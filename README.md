@@ -1,6 +1,6 @@
-# 🚀 CodeNexus — Sprint 2
+# 🚀 CodeNexus — Sprint 3
 
-> Segunda versão do projeto **CodeNexus**, desenvolvida em grupo pelos membros da startup. Este repositório contempla os entregáveis da Sprint 2, com evolução significativa em relação ao Sprint 1: inclusão de backend Java, banco de dados containerizado e visualização de dados aprimorada.
+> Segunda versão do projeto **CodeNexus**, desenvolvida em grupo pelos membros da startup. Este repositório contempla os entregáveis da Sprint 3, com evolução significativa em relação ao Sprint 1 e 2: inclusão de backend Java, banco de dados containerizado e visualização de dados aprimorada.
 
 ---
 
@@ -11,7 +11,7 @@
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Pré-requisitos](#-pré-requisitos)
 - [Módulos](#-módulos)
-  - [codenexus-v2](#codenexus-v2)
+  - [codenexus-v3](#codenexus-v3)
   - [mysql](#mysql)
   - [web-data-viz](#web-data-viz)
 - [Contribuidores](#-contribuidores)
@@ -21,7 +21,7 @@
 
 ## 📌 Sobre o Projeto
 
-O **CodeNexus** é uma plataforma desenvolvida por uma startup em estágio inicial, com foco em conectar desenvolvedores e facilitar o acesso a dados relevantes do ecossistema de tecnologia. O Sprint 2 representa a segunda iteração do produto, incorporando:
+O **CodeNexus** é uma plataforma desenvolvida por uma startup em estágio inicial, com foco em conectar desenvolvedores e facilitar o acesso a dados relevantes do ecossistema de tecnologia. O Sprint 3 representa a segunda iteração do produto, incorporando:
 
 - Backend estruturado com **Java**
 - Banco de dados relacional com **MySQL** containerizado via **Docker**
@@ -33,8 +33,8 @@ O **CodeNexus** é uma plataforma desenvolvida por uma startup em estágio inici
 ## 📁 Estrutura do Repositório
 
 ```
-Sprint2/
-├── codenexus-v2/       # Aplicação backend (Java)
+Sprint3/
+├── codenexus-v3/       # Aplicação backend (Java)
 ├── mysql/              # Configuração do banco de dados (Docker + MySQL)
 ├── web-data-viz/       # Frontend e visualização de dados (HTML/CSS/JS)
 ├── .gitignore
@@ -62,7 +62,7 @@ Sprint2/
 Antes de executar o projeto, certifique-se de ter instalado:
 
 - [Java 17+](https://adoptium.net/)
-- [Maven](https://maven.apache.org/) ou [Gradle](https://gradle.org/)
+- [Maven](https://maven.apache.org/)
 - [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
 - Navegador web moderno (Chrome, Firefox, Edge)
 
@@ -70,7 +70,7 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 ## 📦 Módulos
 
-### `codenexus-v2`
+### `codenexus-v3`
 
 Módulo de backend desenvolvido em **Java**. Responsável pela lógica de negócio da aplicação, expondo APIs e integrando-se com o banco de dados MySQL.
 
