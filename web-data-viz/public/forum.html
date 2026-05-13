@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
+    <link rel="stylesheet" href="./css/forum.css">
+    <title>CodeNexus</title>
+
+</head>
+<body>
+    <div id="sidebar" class="sidebar">
+        <div id="container_titulo">
+            <img src="assets/logo_codenexus_sem_fundo.png" alt="">
+            <h2>CODENEXUS</h2>
+        </div>
+        <div id="container_opcoes">
+            <div id="sub_container_painel">
+                <span class="material-symbols-outlined">home</span>
+                <a href="painel.html" id="sub_container_painel_a">PAINEL</a>
+            </div>
+            <div id="sub_container_perfil">
+                <span class="material-symbols-outlined">person</span>
+                <a href="jogador.html" id="sub_container_perfil_a">JOGADOR</a>
+            </div>
+            <div id="sub_container_partidas">
+                <span class="material-symbols-outlined">contract</span>
+                <a href="partidas.html"id="sub_container_partidas_a">PARTIDAS</a>
+            </div>
+            <div id="sub_container_forum">
+                <span class="material-symbols-outlined">forum</span>   
+                <a href="forum.html" id="sub_container_forum_a">FÓRUM</a>
+            </div>
+        </div>
+
+        <div id="container_sair">
+            <div id="sub_container_sair">
+                <span class="material-symbols-outlined">logout</span>
+                <a href="index.html" id="sub_container_sair_a" onclick="sair()">SAIR</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="container_principal">
+      
+    <div class="forum_topo_pai">  
+        <div id="forum_topo">
+            <h2 class="title">SALA DE TREINAMENTO</h2>
+            <div class="container_user">
+                <span class="user_letra">M</span>
+            </div>
+        </div>
+    </div>  
+
+    <!-- area da postagem no forum-->
+    <div id="area_postagem">
+
+        <div id="post_input">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div id="campo_post">
+                <textarea id="mensagem" placeholder="O que você quer dizer?"></textarea>
+                <div id="acoes_post">
+                    <div>
+                        <span class="material-symbols-outlined">image</span>
+                        <span class="material-symbols-outlined">attach_file</span>
+                    </div>
+
+                    <button onclick="postarMensagem()">POSTAR</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- a lista de todos os posts que for feito -->
+    <div id="lista_posts">
+
+        <div class="post">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div class="conteudo_post">
+                <h3>TREINADOR</h3>
+                <p>
+                    @jogador, aqui está a estratégia que discutimos antes!
+                </p>
+
+                <div class="imagens_post">
+                    <div class="img_fake"></div>
+                    <div class="img_fake"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</body>
+</html>
+<script>
+
+function sair() {
+    sessionStorage.clear();
+    window.location = "index.html";
+}
+
+
+function postarMensagem(){
+
+    var mensagem = document.getElementById("mensagem").value;
+
+    if(mensagem.trim() === ""){
+        alert("Digite uma mensagem!");
+        return;
+    }
+
+    var idPost = Date.now(); 
+
+    var novoPost = document.createElement("div");
+    novoPost.classList.add("post");
+
+    novoPost.innerHTML = `<span class="material-symbols-outlined">account_circle</span>
+                             <div class="conteudo_post">
+                             <h3>VOCÊ</h3>
+                            <p>${mensagem}</p>
+
+                              <div class="acoes_postagem">
+                             <span class="material-symbols-outlined botao_like"
+                              onclick="curtirPost(${idPost}, this)">
+                            favorite
+                            </span>
+                          <span id="likes-${idPost}">0</span>
+                             </div>
+                             </div> `;
+
+    document.getElementById("lista_posts")
+        .prepend(novoPost);
+
+    document.getElementById("mensagem").value = "";
+}
+
+
+
+function curtirPost(id, elemento){
+
+    var contador = document.getElementById("likes-"+id);
+
+    var likes = parseInt(contador.innerText);
+
+    likes++;
+
+    contador.innerText = likes;
+
+    elemento.classList.add("ativo");
+}
+</script>
