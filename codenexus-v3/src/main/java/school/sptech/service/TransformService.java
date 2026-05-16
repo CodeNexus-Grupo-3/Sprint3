@@ -24,6 +24,8 @@ public class TransformService {
     }
 
     public void processarArquivos(List<File> arquivos, LoadService loadService) {
+        logService.sucesso("INFO", "Iniciando processamento e inserção dos dados dos arquivos", "LoadService");
+        System.out.println("[INFO] Iniciando processamento e inserção dos dados dos arquivos");
 
         List<Dados> batch = new ArrayList<>();
         int batchSize = 500;
@@ -58,8 +60,8 @@ public class TransformService {
                 }
 
             } catch (Exception e) {
-                logService.erro("ERRO", "Erro ao processar arquivo", "TransformService",
-                        e.getMessage(), e.toString());
+                logService.erro("ERRO", "Erro ao processar arquivo", "TransformService", e.getMessage(), e.toString());
+                System.out.println("[ERRO] Erro ao processar arquivo");
             }
         }
 
@@ -135,8 +137,8 @@ public class TransformService {
                 return 0;
             return (int) row.getCell(cell).getNumericCellValue();
         } catch (Exception e) {
-            logService.erro("ERRO", "Erro ao ler célula " + cell + " na linha " + row.getRowNum(), "TransformService",
-                    e.getMessage(), null);
+            logService.erro("ERRO", "Erro ao ler célula " + cell + " na linha " + row.getRowNum(), "TransformService", e.getMessage(), null);
+            System.out.println("[ERRO] Erro ao ler célula " + cell + " na linha " + row.getRowNum());
             return 0;
         }
     }
