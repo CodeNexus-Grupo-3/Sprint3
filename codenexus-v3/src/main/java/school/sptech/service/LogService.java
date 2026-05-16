@@ -1,6 +1,7 @@
 package school.sptech.service;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import school.sptech.model.LogErro;
 import school.sptech.model.Log;
 
 import java.time.LocalDateTime;
@@ -18,18 +19,26 @@ public class LogService {
     }
 
     public void erro(String status, String evento, String servico, String mensagemErro, String stacktrace) {
-        saveLog(new Log(LocalDateTime.now(), status, evento, servico, mensagemErro, stacktrace));
+        saveErro(new LogErro(LocalDateTime.now(), status, evento, servico, mensagemErro, stacktrace));
     }
 
     public void saveLog(Log log) {
         jdbcTemplate.update(
-                "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, null, null)",
                 log.getDataHora(),
                 log.getStatus(),
                 log.getEvento(),
-                log.getServico(),
-                log.getMensagemErro(),
-                log.getStacktrace(),
-                log.getFkUsuario());
+                log.getServico());
+    }
+
+    public void saveErro(LogErro logErro) {
+        jdbcTemplate.update(
+                "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)",
+                logErro.getDataHora(),
+                logErro.getStatus(),
+                logErro.getEvento(),
+                logErro.getServico(),
+                logErro.getMensagemErro(),
+                logErro.getStacktrace());
     }
 }
