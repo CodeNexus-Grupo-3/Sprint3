@@ -73,7 +73,7 @@
                     <span class="kpi_title">DURAÇÃO<BR>EM MINUTOS</span>
 
                     <div class="data">
-                        <span class="data1">42</span>
+                        <span id="kpiDuracaoTime" class="data1">42</span>
                         <span>|</span>
                         <span class="data2">33</span>
                     </div>
@@ -161,6 +161,23 @@
         window.location = "index.html";
     }
 
+    //KPIS
+    function kpiDuracaoTime(){
+        fetch(`/dashboard/kpiDuracaoTime`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);}
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        } .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+
+    }
+         
+
+    //GRÁFICOS
     const ctx = document.getElementById('grafico');
     Chart.defaults.font.family = 'Goldman';
 
