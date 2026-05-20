@@ -153,6 +153,13 @@ function curtirPost(id, elemento){
 
     var likes = parseInt(contador.innerText);
 
+
+    if(elemento.classList.contains("ativo")){
+        return;
+    }
+
+    
+
     likes++;
 
     contador.innerText = likes;
