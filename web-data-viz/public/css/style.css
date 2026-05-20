@@ -315,11 +315,11 @@ header h1{
     justify-content: center;
     width: 100%;
     height: 15%;
-    background-color: #022425;
+    /* background-color: red; */
 }
 
 #sub_container_botao button{
-    display: none;
+    /* display: none; */
 }
 
 #sub_container_botao button{
@@ -338,6 +338,12 @@ header h1{
     transition: 0.7s;
 }
 
+.modalFaleConosco{
+    width: 50%;
+    height: 50%;
+    background-color: red;
+}
+
 #container_footer {
     width: 100%;
     height: 40%;
@@ -346,7 +352,6 @@ header h1{
     display: flex;
     flex-direction: column;
     align-items: center;
-
     position: relative;
     overflow: hidden;
 }
@@ -605,5 +610,112 @@ header h1{
 .footer_contato_info span{
     font-size: 18px;
 }
+
+}
+
+.modalFaleConosco{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.7);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal-content{
+    width: 35%;
+    background-color: #022425;
+    border: 2px solid #F2FF58;
+    border-radius: 2px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    
+}
+
+.modal-content h1{
+    color: #F2FF58;
+    text-align: center;
+    font-weight: 100;
+}
+
+.modal-content input{
+    height: 45px;
+    background-color: transparent;
+    border: 2px solid #254C3C;
+    border-radius: 2px;
+    padding-left: 15px;
+    color: white;
+    font-family: "Goldman", sans-serif;
+    outline: none;
+    transition: 0.3s;
+}
+
+.modal-content input:focus{
+    border-color: #F2FF58;
+}
+
+.modal-content input::placeholder{
+    color: rgba(255,255,255,0.6);
+}
+
+.modal-botoes{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.modal-botoes button{
+    width: 48%;
+    height: 45px;
+    font-family: "Goldman", sans-serif;
+    cursor: pointer;
+    border-radius: 2px;
+    border: 2px solid #F2FF58;
+    transition: 0.4s;
+}
+
+#mensagemErro{
+    color: #ff5c5c;
+    font-size: 14px;
+    line-height: 20px;
+    min-height: 20px;
+}
+
+.btn-enviar{
+    background-color: #F2FF58;
+    color: #022425;
+}
+
+.btn-enviar:hover{
+    background-color: #C6D34C;
+}
+
+.btn-fechar{
+    background-color: transparent;
+    color: #F2FF58;
+}
+
+.btn-fechar:hover{
+    background-color: #F2FF58;
+    color: #022425;
+}
+
+@media(max-width: 768px){
+
+    .modal-content{
+        width: 80%;
+        padding: 25px;
+    }
 
 }

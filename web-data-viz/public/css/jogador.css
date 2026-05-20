@@ -124,6 +124,11 @@ body{
     letter-spacing: 3px;
 }
 
+#header_equipes span{
+    color: #F2FF58;
+    font-size: 28px;
+}
+
 #linha_header{
     width: 100%;
     height: 2px;

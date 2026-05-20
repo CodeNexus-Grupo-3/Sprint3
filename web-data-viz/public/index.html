@@ -152,6 +152,148 @@
     </div>
   </footer>
 
+  <div class="modalFaleConosco" id="modalFaleConosco">
+
+    <div class="modal-content">
+
+      <h1>FALE CONOSCO</h1>
+
+      <input type="text" id="input_nome" placeholder="Digite seu nome">
+      <input type="email" id="input_email" placeholder="Digite seu e-mail">
+      <input type="text" id="input_telefone" placeholder="Digite seu telefone">
+      <input type="text" id="input_equipe" placeholder="Digite sua equipe">
+      <input type="password" id="input_senha" placeholder="Digite sua senha" onkeyup="validarFormulario()">
+
+
+      <div id="mensagemErro"></div>
+
+      <div class="modal-botoes">
+
+        <button class="btn-fechar" onclick="fecharModal()">
+          FECHAR
+        </button>
+
+        <button class="btn-enviar" onclick="enviarFormulario()">
+          ENVIAR
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
 </body>
 
 </html>
+<script>
+
+  var formularioValido = false;
+
+  function btn_fale_conosco() {
+    document.getElementById("modalFaleConosco").style.display = "flex";
+  }
+
+  function fecharModal() {
+  document.getElementById("modalFaleConosco").style.display = "none";
+
+  document.getElementById("modalFaleConosco").style.display = "none";
+
+  document.getElementById("input_nome").value = "";
+  document.getElementById("input_email").value = "";
+  document.getElementById("input_telefone").value = "";
+  document.getElementById("input_equipe").value = "";
+  document.getElementById("input_senha").value = "";
+
+  document.getElementById("mensagemErro").innerHTML = "";
+
+  formularioValido = false;
+  }
+
+  function validarFormulario() {
+
+    var senha = document.getElementById("input_senha").value;
+
+    var mensagemErro = document.getElementById("mensagemErro");
+
+    var temMaiuscula = false;
+    var temMinuscula = false;
+    var temEspecial = false;
+
+    var caracteresEspeciais = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?";
+
+    for (var i = 0; i < senha.length; i++) {
+
+      var caractere = senha[i];
+
+      if (caractere >= 'A' && caractere <= 'Z') {
+        temMaiuscula = true;
+      }
+
+      if (caractere >= 'a' && caractere <= 'z') {
+        temMinuscula = true;
+      }
+
+      if (caracteresEspeciais.includes(caractere)) {
+        temEspecial = true;
+      }
+
+    }
+
+if(senha.length < 8){
+
+  mensagemErro.innerHTML = "A senha precisa ter no mínimo 8 caracteres.";
+  mensagemErro.style.color = "#ff5c5c";
+
+  formularioValido = false;
+
+} else if(!temMaiuscula){
+
+  mensagemErro.innerHTML = "A senha precisa ter uma letra maiúscula.";
+  mensagemErro.style.color = "#ff5c5c";
+
+  formularioValido = false;
+
+} else if(!temMinuscula){
+
+  mensagemErro.innerHTML = "A senha precisa ter uma letra minúscula.";
+  mensagemErro.style.color = "#ff5c5c";
+
+  formularioValido = false;
+
+} else if(!temEspecial){
+
+  mensagemErro.innerHTML = "A senha precisa ter um caractere especial.";
+  mensagemErro.style.color = "#ff5c5c";
+
+  formularioValido = false;
+
+} else {
+
+  mensagemErro.innerHTML = "Senha válida!";
+  mensagemErro.style.color = "#7CFC00";
+
+  formularioValido = true;
+
+}
+
+  }
+
+  function enviarFormulario() {
+
+    if (formularioValido) {
+
+      alert("Formulário enviado com sucesso!");
+
+      fecharModal();
+
+    } else {
+
+      alert("Preencha a senha corretamente.");
+
+    }
+
+  }
+
+</script>

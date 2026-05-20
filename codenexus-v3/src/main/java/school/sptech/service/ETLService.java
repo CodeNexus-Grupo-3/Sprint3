@@ -23,6 +23,7 @@ public class ETLService {
     public void executar() {
         // EXTRACT (S3)
         logService.sucesso("INFO", "Extração de dados do S3 iniciada", "ETLService");
+        System.out.println("[INFO] Extração de dados do S3 iniciada");
 
         String nomeBucket = "s3-codenexus";
 
@@ -30,31 +31,35 @@ public class ETLService {
 
         if (listaObjetos.isEmpty()) {
             logService.sucesso("INFO", "Nenhum arquivo para extração", "ETLService");
+            System.out.println("[INFO] Nenhum arquivo para extração");
             return;
         }
 
         List<File> arquivos = extractService.extrairObjetos(listaObjetos, nomeBucket);
 
         logService.sucesso("SUCESSO", "Extração de Dados Concluída (1/3)", "ETLService");
+        System.out.println("[SUCESSO] Extração de Dados Concluída (1/3)");
 
         // TRANSFORM (Apache POI)
         logService.sucesso("INFO", "Transformação de dados via Apache POI iniciada", "ETLService");
+        System.out.println("[INFO] Transformação de dados via Apache POI iniciada");
 
         if (arquivos.isEmpty()) {
             logService.sucesso("INFO", "Nenhum arquivo para transformação", "ETLService");
+            System.out.println("[INFO] Nenhum arquivo para transformação");
             return;
         }
 
         try {
             loadService.clean();
             transformService.processarArquivos(arquivos, loadService);
-            logService.sucesso("SUCESSO", "ETL finalizado com sucesso (2/3 + 3/3)", "ETLService");
+            logService.sucesso("SUCESSO", "Transformação de dados finalizada com sucesso (2/3)", "ETLService");
+            System.out.println("[SUCESSO] Transformação de dados finalizada com sucesso (2/3)");
+            logService.sucesso("SUCESSO", "Carregamento de dados finalizado com sucesso (3/3)", "ETLService");
+            System.out.println("[SUCESSO] Carregamento de dados finalizado com sucesso (3/3)");
         } catch (Exception e) {
-            logService.erro("ERRO",
-                    "Erro durante transformação/carga",
-                    "ETLService",
-                    e.getMessage(),
-                    e.toString());
+            logService.erro("ERRO", "Erro durante transformação/carga", "ETLService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro durante transformação/carregamento");
         }
     }
 }

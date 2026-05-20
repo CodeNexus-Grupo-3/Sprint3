@@ -28,11 +28,14 @@ public class ExtractService {
     public List<Bucket> listarBuckets () {
         try {
             logService.sucesso("INFO", "Listando buckets", "ExtractService");
+            System.out.println("[INFO] Listando buckets");
             List<Bucket> buckets = s3Client.listBuckets().buckets();
             logService.sucesso("SUCESSO", "Buckets listados com sucesso", "ExtractService");
+            System.out.println("[SUCESSO] Buckets listados com sucesso");
             return buckets;
         } catch (Exception e) {
             logService.erro("ERRO", "Erro ao listar buckets", "ExtractService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro ao listar buckets");
             throw new RuntimeException(e);
         }
     }
@@ -41,6 +44,7 @@ public class ExtractService {
     public List<S3Object> listarObjetos (String nomeBucket) {
         try {
             logService.sucesso("INFO", "Listando os Objetos de um Bucket", "ExtractService");
+            System.out.println("[INFO] Listando os Objetos de um Bucket");
             ListObjectsRequest listObjects = ListObjectsRequest.builder()
                     .bucket(nomeBucket)
                     .build();
@@ -49,13 +53,16 @@ public class ExtractService {
 
             if (objects.isEmpty()) {
                 logService.sucesso("INFO", "Nenhum objeto encontrado no bucket: " + nomeBucket, "ExtractService");
+                System.out.println("[INFO] Nenhum objeto encontrado no bucket: " + nomeBucket);
             } else {
                 logService.sucesso("SUCESSO", objects.size() + " listados com sucesso", "ExtractService");
+                System.out.println("[SUCESSO] " + objects.size() + " listados com sucesso");
             }
 
             return objects;
         } catch (Exception e) {
             logService.erro("ERRO", "Erro ao listar objetos do bucket: " + nomeBucket, "ExtractService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro ao listar objetos do bucket: " + nomeBucket);
             throw new RuntimeException(e);
         }
     }
@@ -64,6 +71,7 @@ public class ExtractService {
     public List<File> extrairObjetos (List<S3Object> objects, String bucketName) {
         try {
             logService.sucesso("INFO", "Extraindo os Objetos de um Bucket", "ExtractService");
+            System.out.println("[INFO] Extraindo os Objetos de um Bucket");
 
             File pasta = criarDiretorio();
             List<File> arquivos = new ArrayList<>();
@@ -85,14 +93,17 @@ public class ExtractService {
                     arquivos.add(file);
                 } catch (Exception e) {
                     logService.erro("ERRO", "Erro ao baixar arquivo: " + object.key(), "ExtractService", e.getMessage(), e.toString());
+                    System.out.println("[ERRO] Erro ao baixar arquivo: " + object.key());
                 }
             }
 
             logService.sucesso("SUCESSO", "Objetos extraídos do bucket com sucesso", "ExtractService");
+            System.out.println("[SUCESSO] Objetos extraídos do bucket com sucesso");
 
             return arquivos;
         } catch (Exception e) {
             logService.erro("ERRO", "Erro ao extrair objetos do bucket", "ExtractService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro ao extrair objetos do bucket");
             throw new RuntimeException(e);
         }
     }

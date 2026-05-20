@@ -50,7 +50,8 @@
       
     <div class="forum_topo_pai">  
         <div id="forum_topo">
-            <h2 class="title">SALA DE TREINAMENTO</h2>
+            <span class="title">SALA DE TREINAMENTO</span>
+            <!-- <h2 class="title">SALA DE TREINAMENTO</h2> -->
             <div class="container_user">
                 <span class="user_letra">M</span>
             </div>
@@ -151,6 +152,13 @@ function curtirPost(id, elemento){
     var contador = document.getElementById("likes-"+id);
 
     var likes = parseInt(contador.innerText);
+
+
+    if(elemento.classList.contains("ativo")){
+        return;
+    }
+
+    
 
     likes++;
 
