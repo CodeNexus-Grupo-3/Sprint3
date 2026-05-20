@@ -73,9 +73,9 @@
                     <span class="kpi_title">DURAÇÃO<BR>EM MINUTOS</span>
 
                     <div class="data">
-                        <span id="kpiDuracaoTime" class="data1">42</span>
+                        <span id="kpiDuracaoTime" class="data1">33</span>
                         <span>|</span>
-                        <span class="data2">33</span>
+                        <span id="kpiDuracaoGeral" class="data2"></span>
                     </div>
                 </div>
             </div>
@@ -152,6 +152,7 @@
 
     </div>
 
+
 </body>
 
 </html>
@@ -161,16 +162,28 @@
         window.location = "index.html";
     }
 
+    window.onload = carregarDash;
+
+    function carregarDash() {
+        console.log("Página carregou");
+        kpiDuracaoTime();
+    };
+
     //KPIS
     function kpiDuracaoTime(){
+        // corrigir pra kpiDuracaoGereal ou mudar o select
         fetch(`/dashboard/kpiDuracaoTime`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
-                response.json().then(function (resposta) {console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);}
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiDuracaoGeral").innerHTML =
+                    Number(resposta[0].mediaMinutos).toFixed(0);
+                }
             )} else {
                 console.error('Nenhum dado encontrado ou erro na API');
             }
     
-        } .catch(function (error) {
+        }) .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         })
 
@@ -390,6 +403,8 @@
             }
         }
     });
+
+    carregarDash();
 
 
 

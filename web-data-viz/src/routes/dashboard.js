@@ -13,3 +13,4 @@ router.get("/kpiDuracaoTime", function (req, res) {
 });
 
 module.exports = router;
+
