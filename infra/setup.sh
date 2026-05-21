@@ -83,8 +83,8 @@ AMBIENTE_PROCESSO=desenvolvimento
 # Configurações de conexão com o banco de dados
 DB_HOST=bd-codenexus
 DB_DATABASE=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+DB_USER=app
+DB_PASSWORD=nexus100
 DB_PORT=3306
 
 # Configurações do servidor de aplicação
@@ -99,8 +99,8 @@ AMBIENTE_PROCESSO=producao
 # Configurações de conexão com o banco de dados
 DB_HOST=bd-codenexus
 DB_DATABASE=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+DB_USER=app
+DB_PASSWORD=nexus100
 DB_PORT=3306
 
 # Configurações do servidor de aplicação
@@ -123,8 +123,8 @@ AWS_REGION=us-east-1
 DB_HOST=bd-codenexus
 DB_PORT=3306
 DB_NAME=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+DB_USER=app
+DB_PASSWORD=nexus100
 # =====================
 EOF
 
