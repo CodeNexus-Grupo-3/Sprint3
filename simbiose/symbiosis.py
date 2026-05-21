@@ -1,5 +1,6 @@
 import mysql.connector
-from datetime import datetime
+from datetime import date
+import os
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from openpyxl.utils import get_column_letter
@@ -9,15 +10,15 @@ from openpyxl.utils import get_column_letter
 '''
 
 conexao = mysql.connector.connect(
-    host="34.198.86.190",
+    host="127.0.0.1",
     user="root",
-    password="urubu100",
+    password="Polentinha69?",
     database="codenexus"
 )
 
 cursor = conexao.cursor(dictionary=True)
 
-cursor.execute("SELECT * FROM PartidasTime")
+cursor.execute("SELECT dtPartida, resultado, duracao, tipo, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano FROM PartidasEquipe;")
 
 teamData = cursor.fetchall()
 
@@ -78,8 +79,8 @@ def resize(col, row, size_row):
 header_titles = [
     "Data", 
     "Resultado", 
+    "Duração",
     "Tipo", 
-    "Duração", 
     "Total de Abates", 
     "Total de Assistências", 
     "Total de Mortes", 
@@ -100,7 +101,15 @@ for i, titles in enumerate(header_titles, start=2):
 for item in teamData:
     current_row += 1
 
-    for value in item.values():
+    for key, value in item.items():
+
+        if key == "resultado":
+            value = "Vitória" if value == 1 else "Derrota"
+
+        if key == "duracao":
+            minutos = value // 60
+            segundos = value % 60
+            value = f"{minutos:02d}:{segundos:02d}"
 
         create_cell(current_row, current_col, value, fill_values, False, False)
         resize(current_col, current_row, 15)
@@ -110,8 +119,9 @@ for item in teamData:
 
     current_col = 2
 
-date = datetime.now().strftime("%d-%m-%Y")
-arquivo_saida = "Relátorio-Partidas-Equipe-" + date + ".xlsx"
+data = date.today().strftime("%d-%m-%Y")
+downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+arquivo_saida = os.path.join(downloads_path, f"Relatorio-Partidas-Equipe-{data}.xlsx")
 wb.save(arquivo_saida)
 
 print("Arquivo gerado com sucesso: " + arquivo_saida)
