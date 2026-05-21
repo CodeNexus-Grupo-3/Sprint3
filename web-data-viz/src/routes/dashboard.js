@@ -44,6 +44,11 @@ router.get("/kpiGoldEficGeral", function (req, res) {
     dashboardController.kpiGoldEficGeral(req, res);
 });
 
+// GRÁFICO DE OBJETIVOS POR JOGO
+router.get("/graficoObjetivos/:fkEquipe", function (req, res) {
+    dashboardController.graficoObjetivos(req, res);
+});
+
 
 module.exports = router;
 

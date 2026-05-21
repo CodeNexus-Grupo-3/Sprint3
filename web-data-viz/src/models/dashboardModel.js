@@ -92,6 +92,32 @@ function kpiGoldEficGeral() {
     return database.executar(instrucaoSql);
 }
 
+// GRÁFICO DE OBJETIVOS:
+function graficoObjetivosTime(fkEquipe) {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalDrag) AS dragTime,
+        AVG(totalBaron) AS baroesTime,
+        AVG(totalTorres) AS torresTime
+        FROM PartidasEquipe
+        WHERE fkEquipe = ${fkEquipe};`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function graficoObjetivosGeral() {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalDrag) AS dragGeral,
+        AVG(totalBaron) AS baroesGeral,
+        AVG(totalTorres) AS torresGeral
+        FROM Dashboard;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarUltimosResultados,
@@ -102,5 +128,7 @@ module.exports = {
     kpiGoldMinuTime,
     kpiGoldMinuGeral,
     kpiGoldEficTime,
-    kpiGoldEficGeral
+    kpiGoldEficGeral,
+    graficoObjetivosTime,
+    graficoObjetivosGeral
 }

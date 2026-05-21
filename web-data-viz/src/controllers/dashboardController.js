@@ -139,6 +139,42 @@ function kpiGoldEficGeral(req, res) {
     });
 }
 
+// GRAFICO DE OBJETIVOS
+function graficoObjetivos(req, res) {
+    var fkEquipe = req.params.fkEquipe;
+
+    const time = 
+    dashboardModel.graficoObjetivosTime(fkEquipe).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+    const geral =
+    dashboardModel.graficoObjetivosGeral(req, res).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+    res.json({
+        time: time[0],
+        geral: geral[0]
+    });
+}
+
 module.exports = {
     buscarUltimosResultados,
     kpiDuracaoGeral,
@@ -148,5 +184,6 @@ module.exports = {
     kpiGoldMinuTime,
     kpiGoldMinuGeral,
     kpiGoldEficTime,
-    kpiGoldEficGeral
+    kpiGoldEficGeral,
+    graficoObjetivos,
 }

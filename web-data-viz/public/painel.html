@@ -173,7 +173,9 @@
         kpiGoldMinuTime();
         kpiGoldMinuGeral();
         kpiGoldEficTime();
-        kpiGoldEficGeral()
+        kpiGoldEficGeral();
+        graficoObjetivos();
+
     };
 
     // KPIS
@@ -274,7 +276,7 @@
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     document.getElementById("kpiGoldMinuGeral").innerHTML =
-                    Number(resposta[0].mediaGoldMinuGeral).toFixed(0);
+                    Number(resposta[0].mediaGoldMinu).toFixed(0);
                 }
             )} else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -293,7 +295,7 @@
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     document.getElementById("kpiGoldEficTime").innerHTML =
-                    Number(resposta[0].mediaGoldEficEquipe).toFixed(0);
+                    Number(resposta[0].mediaGoldEficEquipe).toFixed(2);
                 }
             )} else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -310,7 +312,7 @@
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     document.getElementById("kpiGoldEficGeral").innerHTML =
-                    Number(resposta[0].mediaGoldEfic).toFixed(0);
+                    Number(resposta[0].mediaGoldEfic).toFixed(2);
                 }
             )} else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -322,75 +324,93 @@
     };
 
     //GRÁFICOS
+    function graficoObjetivos(){
     const ctx = document.getElementById('grafico');
     Chart.defaults.font.family = 'Goldman';
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Dragões', 'Barões', 'Torres'],
-            datasets: [
-                {
-                    label: 'Time',
-                    data: [2, 2, 8],
-                    borderColor: '#e6f14a',
-                    borderWidth: 2,
-                    backgroundColor: '#e6f14a80'
-                },
-                {
-                    label: 'Geral',
-                    data: [3, 1, 9],
-                    borderColor: '#1f7a73',
-                    borderWidth: 2,
-                    backgroundColor: '#1f7a7370'
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: 'OBJETIVOS\nPOR JOGO',
-                    padding: {
-                        bottom: 30,
-                    },
-                    color: '#ffffff',
-                    font: {
-                        size: 24,
-                        weight: '400'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        padding: 4,
-                        font: {
-                            size: 20,
+    fetch(`/dashboard/graficoObjetivos`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Dragões', 'Barões', 'Torres'],
+                            datasets: [
+                                {
+                                    label: 'Time',
+                                    data: [resposta.time.dragTime, resposta.time.baroesTime, resposta.time.torresTime],
+                                    borderColor: '#e6f14a',
+                                    borderWidth: 2,
+                                    backgroundColor: '#e6f14a80'
+                                },
+                                {
+                                    label: 'Geral',
+                                    data: [resposta.geral.dragGeral, resposta.geral.baroesGeral, resposta.geral.torresGeral],
+                                    borderColor: '#1f7a73',
+                                    borderWidth: 2,
+                                    backgroundColor: '#1f7a7370'
+                                }
+                            ]
                         },
-                        color: '#ffffff'
-                    },
-                    grid: {
-                        color: '#cccccc33'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: '#ffffff'
-                    },
-                    grid: {
-                        color: '#cccccc33'
-                    }
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'OBJETIVOS\nPOR JOGO',
+                                    padding: {
+                                        bottom: 30,
+                                    },
+                                    color: '#ffffff',
+                                    font: {
+                                        size: 24,
+                                        weight: '400'
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        padding: 4,
+                                        font: {
+                                            size: 20,
+                                        },
+                                        color: '#ffffff'
+                                    },
+                                    grid: {
+                                        color: '#cccccc33'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        color: '#ffffff'
+                                    },
+                                    grid: {
+                                        color: '#cccccc33'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
                 }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
-        }
-    });
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    })
+
+    
+    }
+    
 
 
     const ctxy = document.getElementById('grafico2').getContext('2d');
