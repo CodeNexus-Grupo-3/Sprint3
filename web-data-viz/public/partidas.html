@@ -10,7 +10,8 @@
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <title>CodeNexus</title>
-    <link rel="stylesheet" href="./css/partidas.css">   
+    <link rel="stylesheet" href="./css/partidas.css">
+    <link rel="stylesheet" href="./css/painel.css">      
 </head>
 <body>
 
@@ -87,7 +88,6 @@
                             <th>BARÕES</th>
                             <th>DRAGÕES</th>
                             <th>TORRES</th>
-                            <th>PONTOS</th>
                             <th>DATA</th>
                             <th></th>
                         </tr>
@@ -121,36 +121,28 @@
 
             <div class="bottom-grid">
                 <div class="card">
-                    <div class="card-title">Desempenho por Jogador</div>
-                    <table class="tabela-jogadores">
-                        <thead>
-                            <tr>
-                                <th>JOGADOR</th>
-                                <th>CHAMPION</th>
-                                <th>LANE</th>
-                                <th>KDA</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabela-jogadores-body"></tbody>
-                    </table>
+                    <div class="card-title">Progressão de Gold</div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-linha"></canvas>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-title">Progressão de Dano</div>
                     <div class="chart-wrapper">
-                        <canvas id="chart-linha"></canvas>
+                        <canvas id="chart-dano"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="bottom-grid" style="margin-top:20px">
                 <div class="card">
-                    <div class="card-title">Participação em Kills</div>
+                    <div class="card-title">Eficiência (KDA / Dano / Gold)</div>
                     <div class="chart-wrapper">
                         <canvas id="chart-pizza"></canvas>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">KDA por Jogador</div>
+                    <div class="card-title">Monstros e Torres</div>
                     <div class="chart-wrapper">
                         <canvas id="chart-barras"></canvas>
                     </div>
@@ -162,61 +154,49 @@
 
 <script>
 function sair() {
-        sessionStorage.clear();
-        window.location = "index.html";
-    }
+    sessionStorage.clear();
+    window.location = "index.html";
+}
 
 
 let partidas = [
     {
         id: 2,
         resultado: 'VITÓRIA',
-        duração: '23:34',
-        abates: '30',
-        assistências: '27',
-        mortes: '18',
+        duracao: '23:34',
+        abates: 30,
+        assistencias: 27,
+        mortes: 18,
         gold: '18.211',
         dano: '43.721',
-        barões: '1',
-        dragões: '2',
-        torres: '3',
-        pontos: '30',
+        baroes: 2,
+        dragoes: 2,
+        torres: 3,
         data: '07/03/26',
-        /* jogadores: [
-            { nome: 'ShadowAce',  champion: 'Jinx',   lane: 'ADC', kills: 8, deaths: 2, assists: 10 },
-            { nome: 'IronMage',   champion: 'Lux',    lane: 'SUP', kills: 2, deaths: 3, assists: 18 },
-            { nome: 'TopFrag',    champion: 'Darius', lane: 'TOP', kills: 7, deaths: 4, assists: 5  },
-            { nome: 'JungleBoss', champion: 'Vi',     lane: 'JNG', kills: 5, deaths: 3, assists: 12 },
-            { nome: 'MidLord',    champion: 'Syndra', lane: 'MID', kills: 9, deaths: 1, assists: 7  },
-        ],
-        dano: [1200, 2400, 3100, 4800, 6200, 8500, 9800, 11200, 14000, 18000], */
+        // Progressão de gold por minuto (10 pontos)
+        goldGrad: [2100, 4300, 6800, 9200, 11000, 13400, 15100, 16500, 17400, 18211],
+        // Progressão de dano por minuto (10 pontos)
+        danoGrad: [3200, 7500, 12000, 18000, 23500, 29000, 33800, 37200, 40900, 43721],
     },
     {
         id: 1,
         resultado: 'DERROTA',
-        duração: '23:34',
-        abates: '30',
-        assistências: '27',
-        mortes: '18',
-        gold: '18.211',
-        dano: '43.721',
-        barões: '1',
-        dragões: '2',
-        torres: '3',
-        pontos: '30',
+        duracao: '23:34',
+        abates: 15,
+        assistencias: 14,
+        mortes: 22,
+        gold: '14.890',
+        dano: '31.450',
+        baroes: 1,
+        dragoes: 1,
+        torres: 2,
         data: '07/03/26',
-        /* jogadores: [
-            { nome: 'ShadowAce',  champion: 'Caitlyn', lane: 'ADC', kills: 3, deaths: 6, assists: 4 },
-            { nome: 'IronMage',   champion: 'Thresh',  lane: 'SUP', kills: 1, deaths: 5, assists: 9 },
-            { nome: 'TopFrag',    champion: 'Garen',   lane: 'TOP', kills: 4, deaths: 7, assists: 3 },
-            { nome: 'JungleBoss', champion: 'Lee Sin', lane: 'JNG', kills: 2, deaths: 8, assists: 6 },
-            { nome: 'MidLord',    champion: 'Ahri',    lane: 'MID', kills: 5, deaths: 5, assists: 5 },
-        ],
-        dano: [900, 1500, 2200, 3000, 4100, 5200, 6000, 6800, 7200, 7600], */
+        goldGrad: [1800, 3600, 5500, 7200, 8900, 10400, 11800, 13000, 14100, 14890],
+        danoGrad: [2800, 5900, 9200, 13000, 17000, 20500, 24000, 27000, 29500, 31450],
     },
 ];
 let proximoId = 3;
-let chartLinha = null, chartPizza = null, chartBarras = null;
+let chartLinha = null, chartDano = null, chartPizza = null, chartBarras = null;
 
 function renderTabela() {
     const tbody = document.getElementById('tabela-body');
@@ -230,29 +210,28 @@ function renderTabela() {
         const tr = document.createElement('tr');
         tr.dataset.id = p.id;
 
-        const resClasse  = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
-                         : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
+        const resClasse = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
+                        : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
 
         tr.innerHTML = `
             <td>${p.id}</td>
-        <td><span class="badge ${resClasse}">${p.resultado}</span></td>
-        <td>${p.abates}</td>
-        <td>${p.mortes}</td>
-        <td>${p.assistências}</td>
-        <td>${p.duração}</td>
-        <td>${p.dano}</td>
-        <td>${p.gold}</td>
-        <td>${p.barões}</td>
-        <td>${p.dragões}</td>
-        <td>${p.torres}</td>
-        <td>${p.pontos}</td>
-        <td>${p.data}</td>
-        <td>
-            <div class="cell-acoes">
-                <button class="btn-icon" onclick="abrirPartida(${p.id})">open_in_new</button>
-                <button class="btn-icon deletar" onclick="excluirPartida(event, ${p.id})">delete</button>
-            </div>
-        </td>
+            <td><span class="badge ${resClasse}">${p.resultado}</span></td>
+            <td>${p.duracao}</td>
+            <td>${p.abates}</td>
+            <td>${p.assistencias}</td>
+            <td>${p.mortes}</td>
+            <td>${p.gold}</td>
+            <td>${p.dano}</td>
+            <td>${p.baroes}</td>
+            <td>${p.dragoes}</td>
+            <td>${p.torres}</td>
+            <td>${p.data}</td>
+            <td>
+                <div class="cell-acoes">
+                    <button class="btn-icon" onclick="abrirPartida(${p.id})">open_in_new</button>
+                    <button class="btn-icon deletar" onclick="excluirPartida(event, ${p.id})">delete</button>
+                </div>
+            </td>
         `;
 
         tr.addEventListener('click', e => {
@@ -278,10 +257,8 @@ function cadastrarPartida() {
             <select class="input-tabela" id="res-${novoId}">
                 <option>VITÓRIA</option>
                 <option>DERROTA</option>
-                <option>EMPATE</option>
             </select>
         </td>
-        
         <td><input class="input-tabela" id="dur-${novoId}" type="text" placeholder="00:00" style="width:60px"></td>
         <td><input class="input-tabela" id="aba-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
         <td><input class="input-tabela" id="ast-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
@@ -291,9 +268,7 @@ function cadastrarPartida() {
         <td><input class="input-tabela" id="bar-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
         <td><input class="input-tabela" id="dra-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
         <td><input class="input-tabela" id="tor-${novoId}" type="number" placeholder="0" min="0" style="width:40px"></td>
-        <td><input class="input-tabela" id="pts-${novoId}" type="number" placeholder="0" min="0" style="width:50px"></td>
         <td><input class="input-tabela" id="data-${novoId}" type="text" placeholder="DD/MM/AA" style="width:80px"></td>
-        
         <td>
             <div class="cell-acoes">
                 <button class="btn-icon" title="Salvar" onclick="salvarPartida(${novoId})">check_circle</button>
@@ -303,26 +278,29 @@ function cadastrarPartida() {
     `;
 
     tbody.insertBefore(tr, tbody.firstChild);
-    // Foca no primeiro campo de input de texto após os selects
     document.getElementById(`dur-${novoId}`).focus();
 }
 
 function salvarPartida(id) {
     const res  = document.getElementById(`res-${id}`).value;
-    const mapa = document.getElementById(`mapa-${id}`).value;
-    const pts  = parseInt(document.getElementById(`pts-${id}`).value) || 0;
+    const dur  = document.getElementById(`dur-${id}`).value || '00:00';
+    const aba  = parseInt(document.getElementById(`aba-${id}`).value) || 0;
+    const ast  = parseInt(document.getElementById(`ast-${id}`).value) || 0;
+    const mor  = parseInt(document.getElementById(`mor-${id}`).value) || 0;
+    const gld  = document.getElementById(`gld-${id}`).value || '0';
+    const dan  = document.getElementById(`dan-${id}`).value || '0';
+    const bar  = parseInt(document.getElementById(`bar-${id}`).value) || 0;
+    const dra  = parseInt(document.getElementById(`dra-${id}`).value) || 0;
+    const tor  = parseInt(document.getElementById(`tor-${id}`).value) || 0;
     const data = document.getElementById(`data-${id}`).value || '--/--/--';
-    const tipo = document.getElementById(`tipo-${id}`).value;
 
-    const jogadoresPadrao = [
-        { nome: 'Jogador 1', champion: '---', lane: 'TOP', kills: 0, deaths: 0, assists: 0 },
-        { nome: 'Jogador 2', champion: '---', lane: 'JNG', kills: 0, deaths: 0, assists: 0 },
-        { nome: 'Jogador 3', champion: '---', lane: 'MID', kills: 0, deaths: 0, assists: 0 },
-        { nome: 'Jogador 4', champion: '---', lane: 'ADC', kills: 0, deaths: 0, assists: 0 },
-        { nome: 'Jogador 5', champion: '---', lane: 'SUP', kills: 0, deaths: 0, assists: 0 },
-    ];
-
-    partidas.unshift({ id, resultado: res, mapa, pontos: pts, data, tipo, jogadores: jogadoresPadrao, dano: [0,0,0,0,0,0,0,0,0,0] });
+    partidas.unshift({
+        id, resultado: res, duracao: dur, abates: aba, assistencias: ast,
+        mortes: mor, gold: gld, dano: dan, baroes: bar, dragoes: dra,
+        torres: tor, data,
+        goldGrad: Array(10).fill(0),
+        danoGrad: Array(10).fill(0),
+    });
     renderTabela();
 }
 
@@ -349,70 +327,63 @@ function abrirPartida(id) {
 
     document.getElementById('partida-titulo').textContent = `PARTIDA Nº ${p.id}`;
 
-    const resClasse  = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
-                     : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
-    const tipoClasse = p.tipo === 'TREINO' ? 'badge-treino'
-                     : p.tipo === 'RANKED' ? 'badge-ranked' : 'badge-amistoso';
+    const resClasse = p.resultado === 'VITÓRIA' ? 'badge-vitoria'
+                    : p.resultado === 'DERROTA' ? 'badge-derrota' : 'badge-empate';
 
     document.getElementById('partida-meta').innerHTML = `
         <span class="badge ${resClasse}">${p.resultado}</span>
-        <span class="badge ${tipoClasse}">${p.tipo}</span>
-        <span style="color:var(--cor-texto-suave);font-size:12px">${p.mapa} · ${p.data}</span>
+        <span style="color:var(--cor-texto-suave);font-size:12px">${p.data}</span>
     `;
 
-    const totalKills   = p.jogadores.reduce((a, j) => a + j.kills,   0);
-    const totalDeaths  = p.jogadores.reduce((a, j) => a + j.deaths,  0);
-    const totalAssists = p.jogadores.reduce((a, j) => a + j.assists, 0);
-    const kdaGlobal    = totalDeaths > 0 ? ((totalKills + totalAssists) / totalDeaths).toFixed(2) : '∞';
-    const danoTotal    = p.dano[p.dano.length - 1].toLocaleString('pt-BR');
-    const mvp          = [...p.jogadores].sort((a, b) =>
-        (b.kills + b.assists - b.deaths) - (a.kills + a.assists - a.deaths)
-    )[0].nome;
+    // KDA calculado da partida inteira
+    const kda = p.mortes > 0
+        ? ((p.abates + p.assistencias) / p.mortes).toFixed(2)
+        : '∞';
+
+    // Dano por minuto
+    const [min, seg] = p.duracao.split(':').map(Number);
+    const duracaoMin = min + seg / 60;
+    const danoNum    = parseFloat(p.dano.replace('.', '').replace(',', '.')) || 0;
+    const danoMinuto = duracaoMin > 0 ? Math.round(danoNum / duracaoMin).toLocaleString('pt-BR') : '—';
+
+    // Gold por minuto
+    const goldNum    = parseFloat(p.gold.replace('.', '').replace(',', '.')) || 0;
+    const goldMinuto = duracaoMin > 0 ? Math.round(goldNum / duracaoMin).toLocaleString('pt-BR') : '—';
 
     document.getElementById('kpis-grid').innerHTML = `
-        <div class="kpi-card"><div class="kpi-label">Total de Kills</div><div class="kpi-value">${totalKills}</div><div class="kpi-sub">Time completo</div></div>
-        <div class="kpi-card"><div class="kpi-label">Total de Deaths</div><div class="kpi-value">${totalDeaths}</div><div class="kpi-sub">Time completo</div></div>
-        <div class="kpi-card"><div class="kpi-label">Total de Assists</div><div class="kpi-value">${totalAssists}</div><div class="kpi-sub">Time completo</div></div>
-        <div class="kpi-card"><div class="kpi-label">KDA Global</div><div class="kpi-value">${kdaGlobal}</div><div class="kpi-sub">Média do time</div></div>
-        <div class="kpi-card"><div class="kpi-label">Dano Total</div><div class="kpi-value" style="font-size:16px">${danoTotal}</div><div class="kpi-sub">MVP: ${mvp}</div></div>
+        <div class="kpi-card"><div class="kpi-label">Abates</div><div class="kpi-value">${p.abates}</div><div class="kpi-sub">Total da partida</div></div>
+        <div class="kpi-card"><div class="kpi-label">Mortes</div><div class="kpi-value">${p.mortes}</div><div class="kpi-sub">Total da partida</div></div>
+        <div class="kpi-card"><div class="kpi-label">Assistências</div><div class="kpi-value">${p.assistencias}</div><div class="kpi-sub">Total da partida</div></div>
+        <div class="kpi-card"><div class="kpi-label">KDA</div><div class="kpi-value">${kda}</div><div class="kpi-sub">Time completo</div></div>
+        <div class="kpi-card"><div class="kpi-label">Dano/Min</div><div class="kpi-value" style="font-size:16px">${danoMinuto}</div><div class="kpi-sub">Média por minuto</div></div>
     `;
 
-    const tbody = document.getElementById('tabela-jogadores-body');
-    tbody.innerHTML = '';
-    p.jogadores.forEach(j => {
-        const kda      = j.deaths > 0 ? ((j.kills + j.assists) / j.deaths).toFixed(1) : '∞';
-        const kdaClass = parseFloat(kda) >= 3 ? 'kda-pos' : j.deaths > j.kills ? 'kda-neg' : '';
-        tbody.innerHTML += `
-            <tr>
-                <td>${j.nome}</td>
-                <td>${j.champion}</td>
-                <td><span class="lane-badge">${j.lane}</span></td>
-                <td><span class="${kdaClass}">${j.kills}/${j.deaths}/${j.assists}</span></td>
-            </tr>
-        `;
-    });
-
+    // Destruir gráficos anteriores
     if (chartLinha)  { chartLinha.destroy();  chartLinha  = null; }
+    if (chartDano)   { chartDano.destroy();   chartDano   = null; }
     if (chartPizza)  { chartPizza.destroy();  chartPizza  = null; }
     if (chartBarras) { chartBarras.destroy(); chartBarras = null; }
 
     Chart.defaults.color = '#3f5551';
     Chart.defaults.font.family = 'Goldman';
 
-    // Linha progressão de dano
+    const labels = ['1min','3min','5min','8min','10min','13min','15min','18min','20min','23min'];
+
+    // ── Gráfico 1: Progressão de Gold ──────────────────────────────────
     const ctxLinha  = document.getElementById('chart-linha').getContext('2d');
-    const gradLinha = ctxLinha.createLinearGradient(0, 0, 0, 180);
-    gradLinha.addColorStop(0, 'rgba(242,255,88,0.3)');
-    gradLinha.addColorStop(1, 'rgba(242,255,88,0)');
+    const gradGold  = ctxLinha.createLinearGradient(0, 0, 0, 180);
+    gradGold.addColorStop(0, 'rgba(242,255,88,0.3)');
+    gradGold.addColorStop(1, 'rgba(242,255,88,0)');
     chartLinha = new Chart(ctxLinha, {
         type: 'line',
         data: {
-            labels: ['1','2','3','4','5','6','7','8','9','10'],
+            labels,
             datasets: [{
-                data: p.dano,
+                label: 'Gold',
+                data: p.goldGrad,
                 borderColor: '#F2FF58',
                 borderWidth: 2,
-                backgroundColor: gradLinha,
+                backgroundColor: gradGold,
                 fill: true,
                 tension: 0.4,
                 pointBackgroundColor: '#F2FF58',
@@ -429,17 +400,52 @@ function abrirPartida(id) {
         }
     });
 
-    // Pizza participação em kills
-    const laneColors = ['#F2FF58','#4ade80','#60a5fa','#f87171','#c084fc'];
-    const ctxPizza   = document.getElementById('chart-pizza').getContext('2d');
+    // ── Gráfico 2: Progressão de Dano ──────────────────────────────────
+    const ctxDano  = document.getElementById('chart-dano').getContext('2d');
+    const gradDano = ctxDano.createLinearGradient(0, 0, 0, 180);
+    gradDano.addColorStop(0, 'rgba(248,113,113,0.3)');
+    gradDano.addColorStop(1, 'rgba(248,113,113,0)');
+    chartDano = new Chart(ctxDano, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Dano',
+                data: p.danoGrad,
+                borderColor: '#f87171',
+                borderWidth: 2,
+                backgroundColor: gradDano,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#f87171',
+                pointRadius: 3,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } },
+                y: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+
+    // ── Gráfico 3: Eficiência — KDA / Dano / Gold (rosca) ──────────────
+    // Valores normalizados para mostrar distribuição relativa
+    const kdaVal  = p.mortes > 0 ? parseFloat(((p.abates + p.assistencias) / p.mortes).toFixed(2)) : 10;
+    const danoVal = Math.round(danoNum / 10000);
+    const goldVal = Math.round(goldNum / 2000);
+
+    const ctxPizza = document.getElementById('chart-pizza').getContext('2d');
     chartPizza = new Chart(ctxPizza, {
         type: 'doughnut',
         data: {
-            labels: p.jogadores.map(j => j.lane),
+            labels: ['KDA', 'Dano (×10k)', 'Gold (×2k)'],
             datasets: [{
-                data: p.jogadores.map(j => j.kills + j.assists),
-                backgroundColor: laneColors.map(c => c + '99'),
-                borderColor: laneColors,
+                data: [kdaVal, danoVal, goldVal],
+                backgroundColor: ['rgba(242,255,88,0.7)', 'rgba(248,113,113,0.7)', 'rgba(74,222,128,0.7)'],
+                borderColor: ['#F2FF58', '#f87171', '#4ade80'],
                 borderWidth: 2,
             }]
         },
@@ -449,31 +455,47 @@ function abrirPartida(id) {
         }
     });
 
-    // Barras KDA por jogador
+    // ── Gráfico 4: Barões, Torres, Dragões (barras) ─────────────────────
     const ctxBarras = document.getElementById('chart-barras').getContext('2d');
     chartBarras = new Chart(ctxBarras, {
         type: 'bar',
         data: {
-            labels: p.jogadores.map(j => j.nome.split(' ')[0]),
+            labels: ['Barões', 'Torres', 'Dragões'],
             datasets: [
-                { label: 'Kills',   data: p.jogadores.map(j => j.kills),   backgroundColor: 'rgba(74,222,128,0.7)',  borderColor: '#4ade80', borderWidth: 1 },
-                { label: 'Deaths',  data: p.jogadores.map(j => j.deaths),  backgroundColor: 'rgba(248,113,113,0.7)', borderColor: '#f87171', borderWidth: 1 },
-                { label: 'Assists', data: p.jogadores.map(j => j.assists), backgroundColor: 'rgba(96,165,250,0.7)',  borderColor: '#60a5fa', borderWidth: 1 },
+                {
+                    label: 'Barões',
+                    data: [p.baroes, null, null],
+                    backgroundColor: 'rgba(74,222,128,0.7)',
+                    borderColor: '#4ade80',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Torres',
+                    data: [null, p.torres, null],
+                    backgroundColor: 'rgba(248,113,113,0.7)',
+                    borderColor: '#f87171',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Dragões',
+                    data: [null, null, p.dragoes],
+                    backgroundColor: 'rgba(96,165,250,0.7)',
+                    borderColor: '#60a5fa',
+                    borderWidth: 1
+                }
             ]
         },
         options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { labels: { font: { size: 10 }, padding: 10 } } },
-            scales: {
-                x: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } },
-                y: { grid: { color: 'rgba(37,76,60,0.4)' }, ticks: { font: { size: 10 } } }
-            }
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: true } }
         }
     });
 
     document.getElementById('view-historico').classList.add('hidden');
     document.getElementById('view-partida').classList.remove('hidden');
 }
+
 
 function voltarHistorico() {
     document.getElementById('view-partida').classList.add('hidden');

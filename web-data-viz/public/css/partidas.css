@@ -1,3 +1,6 @@
+/* ==========================================================================
+   VARIÁVEIS GLOBAIS E CONFIGURAÇÃO DA PÁGINA
+   ========================================================================== */
 :root {
     --cor-fundo: #022425;
     --cor-fundo-escuro-escuro: #011b1c;
@@ -8,6 +11,16 @@
     --cor-texto: #ffffff;
     --cor-texto-suave: #3f5551;
     --cor-icone: #5f7470;
+    
+    /* Cores de status */
+    --cor-vitoria: #4ade80;
+    --cor-derrota: #f87171;
+    --cor-empate: #facc15;
+    --cor-card: #04313299;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -16,108 +29,15 @@ body {
     height: 100vh;
     font-family: "Goldman", sans-serif;
     display: flex;
+    flex-direction: row;
 }
 
-#sidebar {
-    width: 20%;
-    background-color: var(--cor-fundo-escuro-escuro);
-}
-
-#container_titulo {
-    align-items: center;
-    display: flex;
-    gap: 15px;
-    margin-left: 30px;
-}
-
-#container_titulo h2 {
-    color: var(--cor-destaque);
-}
-
-#container_titulo img {
-    width: 40px;
-    height: 40px;
-}
-
-#container_opcoes {
-    margin-left: 30px;
-    height: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-#container_opcoes span,
-#container_sair span {
-    color: var(--cor-fundo-escuro);
-}
-
-#sub_container_painel,
-#sub_container_perfil,
-#sub_container_partidas,
-#sub_container_forum,
-#sub_container_calendario {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-#sub_container_painel a,
-#sub_container_perfil a,
-#sub_container_forum a,
-#sub_container_sair a {
-    text-decoration: none;
-    color: var(--cor-fundo-escuro);
-    font-size: 23px;
-}
-
-/* partidas = página ativa → destaque amarelo (mesmo padrão do perfil.css) */
-#sub_container_partidas span,
-#sub_container_partidas a {
-    text-decoration: none;
-    color: #F2FF58;
-    font-size: 23px;
-}
-
-#sub_container_painel:hover span,
-#sub_container_painel a:hover,
-#sub_container_perfil:hover span,
-#sub_container_perfil a:hover,
-#sub_container_partidas:hover span,
-#sub_container_partidas a:hover,
-#sub_container_forum:hover span,
-#sub_container_forum a:hover,
-#sub_container_sair:hover span,
-#sub_container_sair a:hover {
-    color: #F2FF58;
-}
-
-#container_sair {
-    display: flex;
-    align-items: end;
-    margin-left: 30px;
-    height: 22%;
-}
-
-#sub_container_sair {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+/* ==========================================================================
+   CONTAINER PRINCIPAL E VIEWPORTS (CONTEÚDO DA TELA)
+   ========================================================================== */
 #container_principal {
     width: 80%;
     background-color: var(--cor-fundo);
-}
-
-:root {
-    --cor-vitoria: #4ade80;
-    --cor-derrota: #f87171;
-    --cor-empate: #facc15;
-    --cor-card: #04313299;
-}
-
-#container_principal {
     overflow: hidden;
     position: relative;
 }
@@ -128,7 +48,6 @@ body {
     padding: 2px 24px;
     overflow-y: auto;
     transition: opacity 0.3s, transform 0.3s;
-    /*             background-color: #c084fc; */
 }
 
 .view.hidden {
@@ -137,21 +56,18 @@ body {
     transform: translateX(20px);
 }
 
+/* Cabeçalho da Seção */
 .section-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-top: 12px;
-    margin-bottom: 15px;
-    height: 6%;
-    /*             background-color: #34d399; */
+    margin-bottom: 20px;
 }
 
 .section-title {
-    /*             background-color: brown; */
     display: flex;
     align-items: center;
-
 }
 
 .section-title span {
@@ -160,6 +76,7 @@ body {
     font-size: 28px;
 }
 
+/* Avatar do Usuário (Topo Direito) */
 .container_user {
     border: 2px solid #F2FF58;
     border-radius: 100%;
@@ -172,11 +89,10 @@ body {
     color: #F2FF58;
     margin-top: 0px;
     box-sizing: border-box;
-    /*             background-color: blueviolet; */
 }
 
+/* Elementos de Layout de Apoio (Segunda Seção) */
 .second_section {
-    /*             background-color: chartreuse; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -194,6 +110,9 @@ body {
     color: #F2FF58;
 }
 
+/* ==========================================================================
+   BOTÕES E COMPONENTES INTERATIVOS
+   ========================================================================== */
 .btn-cadastrar {
     background: var(--cor-destaque);
     color: #011b1c;
@@ -207,7 +126,6 @@ body {
     align-items: center;
     gap: 8px;
     transition: all 0.2s;
-    /*             clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); */
 }
 
 .btn-cadastrar:hover {
@@ -235,6 +153,29 @@ body {
     border-color: var(--cor-destaque);
 }
 
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--cor-texto-suave);
+    font-size: 18px;
+    transition: color 0.15s;
+    font-family: "Material Symbols Outlined";
+    display: flex;
+    align-items: center;
+}
+
+.btn-icon:hover {
+    color: var(--cor-destaque);
+}
+
+.btn-icon.deletar:hover {
+    color: var(--cor-derrota);
+}
+
+/* ==========================================================================
+   TABELAS
+   ========================================================================== */
 .tabela-container {
     background: var(--cor-card);
     border: 1px solid var(--cor-linha);
@@ -279,7 +220,6 @@ tbody tr.nova-linha {
         opacity: 0;
         transform: translateY(-8px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -296,6 +236,30 @@ tbody tr.editando td {
     background: rgba(242, 255, 88, 0.06);
 }
 
+.input-tabela {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--cor-destaque);
+    color: var(--cor-texto);
+    font-family: "Goldman", sans-serif;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+    padding: 2px 4px;
+}
+
+select.input-tabela option {
+    background: #022425;
+}
+
+.cell-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   BADGES (STATUS E MODOS DE JOGO)
+   ========================================================================== */
 .badge {
     display: inline-block;
     padding: 3px 10px;
@@ -345,47 +309,9 @@ tbody tr.editando td {
     font-weight: 700;
 }
 
-.input-tabela {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--cor-destaque);
-    color: var(--cor-texto);
-    font-family: "Goldman", sans-serif;
-    font-size: 13px;
-    width: 100%;
-    outline: none;
-    padding: 2px 4px;
-}
-
-select.input-tabela option {
-    background: #022425;
-}
-
-.cell-acoes {
-    display: flex;
-    gap: 8px;
-}
-
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--cor-texto-suave);
-    font-size: 18px;
-    transition: color 0.15s;
-    font-family: "Material Symbols Outlined";
-    display: flex;
-    align-items: center;
-}
-
-.btn-icon:hover {
-    color: var(--cor-destaque);
-}
-
-.btn-icon.deletar:hover {
-    color: var(--cor-derrota);
-}
-
+/* ==========================================================================
+   KPIS GRID & CARDS
+   ========================================================================== */
 .kpis-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -432,6 +358,9 @@ select.input-tabela option {
     margin-top: 4px;
 }
 
+/* ==========================================================================
+   GRIDS INFERIORES E GRÁFICOS
+   ========================================================================== */
 .bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -518,11 +447,28 @@ select.input-tabela option {
 
 .partida-meta {
     display: flex;
-    gap: 12px;
     align-items: center;
-    margin-top: 6px;
+    gap: 14px;
+    margin-top: 12px;
+    flex-wrap: wrap;
 }
 
+.partida-meta .badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    height: 46px;
+    padding: 0 18px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   SCROLLBAR E UTILS
+   ========================================================================== */
 ::-webkit-scrollbar {
     width: 4px;
 }
@@ -549,4 +495,25 @@ select.input-tabela option {
     display: block;
     margin-bottom: 16px;
     opacity: 0.3;
+}
+/* ==========================================================================
+   SOBRESCREVER SIDEBAR GLOBAL PARA ESTA TELA (PARTIDAS)
+   ========================================================================== */
+
+/* 1. Remove o amarelo do Painel (volta para a cor escura padrão) */
+#sub_container_painel span, 
+#sub_container_painel a {
+    color: var(--cor-fundo-escuro) !important;
+}
+
+/* 2. Força o amarelo no item de Partidas */
+#sub_container_partidas span, 
+#sub_container_partidas a {
+    color: #F2FF58 !important;
+}
+
+/* 3. Garante que se o usuário passar o mouse no Painel, ele ainda acenda em amarelo */
+#sub_container_painel:hover span, 
+#sub_container_painel a:hover {
+    color: #F2FF58 !important;
 }
