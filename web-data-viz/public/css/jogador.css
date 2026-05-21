@@ -244,6 +244,11 @@ body{
     box-sizing: border-box;
 }
 
+#boxPerfil span{
+    color: #F2FF58;
+    font-size: 28px;
+}
+
 
 /* X */
 
@@ -310,17 +315,19 @@ body{
 
 .card_status{
     width: 24%;
-    height: 75px;
+    height: 150px;
     background-color: var(--cor-fundo-escuro);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
+    font-family: "Goldman", sans-serif;
 }
 
 .card_status p{
     color: white;
-    font-size: 12px;
+    font-size: 25px;
     margin: 0;
 }
 
@@ -385,6 +392,11 @@ canvas{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#topoCadastro span{
+    color: #F2FF58;
+    font-size: 28px;
 }
 
 #topoCadastro h1{

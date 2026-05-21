@@ -14,7 +14,7 @@
 body{
     margin: 0;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     font-family: "Goldman", sans-serif;
     display: flex;
 }
@@ -180,6 +180,7 @@ body{
     color:white;
     font-family:"Goldman", sans-serif;
     font-size:18px;
+    display: block;
 }
 
 #acoes_post{
@@ -223,7 +224,8 @@ body{
     background-color:var(--cor-fundo-escuro);
     padding:20px;
     border-radius:8px;
-    width:100%;
+    /*width:100%;*/
+    flex: 1;
 }
 
 .conteudo_post h3{
