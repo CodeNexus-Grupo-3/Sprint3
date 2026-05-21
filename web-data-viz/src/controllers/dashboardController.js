@@ -15,9 +15,11 @@ function buscarUltimosResultados(req, res) {
     });
 }
 
+// KPIS DE DURAÇÃO
 function kpiDuracaoTime(req, res) {
+    var fkEquipe = req.params.fkEquipe;
 
-    dashboardModel.kpiDuracaoTime(req, res).then(function (resultado) {
+    dashboardModel.kpiDuracaoTime(fkEquipe).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -30,8 +32,121 @@ function kpiDuracaoTime(req, res) {
     });
 }
 
+function kpiDuracaoGeral(req, res) {
+    dashboardModel.kpiDuracaoGeral(req, res).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+//KPIS DE DANO/MIN
+function kpiDanoTime(req, res) {
+    var fkEquipe = req.params.fkEquipe;
+
+    dashboardModel.kpiDanoTime(fkEquipe).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function kpiDanoGeral(req, res) {
+    dashboardModel.kpiDanoGeral(req, res).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+//KPIS DE GOLD/MIN
+function kpiGoldMinuTime(req, res) {
+    var fkEquipe = req.params.fkEquipe;
+
+    dashboardModel.kpiGoldMinuTime(fkEquipe).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function kpiGoldMinuGeral(req, res) {
+    dashboardModel.kpiGoldMinuGeral(req, res).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+//KPIS DE GOLD EFFICIENCY
+function kpiGoldEficTime(req, res) {
+    var fkEquipe = req.params.fkEquipe;
+
+    dashboardModel.kpiGoldEficTime(fkEquipe).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function kpiGoldEficGeral(req, res) {
+    dashboardModel.kpiGoldEficGeral(req, res).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
     buscarUltimosResultados,
-    kpiDuracaoTime
+    kpiDuracaoGeral,
+    kpiDuracaoTime,
+    kpiDanoTime,
+    kpiDanoGeral,
+    kpiGoldMinuTime,
+    kpiGoldMinuGeral,
+    kpiGoldEficTime,
+    kpiGoldEficGeral
 }

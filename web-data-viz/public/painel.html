@@ -73,7 +73,7 @@
                     <span class="kpi_title">DURAÇÃO<BR>EM MINUTOS</span>
 
                     <div class="data">
-                        <span id="kpiDuracaoTime" class="data1">33</span>
+                        <span id="kpiDuracaoTime" class="data1"></span>
                         <span>|</span>
                         <span id="kpiDuracaoGeral" class="data2"></span>
                     </div>
@@ -85,9 +85,9 @@
                     <span class="kpi_title">DANO POR <br>MINUTO</span>
 
                     <div class="data">
-                        <span class="data1">1.893</span>
+                        <span id="kpiDanoTime" class="data1"></span>
                         <span>|</span>
-                        <span class="data2">2.297</span>
+                        <span id="kpiDanoGeral" class="data2"></span>
                     </div>
                 </div>
             </div>
@@ -109,9 +109,9 @@
                     <span class="kpi_title">GOLD POR<BR>MINUTO</span>
 
                     <div class="data">
-                        <span class="data1">1.414</span>
+                        <span id="kpiGoldMinuTime" class="data1"></span>
                         <span>|</span>
-                        <span class="data2">2.158</span>
+                        <span id="kpiGoldMinuGeral" class="data2"></span>
                     </div>
                 </div>
             </div>
@@ -121,9 +121,9 @@
                     <span class="kpi_title">EFICIÊNCIA DE <BR>GOLD</span>
 
                     <div class="data">
-                        <span class="data1">2,35</span>
+                        <span id="kpiGoldEficTime" class="data1"></span>
                         <span>|</span>
-                        <span class="data2">2,26</span>
+                        <span id="kpiGoldEficGeral" class="data2"></span>
                     </div>
                 </div>
             </div>
@@ -167,12 +167,37 @@
     function carregarDash() {
         console.log("Página carregou");
         kpiDuracaoTime();
+        kpiDuracaoGeral();
+        kpiDanoTime();
+        kpiDanoGeral();
+        kpiGoldMinuTime();
+        kpiGoldMinuGeral();
+        kpiGoldEficTime();
+        kpiGoldEficGeral()
     };
 
-    //KPIS
+    // KPIS
+    // KPI DE DURAÇÃO:
     function kpiDuracaoTime(){
-        // corrigir pra kpiDuracaoGereal ou mudar o select
-        fetch(`/dashboard/kpiDuracaoTime`, { cache: 'no-store' }).then(function (response) {
+        var fkEquipe = sessionStorage.fkEquipe;
+        fetch(`/dashboard/kpiDuracaoTime/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiDuracaoTime").innerHTML =
+                    Number(resposta[0].mediaMinutosEquipe).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    }
+
+    function kpiDuracaoGeral(){
+        fetch(`/dashboard/kpiDuracaoGeral`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -186,9 +211,115 @@
         }) .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         })
-
     }
-         
+
+    // KPI DE DANO/MINUTO:
+    function kpiDanoTime(){
+        var fkEquipe = sessionStorage.fkEquipe;
+        fetch(`/dashboard/kpiDanoTime/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiDanoTime").innerHTML =
+                    Number(resposta[0].mediaDanoMinuEquipe).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
+
+    function kpiDanoGeral(){
+        fetch(`/dashboard/kpiDanoGeral`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiDanoGeral").innerHTML =
+                    Number(resposta[0].mediaDanoMinu).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
+    
+    // KPIS DE GOLD/MIN
+    function kpiGoldMinuTime(){
+        var fkEquipe = sessionStorage.fkEquipe;
+        fetch(`/dashboard/kpiGoldMinuTime/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiGoldMinuTime").innerHTML =
+                    Number(resposta[0].mediaGoldMinuEquipe).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
+
+    function kpiGoldMinuGeral(){
+        fetch(`/dashboard/kpiGoldMinuGeral`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiGoldMinuGeral").innerHTML =
+                    Number(resposta[0].mediaGoldMinuGeral).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
+
+    // KPIS DE EFICIENCIA DE GOLD
+    function kpiGoldEficTime(){
+        var fkEquipe = sessionStorage.fkEquipe;
+        fetch(`/dashboard/kpiGoldEficTime/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiGoldEficTime").innerHTML =
+                    Number(resposta[0].mediaGoldEficEquipe).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
+
+    function kpiGoldEficGeral(){
+        fetch(`/dashboard/kpiGoldEficGeral`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    document.getElementById("kpiGoldEficGeral").innerHTML =
+                    Number(resposta[0].mediaGoldEfic).toFixed(0);
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+    };
 
     //GRÁFICOS
     const ctx = document.getElementById('grafico');

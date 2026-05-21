@@ -136,9 +136,9 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.email = json.email;
+                    sessionStorage.cargo = json.cargo;
+                    sessionStorage.fkEquipe = json.fkEquipe;
                     div_mensagem_direcionamento.innerHTML = '<p style="color:#E0C066"> Redirecionando em 1 segundo</p>'
                     setTimeout(function () {
                         div_mensagem_direcionamento.innerHTML = ""
