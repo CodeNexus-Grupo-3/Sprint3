@@ -26,7 +26,8 @@ CREATE TABLE Usuario (
 		CHECK (cargo IN ('Dev', 'Suporte', 'Treinador', 'Jogador')),
     fkEquipe INT,
     CONSTRAINT fkUsuarioEquipe
-        FOREIGN KEY (fkEquipe) REFERENCES Equipe(idEquipe)
+        FOREIGN KEY (fkEquipe) REFERENCES Equipe(idEquipe),
+    notificar TINYINT
 );
 
 -- PostagensForum
@@ -44,7 +45,7 @@ CREATE TABLE PostagensForum (
 -- PartidasIndividual
 CREATE TABLE PartidasIndividual (
     idPartidasTime INT AUTO_INCREMENT PRIMARY KEY,
-    dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dtPartida DATE DEFAULT (CURDATE()),
     resultado TINYINT NOT NULL,
     duracao INT NOT NULL,
     abates INT DEFAULT 0,
@@ -60,7 +61,7 @@ CREATE TABLE PartidasIndividual (
 -- PartidasEquipe
 CREATE TABLE PartidasEquipe (
     idPartidasEquipe INT AUTO_INCREMENT PRIMARY KEY,
-    dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dtPartida DATE DEFAULT (CURDATE()),
     resultado TINYINT NOT NULL,
     tipo VARCHAR(75),
     CONSTRAINT chkTipo 
@@ -79,9 +80,9 @@ CREATE TABLE PartidasEquipe (
         FOREIGN KEY (fkEquipe) REFERENCES Equipe(idEquipe)
 );
 
--- Dashboard
-CREATE TABLE Dashboard (
-    idDashboard INT AUTO_INCREMENT PRIMARY KEY,
+-- Trusted
+CREATE TABLE Trusted (
+    idTrusted INT AUTO_INCREMENT PRIMARY KEY,
     equipe VARCHAR(75),
     duracao INT,
     totalAbates INT DEFAULT 0,
@@ -94,10 +95,10 @@ CREATE TABLE Dashboard (
     totalDano INT DEFAULT 0
 );
 
--- Log
-CREATE TABLE Log (
+-- JavaLog
+CREATE TABLE JavaLog (
     idLog INT AUTO_INCREMENT PRIMARY KEY,
-    dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dtLog DATE DEFAULT (CURDATE()),
     codigoStatus VARCHAR(75),
     evento VARCHAR(75),
     servico VARCHAR(75),

@@ -13,10 +13,24 @@ web-data-viz/package-lock.json
 web-data-viz/dist/
 
 # =====================
-# ☕ JAVA (codenexus-v2)
+# ☕ JAVA (codenexus-v3)
 # =====================
 codenexus-v2/target/
 !codenexus-v2/.mvn/wrapper/maven-wrapper.jar
+
+# =====================
+# 🐍 PYTHON (simbiose)
+# =====================
+
+# Ignorar ambiente virtual
+venv/
+.venv/
+
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
 # =====================
 # 🧠 IDEs
