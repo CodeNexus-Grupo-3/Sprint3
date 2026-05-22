@@ -20,7 +20,7 @@ cursor = conexao.cursor(dictionary=True)
 
 cursor.execute("SELECT dtPartida, resultado, duracao, tipo, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano FROM PartidasEquipe;")
 
-teamData = cursor.fetchall()
+team_data = cursor.fetchall()
 
 cursor.close()
 conexao.close()
@@ -98,7 +98,7 @@ for i, titles in enumerate(header_titles, start=2):
     create_cell(current_row, i, titles, fill_header, True, True)
     resize(i, current_row, 27)
 
-for item in teamData:
+for item in team_data:
     current_row += 1
 
     for key, value in item.items():
