@@ -15,13 +15,17 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
+// codenexus:
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
+var dashboardRouter = require("./src/routes/dashboard");
+var forumRouter = require("./src/routes/forumRouter");
+
+// aquatech:
 var avisosRouter = require("./src/routes/avisos");
 var medidasRouter = require("./src/routes/medidas");
 var aquariosRouter = require("./src/routes/aquarios");
 var empresasRouter = require("./src/routes/empresas");
-var forumRouter = require("./src/routes/forumRouter");
 
 
 app.use(express.json());
@@ -37,6 +41,7 @@ app.use("/avisos", avisosRouter);
 app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
+app.use("/dashboard", dashboardRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
