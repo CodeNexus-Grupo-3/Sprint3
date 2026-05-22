@@ -160,7 +160,7 @@
                         <span>EQUIPE | CADASTRO</span>
 
                         <div id="acoesCadastro">
-                            <button id="btnEnviarCadastro">CONCLUIR</button>
+                            <button id="btnEnviarCadastro" onclick="concluir()">CONCLUIR</button>
                             <span id="fecharCadastro" onclick="fecharCadastro()">close</span>
                         </div>
 
@@ -173,28 +173,39 @@
 
                         <div class="campo">
                             <label>NOME:</label>
-                            <input type="text" placeholder="Insira o nome">
+                            <input id="input_nome" type="text" placeholder="Insira o nome">
                         </div>
 
                         <div class="campo">
                             <label>NICKNAME:</label>
-                            <input type="text" placeholder="Insira o nickname">
+                            <input id="input_nickname" type="text" placeholder="Insira o nickname">
                         </div>
 
                         <div class="campo">
                             <label>EMAIL:</label>
-                            <input type="text" placeholder="Insira o email">
+                            <input id="input_email" type="text" placeholder="Insira o email">
+                        </div>
+
+                        <div class="campo">
+                            <label>CARGO:</label>
+                            <select id="select_cargo">
+                                <option value="">Selecione uma opção</option>
+                                <option>Dev</option>
+                                <option>Suporte</option>
+                                <option>Treinador</option>
+                                <option>Jogador</option>
+                            </select>
                         </div>
 
                         <div class="campo">
                             <label>TELEFONE:</label>
-                            <input type="text" placeholder="(--) ---------">
+                            <input id="input_telefone" type="text" placeholder="-----------">
                         </div>
 
                         <div class="campo">
                             <label>PAÍS:</label>
-                            <select>
-                                <option>Selecione uma opção</option>
+                            <select id="select_pais">
+                                <option value="">Selecione uma opção</option>
                                 <option>Brasil</option>
                                 <option>Coreia do Sul</option>
                                 <option>China</option>
@@ -220,19 +231,25 @@
                             </select>
                         </div>
 
-                        <div class="campo">
-                            <label>CARGO:</label>
-                            <select>
-                                <option>Selecione uma opção</option>
-                                <option>Técnico auxiliar</option>
-                                <option>Jogador</option>
-                            </select>
-                        </div>
 
                         <div class="campo">
                             <label>SENHA:</label>
-                            <input type="text" placeholder="Insira a senha">
+                            <input id="input_senha" type="password" placeholder="Insira a senha">
                         </div>
+
+                        <div class="campo">
+                            <label>FUNÇÃO:</label>
+                            <select id="select_funcao">
+                                <option value="">Selecione uma opção</option>
+                                <option>Top</option>
+                                <option>Mid</option>
+                                <option>Jungle</option>
+                                <option>Sup</option>
+                                <option>ADC</option>
+                            </select>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -240,6 +257,74 @@
 
 
             <script>
+                function concluir() {
+                    var varNome = input_nome.value;
+                    var varNickname = input_nickname.value;
+                    var varEmail = input_email.value;
+                    var varCargo = select_cargo.value;
+                    var varTelefone = input_telefone.value;
+                    var varPais = select_pais.value;
+                    var varSenha = input_senha.value;
+                    var varFuncao = select_funcao.value;
+
+                    if (
+                        varNome == "" ||
+                        varNickname == "" ||
+                        varEmail == "" ||
+                        varCargo == "" ||
+                        varTelefone == "" ||
+                        varPais == "" ||
+                        varSenha == "" ||
+                        varFuncao == ""
+                    ) {
+                        alert("Preencha todos os campos!");
+                        return;
+                    } else {
+                        fetch("/usuarios/cadastrar", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                // crie um atributo que recebe o valor recuperado aqui
+                                // Agora vá para o arquivo routes/usuario.js
+                                serverNome: varNome,
+                                serverNickname: varNickname,
+                                serverEmail: varEmail,
+                                serverCargo: varCargo,
+                                serverTelefone: varTelefone,
+                                serverPais: varPais,
+                                serverSenha: varSenha,
+                                serverFuncao: varFuncao,
+                            }),
+                        })
+                            .then(function (resposta) {
+                                console.log("resposta: ", resposta);
+
+                                if (resposta.ok) {
+                                    // cardErro.style.display = "block";
+
+                                    // mensagem_erro.innerHTML =
+                                    //   "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                                    setTimeout(() => {
+                                        window.location = "jogador.html";
+                                    }, "2000");
+
+                                    // limparFormulario();
+                                    // finalizarAguardar();
+                                } else {
+                                    throw "Houve um erro ao tentar realizar o cadastro!";
+                                }
+                            })
+                            .catch(function (resposta) {
+                                console.log(`#ERRO: ${resposta}`);
+                                // finalizarAguardar();
+                            });
+                    }
+                }
+
+
                 function sair() {
                     sessionStorage.clear();
                     window.location = "index.html";
