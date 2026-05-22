@@ -118,6 +118,31 @@ function graficoObjetivosGeral() {
     return database.executar(instrucaoSql);
 }
 
+// GRÁFICO DE GOLD DANO TANK:
+function graficoGoldDanoTime(fkEquipe) {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalGold) AS goldTime,
+        AVG(totalDano) AS danoTime,
+        AVG(total) AS torresTime
+        FROM PartidasEquipe
+        WHERE fkEquipe = ${fkEquipe};`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function graficoGoldDanoGeral() {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalDrag) AS dragGeral,
+        AVG(totalBaron) AS baroesGeral,
+        AVG(totalTorres) AS torresGeral
+        FROM Dashboard;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     buscarUltimosResultados,

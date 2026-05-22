@@ -49,6 +49,10 @@ router.get("/graficoObjetivos/:fkEquipe", function (req, res) {
     dashboardController.graficoObjetivos(req, res);
 });
 
+// GRÁFICO DE GOLD, DANO, TANK
+router.get("/graficoGoldDano/:fkEquipe", function (req, res) {
+    dashboardController.graficoGoldDano(req, res);
+});
 
 module.exports = router;
 

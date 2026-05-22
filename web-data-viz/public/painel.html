@@ -327,8 +327,9 @@
     function graficoObjetivos(){
     const ctx = document.getElementById('grafico');
     Chart.defaults.font.family = 'Goldman';
+    var fkEquipe = sessionStorage.fkEquipe;
 
-    fetch(`/dashboard/graficoObjetivos`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/dashboard/graficoObjetivos/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -407,93 +408,111 @@
         }) .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     })
-
-    
     }
     
 
 
+    function graficoGoldDano(){
     const ctxy = document.getElementById('grafico2').getContext('2d');
+    var fkEquipe = sessionStorage.fkEquipe;
 
-    const data = {
-        labels: ['Gold', 'Dano', 'Tank'], // As 3 fileiras
-        datasets: [
-            {
-                label: 'Time',
-                // Valores negativos para crescerem à esquerda
-                data: [-59426, -79531, -60324],
-                borderColor: '#e6f14a',
-                borderWidth: 1,
-                backgroundColor: '#e6f14a60',
-                borderSkipped: false,
-            },
-            {
-                label: 'Geral',
-                // Valores positivos para crescerem à direita
-                data: [71245, 75817, 85288],
-                borderColor: '#1f7a73',
-                borderWidth: 1,
-                backgroundColor: '#1f7a7350',
-                borderSkipped: false,
+    fetch(`/dashboard/graficoGoldDano/${fkEquipe}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    
+                    const data = {
+                        labels: ['Gold', 'Dano'], // As 3 fileiras
+                        datasets: [
+                            {
+                                label: 'Time',
+                                // Valores negativos para crescerem à esquerda
+                                data: [-59426, -79531],
+                                borderColor: '#e6f14a',
+                                borderWidth: 1,
+                                backgroundColor: '#e6f14a60',
+                                borderSkipped: false,
+                            },
+                            {
+                                label: 'Geral',
+                                // Valores positivos para crescerem à direita
+                                data: [71245, 75817],
+                                borderColor: '#1f7a73',
+                                borderWidth: 1,
+                                backgroundColor: '#1f7a7350',
+                                borderSkipped: false,
+                            }
+                        ]
+                    };
+
+                    new Chart(ctxy, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            indexAxis: 'y', // Inverte para barras horizontais
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        
+                            scales: {
+                                x: {
+                                    stacked: true, // Crucial para o efeito de divergência
+                                    min: -100000,
+                                    max: 100000,
+                                    grid: {
+                                        color: '#eeeeee33',
+                                    },
+                                    ticks: {
+                                        // Remove o sinal negativo dos números no eixo X
+                                        color: '#ffffff',
+                                        callback: (value) => Math.abs(value)
+                                    }
+                                },
+                                y: {
+                                    stacked: true,
+                                    grid: {
+                                        display: false // Limpa o fundo atrás das barras
+                                    },
+                                    ticks: {
+                                        color: '#ffffff',
+                                        crossAlign: 'left',
+                                        font: {
+                                            size: 20,
+                                            weight: '300',
+                                        },
+                                    
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        // Remove o sinal negativo do balão de informação (hover)
+                                        label: (context) => {
+                                            const label = context.dataset.label || '';
+                                            const value = Math.abs(context.raw);
+                                            return `${label}: ${value}`;
+                                        }
+                                    }
+                                },
+                                legend: {
+                                    display: false,
+                                }
+                            }
+                        }
+                    });
+                }
+            )} else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
-        ]
+    
+        }) .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
     };
 
-    new Chart(ctxy, {
-        type: 'bar',
-        data: data,
-        options: {
-            indexAxis: 'y', // Inverte para barras horizontais
-            responsive: true,
-            maintainAspectRatio: false,
+    
 
-            scales: {
-                x: {
-                    stacked: true, // Crucial para o efeito de divergência
-                    min: -100000,
-                    max: 100000,
-                    grid: {
-                        color: '#eeeeee33',
-                    },
-                    ticks: {
-                        // Remove o sinal negativo dos números no eixo X
-                        color: '#ffffff',
-                        callback: (value) => Math.abs(value)
-                    }
-                },
-                y: {
-                    stacked: true,
-                    grid: {
-                        display: false // Limpa o fundo atrás das barras
-                    },
-                    ticks: {
-                        color: '#ffffff',
-                        crossAlign: 'left',
-                        font: {
-                            size: 20,
-                            weight: '300',
-                        },
-
-                    }
-                }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        // Remove o sinal negativo do balão de informação (hover)
-                        label: (context) => {
-                            const label = context.dataset.label || '';
-                            const value = Math.abs(context.raw);
-                            return `${label}: ${value}`;
-                        }
-                    }
-                },
-                legend: {
-                    display: false,
-                }
-            }
-        }
-    });
+    
 
     const ctxyz = document.getElementById('grafico1').getContext('2d');
 
