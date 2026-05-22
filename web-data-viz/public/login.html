@@ -136,6 +136,7 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
+                    sessionStorage.nome = json.nome;
                     sessionStorage.email = json.email;
                     sessionStorage.cargo = json.cargo;
                     sessionStorage.fkEquipe = json.fkEquipe;

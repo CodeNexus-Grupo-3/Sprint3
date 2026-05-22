@@ -1,17 +1,5 @@
 var database = require("../database/config");
 
-function buscarUltimosResultados() {
-    var instrucaoSql = 
-    `SELECT 
-    generoMais AS genero,
-    COUNT(*) / (SELECT COUNT(*) FROM Resultado) *100 AS porcentagem
-    FROM Resultado
-    GROUP BY generoMais;`
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
 // KPIS DE DURAÇÃO
 function kpiDuracaoTime(fkEquipe) {
     var instrucaoSql = 
@@ -26,7 +14,7 @@ function kpiDuracaoTime(fkEquipe) {
 function kpiDuracaoGeral() {
     var instrucaoSql = 
     `SELECT AVG(duracao) / 60 AS mediaMinutos
-    FROM Dashboard;`
+    FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -46,7 +34,7 @@ function kpiDanoTime(fkEquipe) {
 function kpiDanoGeral() {
     var instrucaoSql = 
     `SELECT AVG(totalDano / (duracao / 60)) AS mediaDanoMinu
-    FROM Dashboard;`
+    FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -66,7 +54,7 @@ function kpiGoldMinuTime(fkEquipe) {
 function kpiGoldMinuGeral() {
     var instrucaoSql = 
     `SELECT AVG(totalGold / (duracao / 60)) AS mediaGoldMinu
-    FROM Dashboard;`
+    FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -86,7 +74,7 @@ function kpiGoldEficTime(fkEquipe) {
 function kpiGoldEficGeral() {
     var instrucaoSql = 
     `SELECT AVG(totalDano / totalGold) AS mediaGoldEfic
-    FROM Dashboard;`
+    FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -112,7 +100,7 @@ function graficoObjetivosGeral() {
         AVG(totalDrag) AS dragGeral,
         AVG(totalBaron) AS baroesGeral,
         AVG(totalTorres) AS torresGeral
-        FROM Dashboard;`
+        FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -122,9 +110,8 @@ function graficoObjetivosGeral() {
 function graficoGoldDanoTime(fkEquipe) {
     var instrucaoSql = 
     `SELECT
-        AVG(totalGold) AS goldTime,
-        AVG(totalDano) AS danoTime,
-        AVG(total) AS torresTime
+        - (AVG(totalGold)) AS goldTime,
+        - (AVG(totalDano)) AS danoTime
         FROM PartidasEquipe
         WHERE fkEquipe = ${fkEquipe};`
 
@@ -135,17 +122,41 @@ function graficoGoldDanoTime(fkEquipe) {
 function graficoGoldDanoGeral() {
     var instrucaoSql = 
     `SELECT
-        AVG(totalDrag) AS dragGeral,
-        AVG(totalBaron) AS baroesGeral,
-        AVG(totalTorres) AS torresGeral
-        FROM Dashboard;`
+        AVG(totalGold) AS goldGeral,
+        AVG(totalDano) AS danoGeral
+        FROM Trusted;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+// GRÁFICO DE KDA:
+function graficoKDATime(fkEquipe) {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalAbates) AS killsTime,
+        AVG(totalMortes) AS deathsTime,
+        AVG(totalAssistencias) AS assistsTime
+        FROM PartidasEquipe
+        WHERE fkEquipe = ${fkEquipe};`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function graficoKDAGeral() {
+    var instrucaoSql = 
+    `SELECT
+        AVG(totalAbates) AS killsGeral,
+        AVG(totalMortes) AS deathsGeral,
+        AVG(totalAssistencias) AS assistsGeral
+        FROM Trusted;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
-    buscarUltimosResultados,
     kpiDuracaoGeral,
     kpiDuracaoTime,
     kpiDanoTime,
@@ -155,5 +166,9 @@ module.exports = {
     kpiGoldEficTime,
     kpiGoldEficGeral,
     graficoObjetivosTime,
-    graficoObjetivosGeral
+    graficoObjetivosGeral,
+    graficoGoldDanoTime,
+    graficoGoldDanoGeral,
+    graficoKDATime,
+    graficoKDAGeral
 }

@@ -1,20 +1,5 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function buscarUltimosResultados(req, res) {
-
-    dashboardModel.buscarUltimosResultados(req, res).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
-}
-
 // KPIS DE DURAÇÃO
 function kpiDuracaoTime(req, res) {
     var fkEquipe = req.params.fkEquipe;
@@ -140,79 +125,77 @@ function kpiGoldEficGeral(req, res) {
 }
 
 // GRAFICO DE OBJETIVOS
-function graficoObjetivos(req, res) {
-    var fkEquipe = req.params.fkEquipe;
+async function graficoObjetivos(req, res) {
+    try {
+        var fkEquipe = req.params.fkEquipe;
+        const time = await dashboardModel.graficoObjetivosTime(fkEquipe);
+        const geral = await dashboardModel.graficoObjetivosGeral();
 
-    const time = 
-    dashboardModel.graficoObjetivosTime(fkEquipe).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
+        if (time.length > 0 && geral.length > 0) {
+            res.status(200).json({
+                time: time[0],
+                geral: geral[0]
+            });
+
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            res.status(204).send("Nenhum resultado encontrado!");
         }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
+    } catch (erro) {
 
-    const geral =
-    dashboardModel.graficoObjetivosGeral(req, res).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
+        console.log("Houve um erro ao buscar os resultados.", erro.sqlMessage);
 
-    res.json({
-        time: time[0],
-        geral: geral[0]
-    });
+        res.status(500).json(erro.sqlMessage);
+    }
 }
 
 // GRAFICO DE GOLD DANO TANK
-function graficoGoldDano(req, res) {
-    var fkEquipe = req.params.fkEquipe;
+async function graficoGoldDano(req, res) {
+    try {
+        var fkEquipe = req.params.fkEquipe;
+        const time = await dashboardModel.graficoGoldDanoTime(fkEquipe);
+        const geral = await dashboardModel.graficoGoldDanoGeral();
 
-    const time = 
-    dashboardModel.graficoGoldDanoTime(fkEquipe).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
+        if (time.length > 0 && geral.length > 0) {
+            res.status(200).json({
+                time: time,
+                geral: geral
+            });
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            res.status(204).send("Nenhum resultado encontrado!");
         }
-    }).catch(function (erro) {
+    } catch (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
+        console.log("Houve um erro ao buscar os resultados.", erro.sqlMessage);
 
-    const geral =
-    dashboardModel.graficoGoldDanoGeral(req, res).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
+        res.status(500).json(erro.sqlMessage);
+    }
+}
+
+// GRAFICO DE KDA 
+async function graficoKDA(req, res) {
+    try {
+        var fkEquipe = req.params.fkEquipe;
+        const time = await dashboardModel.graficoKDATime(fkEquipe);
+        const geral = await dashboardModel.graficoKDAGeral();
+
+        if (time.length > 0 && geral.length > 0) {
+            res.status(200).json({
+                time: time,
+                geral: geral
+            });
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            res.status(204).send("Nenhum resultado encontrado!");
         }
-    }).catch(function (erro) {
+    } catch (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar os últimos resultados.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
+        console.log("Houve um erro ao buscar os resultados.", erro.sqlMessage);
 
-    res.json({
-        time: time[0],
-        geral: geral[0]
-    });
+        res.status(500).json(erro.sqlMessage);
+    }
 }
 
 module.exports = {
-    buscarUltimosResultados,
     kpiDuracaoGeral,
     kpiDuracaoTime,
     kpiDanoTime,
@@ -222,5 +205,6 @@ module.exports = {
     kpiGoldEficTime,
     kpiGoldEficGeral,
     graficoObjetivos,
-    graficoGoldDanoT
+    graficoGoldDano,
+    graficoKDA
 }

@@ -3,9 +3,9 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-//Recebendo os dados do html e direcionando para a função registrar de quizController.js
-router.get("/grafico1", function (req, res) {
-    dashboardController.buscarUltimosResultados(req, res);
+// LETRA DO ICONE:
+router.get("/kpiDuracaoTime/:fkEquipe", function (req, res) {
+    dashboardController.kpiDuracaoTime(req, res);
 });
 
 //KPIS DE DURAÇÃO
@@ -52,6 +52,11 @@ router.get("/graficoObjetivos/:fkEquipe", function (req, res) {
 // GRÁFICO DE GOLD, DANO, TANK
 router.get("/graficoGoldDano/:fkEquipe", function (req, res) {
     dashboardController.graficoGoldDano(req, res);
+});
+
+// GRÁFICO DE KDA
+router.get("/graficoKDA/:fkEquipe", function (req, res) {
+    dashboardController.graficoKDA(req, res);
 });
 
 module.exports = router;
