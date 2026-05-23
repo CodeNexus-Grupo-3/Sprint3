@@ -47,7 +47,7 @@ public class EmailService {
 
     public void enviarEmailsCoaches(LoadService loadService, String assunto, String mensagem) {
         try {
-            List<String> emails = loadService.buscarEmailsCoachs();
+            List<String> emails = loadService.buscarEmailsCoaches();
 
             logService.sucesso("INFO", "Iniciando envio dos emails para os coaches", "LoadService");
             System.out.println("[INFO] Iniciando envio dos emails para os coaches");
@@ -68,7 +68,7 @@ public class EmailService {
 
     public void enviarEmailsDevs(LoadService loadService, String assunto, String mensagem) {
         try {
-            List<String> emails = loadService.buscarEmailsCoachs();
+            List<String> emails = loadService.buscarEmailsDevs();
 
             logService.sucesso("INFO", "Iniciando envio dos emails para os devs", "LoadService");
             System.out.println("[INFO] Iniciando envio dos emails para os devs");
