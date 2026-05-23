@@ -65,7 +65,7 @@ public class ETLService {
             Equipe CodeNexus
             """;
             
-            emailService.enviarEmailsCoachs(loadService, assunto, mensagem);
+            emailService.enviarEmailsCoaches(loadService, assunto, mensagem);
 
             logService.sucesso("SUCESSO", "Processo ETL Concluído", "ETLService");
             System.out.println("[SUCESSO] Processo ETL Concluído");

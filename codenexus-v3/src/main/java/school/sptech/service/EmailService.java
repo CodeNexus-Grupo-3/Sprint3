@@ -45,8 +45,7 @@ public class EmailService {
         }
     }
 
-    public void enviarEmailsCoachs(LoadService loadService, String assunto, String mensagem) {
-
+    public void enviarEmailsCoaches(LoadService loadService, String assunto, String mensagem) {
         try {
             List<String> emails = loadService.buscarEmailsCoachs();
 
@@ -68,7 +67,6 @@ public class EmailService {
     }
 
     public void enviarEmailsDevs(LoadService loadService, String assunto, String mensagem) {
-
         try {
             List<String> emails = loadService.buscarEmailsCoachs();
 
