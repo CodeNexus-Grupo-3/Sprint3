@@ -89,7 +89,7 @@ DB_PORT=3306
 
 # Configurações do servidor de aplicação
 APP_PORT=3333
-APP_HOST=localhost
+APP_HOST=0.0.0.0
 EOF
 
 # .env de produção
@@ -105,7 +105,7 @@ DB_PORT=3306
 
 # Configurações do servidor de aplicação
 APP_PORT=3333
-APP_HOST=localhost
+APP_HOST=0.0.0.0
 EOF
 
 # 8.2 - .env codenexus-v3

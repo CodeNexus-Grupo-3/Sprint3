@@ -22,7 +22,7 @@ public class LoadService {
             return;
         }
 
-        String sql = "INSERT INTO Dashboard VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Trusted VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, dados, dados.size(), (ps, dado) -> {
             ps.setInt(1, dado.getDuracao());
