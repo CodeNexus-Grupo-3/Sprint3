@@ -52,4 +52,68 @@ public class LoadService {
             System.out.println("[ERRO] Erro ao limpar tabela");
         }
     }
+
+    public List<String> buscarEmailsCoachs() {
+        try {
+            logService.sucesso("INFO", "Buscando emails dos coaches", "EmailService");
+            System.out.println("[INFO] Buscando emails dos coaches");
+
+            String sql = """
+                SELECT email
+                FROM Usuario
+                WHERE notificar = 1
+                AND cargo = 'Treinador'
+            """;
+
+            List<String> emails = jdbcTemplate.queryForList(sql, String.class);
+
+            if (emails.isEmpty()) {
+                logService.sucesso("INFO", "Nenhum email encontrado", "LoadService");
+                System.out.println("[INFO] Nenhum email encontrado");
+            } else {
+                logService.sucesso("SUCESSO", emails.size() + " emails encontrados", "LoadService");
+                System.out.println("[SUCESSO] " + emails.size() + " emails encontrados");
+            }
+
+            return emails;
+        } catch (Exception e) {
+            logService.erro("ERRO", "Erro ao buscar emails dos coaches", "LoadService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro ao buscar emails dos coaches");
+
+            throw new RuntimeException(e);
+        }
+        
+    }
+
+    public List<String> buscarEmailsDevs() {
+        try {
+            logService.sucesso("INFO", "Buscando emails dos coaches", "EmailService");
+            System.out.println("[INFO] Buscando emails dos coaches");
+
+            String sql = """
+                SELECT email
+                FROM Usuario
+                WHERE notificar = 1
+                AND cargo = 'Dev'
+            """;
+
+            List<String> emails = jdbcTemplate.queryForList(sql, String.class);
+
+            if (emails.isEmpty()) {
+                logService.sucesso("INFO", "Nenhum email encontrado", "LoadService");
+                System.out.println("[INFO] Nenhum email encontrado");
+            } else {
+                logService.sucesso("SUCESSO", emails.size() + " emails encontrados", "LoadService");
+                System.out.println("[SUCESSO] " + emails.size() + " emails encontrados");
+            }
+
+            return emails;
+        } catch (Exception e) {
+            logService.erro("ERRO", "Erro ao buscar emails dos coaches", "LoadService", e.getMessage(), e.toString());
+            System.out.println("[ERRO] Erro ao buscar emails dos coaches");
+
+            throw new RuntimeException(e);
+        }
+        
+    }
 }

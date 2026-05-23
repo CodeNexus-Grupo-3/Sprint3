@@ -15,10 +15,8 @@ import java.util.List;
 
 public class TransformService {
 
-    // Atributos
     private final LogService logService;
 
-    // Construtor
     public TransformService(LogService logService) {
         this.logService = logService;
     }
@@ -62,6 +60,7 @@ public class TransformService {
             } catch (Exception e) {
                 logService.erro("ERRO", "Erro ao processar arquivo", "TransformService", e.getMessage(), e.toString());
                 System.out.println("[ERRO] Erro ao processar arquivo");
+                throw new RuntimeException(e);
             }
         }
 
@@ -78,7 +77,7 @@ public class TransformService {
             String[] partes = duracaoString.split(":");
             duracao = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
         } catch (Exception e) {
-            return null;
+            duracao = null;
         }
 
         String vitoria = formatter.formatCellValue(row.getCell(1));
@@ -130,7 +129,6 @@ public class TransformService {
                 totalDano);
     }
 
-    // Casting de valores Double para Integer
     private Integer getInteger(Row row, Integer cell) {
         try {
             if (row.getCell(cell) == null)
@@ -143,7 +141,6 @@ public class TransformService {
         }
     }
 
-    // Soma das células dos jogadores
     private Integer soma(Row row, Integer cell) {
         Integer total = 0;
         for (int i = cell; i <= cell + 20; i += 5) {

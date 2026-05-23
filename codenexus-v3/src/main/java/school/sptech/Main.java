@@ -1,6 +1,7 @@
 package school.sptech;
 
 import school.sptech.client.DBConnectionProvider;
+import school.sptech.client.EmailProvider;
 import school.sptech.client.S3Provider;
 import school.sptech.service.*;
 
@@ -15,7 +16,8 @@ public class Main {
         ExtractService extractService = new ExtractService(s3Provider.getS3Client(), logService);
         TransformService transformService = new TransformService(logService);
         LoadService loadService = new LoadService(dbConnectionProvider.getConnection(), logService);
-        ETLService etlService = new ETLService(extractService, transformService, loadService, logService);
+        EmailService emailService = new EmailService(new EmailProvider(), logService);
+        ETLService etlService = new ETLService(extractService, transformService, loadService, logService, emailService);
 
         etlService.executar();
     }
