@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <link rel="stylesheet" href="./css/jogador.css">
+    <link rel="stylesheet" href="./css/userModal.css">
+
     <title>CodeNexus</title>
 
 </head>
@@ -40,12 +42,12 @@
             </div>
         </div>
 
-        <div id="container_sair">
+        <!-- <div id="container_sair">
             <div id="sub_container_sair">
                 <span class="material-symbols-outlined">logout</span>
                 <a href="index.html" id="sub_container_sair_a" onclick="sair()">SAIR</a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div id="container_principal">
@@ -56,382 +58,377 @@
                 <div id="linha_header"></div>
 
                 <div id="topo_direita">
-                    <div id="avatar_usuario">M</div>
+                    <div id="container_user">M</div>
                     <button id="btn_cadastrar" onclick="abrirCadastro()">CADASTRAR +</button>
-                </div>
-            </div>
 
-            <div id="lista_equipes">
 
-                <div class="item_equipe" onclick="abrirPerfil()">
-                    <span class="numero">1</span>
-                    <span class="material-symbols-outlined icone">person</span>
-                    <span class="nome">Marina Okamoto / hitotsumenokado</span>
-                    <div class="divisor"></div>
-                    <span class="cargo">Suporte</span>
                 </div>
 
-                <div class="item_equipe" onclick="abrirPerfil()">
-                    <span class="numero">2</span>
-                    <span class="material-symbols-outlined icone">person</span>
-                    <span class="nome">João Silva / jhonzera</span>
-                    <div class="divisor"></div>
-                    <span class="cargo">ADC</span>
-                </div>
+                <div id="lista_equipes">
 
-            </div>
-
-            <!-- MODAL PERFIL -->
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-            <div id="modalPerfil">
-
-                <div id="boxPerfil">
-
-                    <span id="fecharModal" onclick="fecharPerfil()">close</span>
-
-                    <span>PERFIL DO JOGADOR</span>
-
-                    <div id="linha_perfil"></div>
-
-                    <!-- TOPO PERFIL -->
-                    <div id="topo_perfil">
-
-                        <span class="material-symbols-outlined avatar_modal">person</span>
-
-                        <div>
-                            <h2>Marina Okamoto / hitotsumenokado</h2>
-                            <p>Suporte / ADC</p>
-                        </div>
-
+                    <div class="item_equipe" onclick="abrirPerfil()">
+                        <span class="numero">1</span>
+                        <span class="material-symbols-outlined icone">person</span>
+                        <span class="nome">Marina Okamoto / hitotsumenokado</span>
+                        <div class="divisor"></div>
+                        <span class="cargo">Suporte</span>
                     </div>
 
-                    <!-- CARDS -->
-                    <div id="cardsPerfil">
-
-                        <div class="card_status">
-                            <p>VITÓRIAS</p>
-                            <h1>72</h1>
-                        </div>
-
-                        <div class="card_status">
-                            <p>DERROTAS</p>
-                            <h1>29</h1>
-                        </div>
-
-                        <div class="card_status">
-                            <p>KDA</p>
-                            <h1>4.9</h1>
-                        </div>
-
-                        <div class="card_status">
-                            <p>WINRATE</p>
-                            <h1>71%</h1>
-                        </div>
-
-                    </div>
-
-                    <!-- GRAFICOS -->
-                    <div id="graficosPerfil">
-
-                        <div class="boxGrafico">
-                            <h4>VITÓRIAS POR MÊS:</h4>
-                            <canvas id="graficoLinha"></canvas>
-                        </div>
-
-                        <div class="boxGrafico">
-                            <h4>CHAMPIONS MAIS PICKADOS:</h4>
-                            <canvas id="graficoBarra"></canvas>
-                        </div>
-
+                    <div class="item_equipe" onclick="abrirPerfil()">
+                        <span class="numero">2</span>
+                        <span class="material-symbols-outlined icone">person</span>
+                        <span class="nome">João Silva / jhonzera</span>
+                        <div class="divisor"></div>
+                        <span class="cargo">ADC</span>
                     </div>
 
                 </div>
 
-            </div>
+                <!-- MODAL PERFIL -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <!-- MODAL CADASTRO -->
-            <div id="modalCadastro">
+                <div id="modalPerfil">
 
-                <div id="boxCadastro">
+                    <div id="boxPerfil">
 
-                    <div id="topoCadastro">
+                        <span id="fecharModal" onclick="fecharPerfil()">close</span>
 
-                        <span>EQUIPE | CADASTRO</span>
+                        <span>PERFIL DO JOGADOR</span>
 
-                        <div id="acoesCadastro">
-                            <button id="btnEnviarCadastro" onclick="concluir()">CONCLUIR</button>
-                            <span id="fecharCadastro" onclick="fecharCadastro()">close</span>
+                        <div id="linha_perfil"></div>
+
+                        <!-- TOPO PERFIL -->
+                        <div id="topo_perfil">
+
+                            <span class="material-symbols-outlined avatar_modal">person</span>
+
+                            <div>
+                                <h2>Marina Okamoto / hitotsumenokado</h2>
+                                <p>Suporte / ADC</p>
+                            </div>
+
+                        </div>
+
+                        <!-- CARDS -->
+                        <div id="cardsPerfil">
+
+                            <div class="card_status">
+                                <p>VITÓRIAS</p>
+                                <h1>72</h1>
+                            </div>
+
+                            <div class="card_status">
+                                <p>DERROTAS</p>
+                                <h1>29</h1>
+                            </div>
+
+                            <div class="card_status">
+                                <p>KDA</p>
+                                <h1>4.9</h1>
+                            </div>
+
+                            <div class="card_status">
+                                <p>WINRATE</p>
+                                <h1>71%</h1>
+                            </div>
+
+                        </div>
+
+                        <!-- GRAFICOS -->
+                        <div id="graficosPerfil">
+
+                            <div class="boxGrafico">
+                                <h4>VITÓRIAS POR MÊS:</h4>
+                                <canvas id="graficoLinha"></canvas>
+                            </div>
+
+                            <div class="boxGrafico">
+                                <h4>CHAMPIONS MAIS PICKADOS:</h4>
+                                <canvas id="graficoBarra"></canvas>
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <div id="linhaCadastro"></div>
-
-
-                    <div id="gridCadastro">
-
-                        <div class="campo">
-                            <label>NOME:</label>
-                            <input id="input_nome" type="text" placeholder="Insira o nome">
-                        </div>
-
-                        <div class="campo">
-                            <label>NICKNAME:</label>
-                            <input id="input_nickname" type="text" placeholder="Insira o nickname">
-                        </div>
-
-                        <div class="campo">
-                            <label>EMAIL:</label>
-                            <input id="input_email" type="text" placeholder="Insira o email">
-                        </div>
-
-                        <div class="campo">
-                            <label>CARGO:</label>
-                            <select id="select_cargo">
-                                <option value="">Selecione uma opção</option>
-                                <option>Dev</option>
-                                <option>Suporte</option>
-                                <option>Treinador</option>
-                                <option>Jogador</option>
-                            </select>
-                        </div>
-
-                        <div class="campo">
-                            <label>TELEFONE:</label>
-                            <input id="input_telefone" type="text" placeholder="-----------">
-                        </div>
-
-                        <div class="campo">
-                            <label>PAÍS:</label>
-                            <select id="select_pais">
-                                <option value="">Selecione uma opção</option>
-                                <option>Brasil</option>
-                                <option>Coreia do Sul</option>
-                                <option>China</option>
-                                <option>Estados Unidos</option>
-                                <option>Canadá</option>
-                                <option>Alemanha</option>
-                                <option>França</option>
-                                <option>Espanha</option>
-                                <option>Reino Unido</option>
-                                <option>Dinamarca</option>
-                                <option>Suécia</option>
-                                <option>Polônia</option>
-                                <option>Turquia</option>
-                                <option>Japão</option>
-                                <option>Vietnã</option>
-                                <option>Taiwan</option>
-                                <option>Hong Kong</option>
-                                <option>Austrália</option>
-                                <option>Argentina</option>
-                                <option>Chile</option>
-                                <option>México</option>
-                                <option>Peru</option>
-                            </select>
-                        </div>
-
-
-                        <div class="campo">
-                            <label>SENHA:</label>
-                            <input id="input_senha" type="password" placeholder="Insira a senha">
-                        </div>
-
-                        <div class="campo">
-                            <label>FUNÇÃO:</label>
-                            <select id="select_funcao">
-                                <option value="">Selecione uma opção</option>
-                                <option>Top</option>
-                                <option>Mid</option>
-                                <option>Jungle</option>
-                                <option>Sup</option>
-                                <option>ADC</option>
-                            </select>
-                        </div>
-
-
-                    </div>
                 </div>
 
-            </div>
+                <!-- MODAL CADASTRO -->
+                <div id="modalCadastro">
+
+                    <div id="boxCadastro">
+
+                        <div id="topoCadastro">
+
+                            <span>EQUIPE | CADASTRO</span>
+
+                            <div id="acoesCadastro">
+                                <button id="btnEnviarCadastro" onclick="concluir()">CONCLUIR</button>
+                                <span id="fecharCadastro" onclick="fecharCadastro()">close</span>
+                            </div>
+
+                        </div>
+
+                        <div id="linhaCadastro"></div>
 
 
-            <script>
-                function concluir() {
-                    var varNome = input_nome.value;
-                    var varNickname = input_nickname.value;
-                    var varEmail = input_email.value;
-                    var varCargo = select_cargo.value;
-                    var varTelefone = input_telefone.value;
-                    var varPais = select_pais.value;
-                    var varSenha = input_senha.value;
-                    var varFuncao = select_funcao.value;
+                        <div id="gridCadastro">
 
-                    if (
-                        varNome == "" ||
-                        varNickname == "" ||
-                        varEmail == "" ||
-                        varCargo == "" ||
-                        varTelefone == "" ||
-                        varPais == "" ||
-                        varSenha == "" ||
-                        varFuncao == ""
-                    ) {
-                        alert("Preencha todos os campos!");
-                        return;
-                    } else {
-                        fetch("/usuarios/cadastrar", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                // crie um atributo que recebe o valor recuperado aqui
-                                // Agora vá para o arquivo routes/usuario.js
-                                serverNome: varNome,
-                                serverNickname: varNickname,
-                                serverEmail: varEmail,
-                                serverCargo: varCargo,
-                                serverTelefone: varTelefone,
-                                serverPais: varPais,
-                                serverSenha: varSenha,
-                                serverFuncao: varFuncao,
-                            }),
-                        })
-                            .then(function (resposta) {
-                                console.log("resposta: ", resposta);
+                            <div class="campo">
+                                <label>NOME:</label>
+                                <input id="input_nome" type="text" placeholder="Insira o nome">
+                            </div>
 
-                                if (resposta.ok) {
-                                    // cardErro.style.display = "block";
+                            <div class="campo">
+                                <label>NICKNAME:</label>
+                                <input id="input_nickname" type="text" placeholder="Insira o nickname">
+                            </div>
 
-                                    // mensagem_erro.innerHTML =
-                                    //   "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+                            <div class="campo">
+                                <label>EMAIL:</label>
+                                <input id="input_email" type="text" placeholder="Insira o email">
+                            </div>
 
-                                    setTimeout(() => {
-                                        window.location = "jogador.html";
-                                    }, "2000");
+                            <div class="campo">
+                                <label>CARGO:</label>
+                                <select id="select_cargo">
+                                    <option value="">Selecione uma opção</option>
+                                    <option>Dev</option>
+                                    <option>Suporte</option>
+                                    <option>Treinador</option>
+                                    <option>Jogador</option>
+                                </select>
+                            </div>
 
-                                    // limparFormulario();
-                                    // finalizarAguardar();
-                                } else {
-                                    throw "Houve um erro ao tentar realizar o cadastro!";
-                                }
+                            <div class="campo">
+                                <label>TELEFONE:</label>
+                                <input id="input_telefone" type="text" placeholder="-----------">
+                            </div>
+
+                            <div class="campo">
+                                <label>PAÍS:</label>
+                                <select id="select_pais">
+                                    <option value="">Selecione uma opção</option>
+                                    <option>Brasil</option>
+                                    <option>Coreia do Sul</option>
+                                    <option>China</option>
+                                    <option>Estados Unidos</option>
+                                    <option>Canadá</option>
+                                    <option>Alemanha</option>
+                                    <option>França</option>
+                                    <option>Espanha</option>
+                                    <option>Reino Unido</option>
+                                    <option>Dinamarca</option>
+                                    <option>Suécia</option>
+                                    <option>Polônia</option>
+                                    <option>Turquia</option>
+                                    <option>Japão</option>
+                                    <option>Vietnã</option>
+                                    <option>Taiwan</option>
+                                    <option>Hong Kong</option>
+                                    <option>Austrália</option>
+                                    <option>Argentina</option>
+                                    <option>Chile</option>
+                                    <option>México</option>
+                                    <option>Peru</option>
+                                </select>
+                            </div>
+
+
+                            <div class="campo">
+                                <label>SENHA:</label>
+                                <input id="input_senha" type="password" placeholder="Insira a senha">
+                            </div>
+
+                            <div class="campo">
+                                <label>FUNÇÃO:</label>
+                                <select id="select_funcao">
+                                    <option value="">Selecione uma opção</option>
+                                    <option>Top</option>
+                                    <option>Mid</option>
+                                    <option>Jungle</option>
+                                    <option>Sup</option>
+                                    <option>ADC</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <script src="./js/userModal.js"></script>
+
+                <script>
+                    function concluir() {
+                        var varNome = input_nome.value;
+                        var varNickname = input_nickname.value;
+                        var varEmail = input_email.value;
+                        var varCargo = select_cargo.value;
+                        var varTelefone = input_telefone.value;
+                        var varPais = select_pais.value;
+                        var varSenha = input_senha.value;
+                        var varFuncao = select_funcao.value;
+
+                        if (
+                            varNome == "" ||
+                            varNickname == "" ||
+                            varEmail == "" ||
+                            varCargo == "" ||
+                            varTelefone == "" ||
+                            varPais == "" ||
+                            varSenha == "" ||
+                            varFuncao == ""
+                        ) {
+                            alert("Preencha todos os campos!");
+                            return;
+                        } else {
+                            fetch("/usuarios/cadastrar", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    // crie um atributo que recebe o valor recuperado aqui
+                                    // Agora vá para o arquivo routes/usuario.js
+                                    serverNome: varNome,
+                                    serverNickname: varNickname,
+                                    serverEmail: varEmail,
+                                    serverCargo: varCargo,
+                                    serverTelefone: varTelefone,
+                                    serverPais: varPais,
+                                    serverSenha: varSenha,
+                                    serverFuncao: varFuncao,
+                                }),
                             })
-                            .catch(function (resposta) {
-                                console.log(`#ERRO: ${resposta}`);
-                                // finalizarAguardar();
-                            });
+                                .then(function (resposta) {
+                                    console.log("resposta: ", resposta);
+
+                                    if (resposta.ok) {
+                                        // cardErro.style.display = "block";
+
+                                        // mensagem_erro.innerHTML =
+                                        //   "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                                        setTimeout(() => {
+                                            window.location = "jogador.html";
+                                        }, "2000");
+
+                                        // limparFormulario();
+                                        // finalizarAguardar();
+                                    } else {
+                                        throw "Houve um erro ao tentar realizar o cadastro!";
+                                    }
+                                })
+                                .catch(function (resposta) {
+                                    console.log(`#ERRO: ${resposta}`);
+                                    // finalizarAguardar();
+                                });
+                        }
                     }
-                }
+
+                    function abrirPerfil() {
+                        document.getElementById("modalPerfil").style.display = "block";
+                        criarGraficos();
+                    }
+
+                    function fecharPerfil() {
+                        document.getElementById("modalPerfil").style.display = "none";
+                    }
+
+                    function abrirCadastro() {
+                        document.getElementById("modalCadastro").style.display = "block";
+                    }
+
+                    function fecharCadastro() {
+                        document.getElementById("modalCadastro").style.display = "none";
+                    }
+
+                    function criarGraficos() {
+
+                        if (window.grafico1) window.grafico1.destroy();
+                        if (window.grafico2) window.grafico2.destroy();
 
 
-                function sair() {
-                    sessionStorage.clear();
-                    window.location = "index.html";
-                }
+                        const ctx1 = document.getElementById('graficoLinha');
 
-                function abrirPerfil() {
-                    document.getElementById("modalPerfil").style.display = "block";
-                    criarGraficos();
-                }
-
-                function fecharPerfil() {
-                    document.getElementById("modalPerfil").style.display = "none";
-                }
-
-                function abrirCadastro() {
-                    document.getElementById("modalCadastro").style.display = "block";
-                }
-
-                function fecharCadastro() {
-                    document.getElementById("modalCadastro").style.display = "none";
-                }
-
-                function criarGraficos() {
-
-                    if (window.grafico1) window.grafico1.destroy();
-                    if (window.grafico2) window.grafico2.destroy();
-
-
-                    const ctx1 = document.getElementById('graficoLinha');
-
-                    window.grafico1 = new Chart(ctx1, {
-                        type: 'line',
-                        data: {
-                            labels: ['0', '1', '2', '3', '4'],
-                            datasets: [
-                                {
-                                    data: [50, 190, 120, 210, 130],
-                                    borderColor: '#00ffff',
-                                    borderWidth: 2,
-                                    tension: 0
-                                },
-                                {
-                                    data: [130, 40, 200, 220, 180],
-                                    borderColor: '#F2FF58',
-                                    borderWidth: 2,
-                                    tension: 0
-                                }
-                            ]
-                        },
-                        options: {
-                            plugins: { legend: { display: false } },
-                            responsive: true,
-                            scales: {
-                                x: {
-                                    ticks: { color: 'white' },
-                                    grid: { color: 'rgba(255,255,255,0.3)' }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    max: 250,
-                                    ticks: {
-                                        color: 'white',
-                                        stepSize: 50
+                        window.grafico1 = new Chart(ctx1, {
+                            type: 'line',
+                            data: {
+                                labels: ['0', '1', '2', '3', '4'],
+                                datasets: [
+                                    {
+                                        data: [50, 190, 120, 210, 130],
+                                        borderColor: '#00ffff',
+                                        borderWidth: 2,
+                                        tension: 0
                                     },
-                                    grid: {
-                                        color: 'rgba(255,255,255,0.3)'
+                                    {
+                                        data: [130, 40, 200, 220, 180],
+                                        borderColor: '#F2FF58',
+                                        borderWidth: 2,
+                                        tension: 0
+                                    }
+                                ]
+                            },
+                            options: {
+                                plugins: { legend: { display: false } },
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        ticks: { color: 'white' },
+                                        grid: { color: 'rgba(255,255,255,0.3)' }
+                                    },
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 250,
+                                        ticks: {
+                                            color: 'white',
+                                            stepSize: 50
+                                        },
+                                        grid: {
+                                            color: 'rgba(255,255,255,0.3)'
+                                        }
                                     }
                                 }
                             }
-                        }
-                    });
+                        });
 
 
 
-                    const ctx2 = document.getElementById('graficoBarra');
+                        const ctx2 = document.getElementById('graficoBarra');
 
-                    window.grafico2 = new Chart(ctx2, {
-                        type: 'bar',
-                        data: {
-                            labels: ['0', '1', '2', '3', '4'],
-                            datasets: [{
-                                data: [350, 200, 850, 650, 980],
-                                backgroundColor: '#f0b90b'
-                            }]
-                        },
-                        options: {
-                            plugins: { legend: { display: false } },
-                            responsive: true,
-                            scales: {
-                                x: {
-                                    ticks: { color: 'white' },
-                                    grid: { color: 'rgba(255,255,255,0.3)' }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    max: 1000,
-                                    ticks: {
-                                        color: 'white',
-                                        stepSize: 250
+                        window.grafico2 = new Chart(ctx2, {
+                            type: 'bar',
+                            data: {
+                                labels: ['0', '1', '2', '3', '4'],
+                                datasets: [{
+                                    data: [350, 200, 850, 650, 980],
+                                    backgroundColor: '#f0b90b'
+                                }]
+                            },
+                            options: {
+                                plugins: { legend: { display: false } },
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        ticks: { color: 'white' },
+                                        grid: { color: 'rgba(255,255,255,0.3)' }
                                     },
-                                    grid: {
-                                        color: 'rgba(255,255,255,0.3)'
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 1000,
+                                        ticks: {
+                                            color: 'white',
+                                            stepSize: 250
+                                        },
+                                        grid: {
+                                            color: 'rgba(255,255,255,0.3)'
+                                        }
                                     }
                                 }
                             }
-                        }
-                    });
+                        });
 
-                }
-            </script>
+                    } 
+                </script>

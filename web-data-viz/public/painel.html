@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <link rel="stylesheet" href="./css/painel.css">
+    <link rel="stylesheet" href="./css/userModal.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -43,12 +44,12 @@
             </div>
         </div>
 
-        <div id="container_sair">
+        <!-- <div id="container_sair">
             <div id="sub_container_sair">
                 <span class="material-symbols-outlined">logout</span>
                 <a href="index.html" id="sub_container_sair_a" onclick="sair()">SAIR</a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div id="container_principal">
@@ -156,6 +157,7 @@
 </body>
 
 </html>
+<script src="./js/userModal.js"></script>
 <script>
     function sair() {
         sessionStorage.clear();
