@@ -53,7 +53,7 @@ public class LoadService {
         }
     }
 
-    public List<String> buscarEmailsCoachs() {
+    public List<String> buscarEmailsCoaches() {
         try {
             logService.sucesso("INFO", "Buscando emails dos coaches", "EmailService");
             System.out.println("[INFO] Buscando emails dos coaches");
