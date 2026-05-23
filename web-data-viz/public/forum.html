@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <link rel="stylesheet" href="./css/forum.css">
+    <link rel="stylesheet" href="./css/userModal.css">
     <title>CodeNexus</title>
 
 </head>
@@ -38,12 +39,12 @@
             </div>
         </div>
 
-        <div id="container_sair">
+        <!-- <div id="container_sair">
             <div id="sub_container_sair">
                 <span class="material-symbols-outlined">logout</span>
                 <a href="index.html" id="sub_container_sair_a" onclick="sair()">SAIR</a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div id="container_principal">
@@ -52,9 +53,7 @@
         <div id="forum_topo">
             <span class="title">SALA DE TREINAMENTO</span>
             <!-- <h2 class="title">SALA DE TREINAMENTO</h2> -->
-            <div class="container_user">
-                <span class="user_letra">M</span>
-            </div>
+            <div id="container_user">M</div>
         </div>
     </div>  
 
@@ -103,8 +102,8 @@
     </div>
 </body>
 </html>
+<script src="./js/userModal.js"></script>
 <script>
-
 function sair() {
     sessionStorage.clear();
     window.location = "index.html";
