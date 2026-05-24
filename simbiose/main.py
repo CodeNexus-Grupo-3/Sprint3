@@ -28,7 +28,6 @@ left_align = Alignment(horizontal="left", vertical="center")
 font_bold = Font(bold=True, size=13)
 font_normal = Font(size=11)
 
-
 '''
 ---> FUNÇÕES AUXILIARES <---
 '''
@@ -58,7 +57,6 @@ def resize(ws, col, row, size_row):
     col_letter = get_column_letter(col)
     ws.column_dimensions[col_letter].width = 22
     ws.row_dimensions[row].height = size_row
-
 
 '''
 ---> FUNÇÃO PRINCIPAL <---

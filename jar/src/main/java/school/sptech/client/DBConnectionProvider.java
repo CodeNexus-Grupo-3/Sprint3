@@ -13,7 +13,7 @@ public class DBConnectionProvider {
         BasicDataSource basicDataSource = new BasicDataSource();
 
         String host = System.getenv("DB_HOST");
-        String db = System.getenv("DB_NAME");
+        String db = System.getenv("DB_DATABASE");
         String user = System.getenv("DB_USER");
         String pass = System.getenv("DB_PASSWORD");
 

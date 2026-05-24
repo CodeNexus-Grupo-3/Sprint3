@@ -13,7 +13,7 @@ async function gerarRelatorio(req, res) {
       // Define o método da requisisção (POST)
       method: "POST",
       // "Endereço" do container Python, para que o Node consiga enviar a requisição
-      url: "http://simbiose:8000/gerar-relatorio",
+      url: "http://python:8000/gerar-relatorio",
       // Define que a resposta do FastAPI deve ser em stream (fluxo contínuo de dados)
       // Ideal para tratar com arquivos como o Excel binário gerado pela simbiose
       responseType: "stream",
