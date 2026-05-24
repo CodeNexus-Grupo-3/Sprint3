@@ -1,10 +1,5 @@
 FROM mysql:8
 
-ENV MYSQL_ROOT_PASSWORD=urubu100
-ENV MYSQL_DATABASE=codenexus
-ENV MYSQL_USER=app
-ENV MYSQL_PASSWORD=nexus100
-
-COPY 001-Create_CodeNexus.sql /docker-entrypoint-initdb.d/
+COPY ./sql-scripts/ /docker-entrypoint-initdb.d/
 
 EXPOSE 3306
