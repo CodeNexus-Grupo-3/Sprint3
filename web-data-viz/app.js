@@ -15,26 +15,25 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
-// codenexus:
-var indexRouter = require("./src/routes/index");
-var usuarioRouter = require("./src/routes/usuarios");
-var dashboardRouter = require("./src/routes/dashboard");
-var forumRouter = require("./src/routes/forumRouter");
-
-// aquatech:
 var avisosRouter = require("./src/routes/avisos");
+var dashboardRouter = require("./src/routes/dashboard");
+var forumRouter = require("./src/routes/forum");
+var indexRouter = require("./src/routes/index");
+var relatorioRouter = require("./src/routes/relatorio");
+var usuarioRouter = require("./src/routes/usuarios");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/forum", forumRouter);
 
 app.use(cors());
 
-app.use("/", indexRouter);
-app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/forum", forumRouter);
+app.use("/", indexRouter);
+app.use("/relatorio", relatorioRouter);
+app.use("/usuarios", usuarioRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
