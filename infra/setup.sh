@@ -163,9 +163,10 @@ sudo apt update && sudo apt install cron -y
 sudo systemctl start cron
 sudo systemctl enable cron
 
-# Buildando imagem do java ETL
+# Buildando imagem do java
+echo "[INFO] Buildando imagem do java via docker-compose"
 sudo docker compose build java
 
 # Adicionando tarefa no CRON
-echo "[INFO] Container Java adicionado ao CRON"
-echo "*/10 * * * * cd /home/ubuntu/Sprint3 && sudo docker run --rm --env-file ./jar/.env --network network-codenexus java-codenexus >> /home/ubuntu/etl.log 2>&1" | crontab -
+echo "[INFO] Criando tarefa no CRON de criar, executar e eliminar container"
+echo "*/10 * * * * sudo docker run --rm --env-file /home/ubuntu/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/ubuntu/etl.log 2>&1" | crontab -
