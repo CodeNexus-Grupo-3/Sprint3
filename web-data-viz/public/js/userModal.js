@@ -9,8 +9,8 @@ document.body.innerHTML += `
             <div id="avatarUserModal">M</div>
 
             <div id="infosUser">
-                <h3>Marina Okamoto</h3>
-                <p>marina@codenexus.com</p>
+                <h3 id="nomeModal"></h3>
+                <p id="emailModal"></p>
             </div>
 
         </div>
@@ -19,7 +19,7 @@ document.body.innerHTML += `
 
         <div id="conteudoUser">
 
-            <div class="toggleArea">
+            <div id="notifArea" class="toggleArea">
 
                 <div class="toggleItem">
 
@@ -52,6 +52,15 @@ document.body.innerHTML += `
 
 </div>
 `;
+
+validarCargo();
+userModal();
+
+function userModal(){
+  document.getElementById("nomeModal").innerHTML = sessionStorage.nome;
+  document.getElementById("emailModal").innerHTML = sessionStorage.email;
+};
+
 
 const modalUser = document.getElementById("modalUser");
 const containerUser = document.getElementById("container_user");
@@ -124,3 +133,10 @@ async function baixarRelatorio() {
     alert("Erro ao baixar relatório");
   }
 }
+
+function validarCargo(){
+    if(sessionStorage.cargo === 'Jogador'){
+      document.getElementById("btnRelatorio").style.display = "none";
+      document.getElementById("notifArea").style.display = "none";
+    }
+};
