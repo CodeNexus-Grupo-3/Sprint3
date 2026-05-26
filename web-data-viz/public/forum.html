@@ -104,6 +104,14 @@
 </html>
 <script src="./js/userModal.js"></script>
 <script>
+validarCargo();
+
+// LETRA DO ICONE
+function iconeLetra(){
+    var nome = sessionStorage.nome;
+    document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+};
+
 function sair() {
     sessionStorage.clear();
     window.location = "index.html";
@@ -227,7 +235,11 @@ function curtirPost(id, elemento){
         elemento.classList.add("ativo");
 
     });
+};
 
+function validarCargo(){
+    if(sessionStorage.cargo === 'Jogador'){
+      document.getElementById("area_postagem").style.display = "none";
+    };
 }
-
 </script>
