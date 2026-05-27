@@ -3,10 +3,6 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-// LETRA DO ICONE:
-router.get("/kpiDuracaoTime/:fkEquipe", function (req, res) {
-    dashboardController.kpiDuracaoTime(req, res);
-});
 
 //KPIS DE DURAÇÃO
 router.get("/kpiDuracaoTime/:fkEquipe", function (req, res) {

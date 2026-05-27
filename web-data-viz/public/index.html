@@ -162,7 +162,7 @@
       <input type="email" id="input_email" placeholder="Digite seu e-mail">
       <input type="text" id="input_telefone" placeholder="Digite seu telefone">
       <input type="text" id="input_equipe" placeholder="Digite sua equipe">
-      <textarea name="" id="" placeholder="Digite uma mensagem"></textarea>
+      <textarea name="" id="input_mensagem" placeholder="Digite uma mensagem"></textarea>
 
       <div id="mensagemErro"></div>
 
@@ -188,8 +188,6 @@
 </html>
 <script>
 
-  var formularioValido = false;
-
   function btn_fale_conosco() {
     document.getElementById("modalFaleConosco").style.display = "flex";
   }
@@ -198,25 +196,34 @@
   document.getElementById("modalFaleConosco").style.display = "none";
 
   document.getElementById("modalFaleConosco").style.display = "none";
-
   }
-
-
 
   function enviarFormulario() {
-
-    if (formularioValido) {
-
-      alert("Formulário enviado com sucesso!");
-
-      fecharModal();
-
-    } else {
-
-      alert("Preencha a senha corretamente.");
-
-    }
-
+    insertFaleConosco();
+    alert("Formulário enviado com sucesso!");
+    fecharModal();
   }
+
+  function insertFaleConosco(){
+    var nome = document.getElementById("input_nome").value
+    var email = document.getElementById("input_email").value
+    var telefone = document.getElementById("input_telefone").value
+    var equipe = document.getElementById("input_equipe").value
+    var mensagem = document.getElementById("input_mensagem").value
+
+     fetch("/insertFaleConosco", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeServer: nome,
+        emailServer: email,
+        telefoneServer: telefone,
+        equipeServer: equipe,
+        mensagemServer: mensagem
+      }),
+    })
+  };
 
 </script>

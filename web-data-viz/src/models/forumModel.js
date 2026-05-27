@@ -6,7 +6,7 @@ function postar(titulo, conteudo, fkUsuario){
         INSERT INTO PostagensForum
         (titulo, conteudo, fkUsuario)
         VALUES
-        ('${titulo}', '${conteudo}', ${fkUsuario});
+        ('${titulo}', '${conteudo}', '${fkUsuario}');
     `;
 
     return database.executar(instrucaoSql);
