@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # 1 - Atualiza a lista de pacotes disponíveis
 echo "[INFO] Atualizando a lista de pacotes disponíveis"
@@ -49,67 +50,79 @@ export AWS_ACCESS_KEY_ID="$ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="$SECRET_KEY"
 export AWS_SESSION_TOKEN="$SESSION_TOKEN"
 
-# Configura via aws configure
-aws configure set aws_access_key_id "$ACCESS_KEY"
-aws configure set aws_secret_access_key "$SECRET_KEY"
-aws configure set aws_session_token "$SESSION_TOKEN"
-aws configure set region "$REGION"
-aws configure set output "$OUTPUT"
+# Cria o diretório .aws para guardar as credenciais e configurações
+mkdir -p ~/.aws
+
+# Cria um arquivo de credenciais no diretório .aws
+cat <<EOF > ~/.aws/credentials
+[default]
+aws_access_key_id=$ACCESS_KEY
+aws_secret_access_key=$SECRET_KEY
+aws_session_token=$SESSION_TOKEN
+EOF
+
+# Cria um arquivo de configurações no diretório .aws
+cat <<EOF > ~/.aws/config
+[default]
+region=$REGION
+output=$OUTPUT
+EOF
 
 # 5 - Instalando o Git e clonando o Repo
 echo "[INFO] Instalando o Git e clonando o repositório"
 sudo apt update && sudo apt install git -y
 git clone https://github.com/CodeNexus-Grupo-3/Sprint3.git
 
-# 6 - Instalando o Maven
-echo "[INFO] Instalando o Maven"
-sudo apt update && sudo apt install maven -y
-
-# 7 - Instalando o Docker
+# 6 - Instalando o Docker
 echo "[INFO] Instalando o Docker"
 sudo apt update && sudo apt install docker.io -y
 sudo systemctl enable docker 
 sudo systemctl start docker
 
+# 7 - Instalando o Docker Compose
+echo "[INFO] Instalando o Docker Compose"
+sudo apt update && sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
 # 8 - Definindo os .env
 echo "[INFO] Criando os arquivos .env"
 
-# 8.1 - .env do web-data-viz
+# 9.1 - .env do web-data-viz
 
 # .env de desenvolvimento
-cat <<EOF > /Sprint3/web-data-viz/.env.dev
+cat <<EOF > /home/codenexus/Sprint3/web-data-viz/.env.dev
 AMBIENTE_PROCESSO=desenvolvimento
 
 # Configurações de conexão com o banco de dados
-DB_HOST=bd-codenexus
+DB_HOST=mysql
 DB_DATABASE=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+DB_USER=app
+DB_PASSWORD=nexus100
 DB_PORT=3306
 
 # Configurações do servidor de aplicação
 APP_PORT=3333
-APP_HOST=localhost
+APP_HOST=0.0.0.0
 EOF
 
 # .env de produção
-cat <<EOF > /Sprint3/web-data-viz/.env
+cat <<EOF > /home/codenexus/Sprint3/web-data-viz/.env
 AMBIENTE_PROCESSO=producao
 
 # Configurações de conexão com o banco de dados
-DB_HOST=bd-codenexus
+DB_HOST=mysql
 DB_DATABASE=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+DB_USER=app
+DB_PASSWORD=nexus100
 DB_PORT=3306
 
 # Configurações do servidor de aplicação
 APP_PORT=3333
-APP_HOST=localhost
+APP_HOST=0.0.0.0
 EOF
 
-# 8.2 - .env codenexus-v3
-cat <<EOF > /Sprint3/codenexus-v3/.env
+# 9.2 - .env jar
+cat <<EOF > /home/codenexus/Sprint3/jar/.env
 # AWS
 # =====================
 AWS_ACCESS_KEY_ID=$ACCESS_KEY
@@ -120,48 +133,41 @@ AWS_REGION=us-east-1
 
 # BANCO
 # =====================
-DB_HOST=bd-codenexus
+DB_HOST=mysql
+DB_DATABASE=codenexus
+DB_USER=app
+DB_PASSWORD=nexus100
 DB_PORT=3306
-DB_NAME=codenexus
-DB_USER=root
-DB_PASSWORD=urubu100
+# =====================
+
+# JAVA_MAIL
+# =====================
+SMTP_HOST=smtp.office365.com
+SMTP_PORT=587
+SMTP_USER=lucas.castro@sptech.school
+SMTP_PASS=Polentinha69?
 # =====================
 EOF
 
-# 9 - Construindo as imagens
-echo "[INFO] Construindo as imagens personalizadas do banco, web-data-viz e java"
+# 9.3 - .env do python
 
-# 9.1 - Imagem do Banco de Dados
-sudo docker build -t mysql-codenexus /Sprint3/mysql
+cat <<EOF > /home/codenexus/Sprint3/simbiose/.env
+# BANCO
+# =====================
+DB_HOST=mysql
+DB_PORT=3306
+DB_NAME=codenexus
+DB_USER=app
+DB_PASSWORD=nexus100
+# =====================
+EOF
 
-# 9.2 - Imagem do Site e Aplicação
-sudo docker build -t node-codenexus /Sprint3/web-data-viz
+# 10 - Subindo infraestrutura via docker-compose (imagens, containers, network, volume)
+echo "[INFO] Subindo infraestrutura via docker-compose"
+cd /home/codenexus/Sprint3
+sudo docker-compose up -d --build mysql python app
 
-# 9.3 - Imagem do Java
-sudo docker build -t java-codenexus /Sprint3/codenexus-v3
-
-# 10 - Criando Network
-echo "[INFO] Criando rede para conectar os containers entre si"
-docker network create network-codenexus
-
-# 11 - Criando os Containers
-echo "[INFO] Criando os containers"
-
-# 11.1 - Subindo container de Banco de Dados
-docker run -d \
-  --name bd-codenexus \
-  --network network-codenexus \
-  -p 3306:3306 \
-  mysql-codenexus
-
-# 11.2 - Subindo container do Site e Aplicação
-docker run -d \
-  --env-file /Sprint3/web-data-viz/.env \
-  --name app-codenexus \
-  --network network-codenexus \
-  node-codenexus
-
-# 12 - Subindo container do Java (+CRON)
+# 11 - Subindo container do Java (+CRON)
 
 # Garantir que o Cron está instalado
 echo "[INFO] Instalando e ativando o CRON"
@@ -169,6 +175,14 @@ sudo apt update && sudo apt install cron -y
 sudo systemctl start cron
 sudo systemctl enable cron
 
+# Buildando imagem do java
+echo "[INFO] Buildando imagem do java via docker-compose"
+sudo docker-compose build java
+
 # Adicionando tarefa no CRON
-echo "[INFO] Container Java adicionado ao CRON"
-echo "*/10 * * * * cd /home/ubuntu/Sprint3/codenexus-v3 && sudo docker run --rm --env-file .env --network network-codenexus java-codenexus >> /home/ubuntu/etl.log 2>&1" | crontab -
+echo "[INFO] Criando tarefa no CRON de criar, executar e eliminar container"
+echo "*/10 * * * * sudo docker run --rm --env-file /home/codenexus/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/codenexus/etl.log 2>&1" | crontab -
+
+# 12 - Adicionando o usuário ao grupo Docker
+echo "[INFO] Adicionando o usuário ao grupo Docker"
+sudo usermod -aG docker codenexus

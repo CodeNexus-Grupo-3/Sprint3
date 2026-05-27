@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# macOS
+.DS_Store
+__MACOSX
+
+# IDEs
+.idea
+.vscode
+
+# Python
+**/venv
+**/__pycache__
+**/*.pyc
+
+# Java / Maven
+**/target
+**/.mvn
+**/*.class
+
+# Node
+**/node_modules
+**/dist
+**/.next
+
+# Logs
+**/*.log
+
+# Env
+**/.env
+
+# Docker
+**/.dockerignore
+
+# Temporary files
+**/tmp
+**/temp

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
     <link rel="stylesheet" href="./css/forum.css">
+    <link rel="stylesheet" href="./css/userModal.css">
     <title>CodeNexus</title>
 
 </head>
@@ -38,12 +39,12 @@
             </div>
         </div>
 
-        <div id="container_sair">
+        <!-- <div id="container_sair">
             <div id="sub_container_sair">
                 <span class="material-symbols-outlined">logout</span>
                 <a href="index.html" id="sub_container_sair_a" onclick="sair()">SAIR</a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div id="container_principal">
@@ -52,9 +53,7 @@
         <div id="forum_topo">
             <span class="title">SALA DE TREINAMENTO</span>
             <!-- <h2 class="title">SALA DE TREINAMENTO</h2> -->
-            <div class="container_user">
-                <span class="user_letra">M</span>
-            </div>
+            <div id="container_user">M</div>
         </div>
     </div>  
 
@@ -103,7 +102,15 @@
     </div>
 </body>
 </html>
+<script src="./js/userModal.js"></script>
 <script>
+validarCargo();
+
+// LETRA DO ICONE
+function iconeLetra(){
+    var nome = sessionStorage.nome;
+    document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+};
 
 function sair() {
     sessionStorage.clear();
@@ -112,51 +119,127 @@ function sair() {
 
 
 function postarMensagem(){
-
     var mensagem = document.getElementById("mensagem").value;
 
-    if(mensagem.trim() === ""){
+    if(mensagem.trim() == ""){
         alert("Digite uma mensagem!");
         return;
     }
 
-    var idPost = Date.now(); 
+    fetch("/forum/postar", {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            titulo:"Postagem",
+            conteudo:mensagem,
+            fkUsuario: sessionStorage.ID_USUARIO
+        })
+    })
+    .then(function(resposta){
 
-    var novoPost = document.createElement("div");
-    novoPost.classList.add("post");
+        if(resposta.ok){
 
-    novoPost.innerHTML = `<span class="material-symbols-outlined">account_circle</span>
-                             <div class="conteudo_post">
-                             <h3>VOCÊ</h3>
-                            <p>${mensagem}</p>
+            listarPosts();
 
-                              <div class="acoes_postagem">
-                             <span class="material-symbols-outlined botao_like"
-                              onclick="curtirPost(${idPost}, this)">
-                            favorite
-                            </span>
-                          <span id="likes-${idPost}">0</span>
-                             </div>
-                             </div> `;
+            document.getElementById("mensagem").value = "";
 
-    document.getElementById("lista_posts")
-        .prepend(novoPost);
+        }
 
-    document.getElementById("mensagem").value = "";
+    })
+    .catch(function(erro){
+        console.log(erro);
+    });
+
 }
 
+function listarPosts(){
+
+    fetch("/forum/listar")
+    .then(function(resposta){
+        return resposta.json();
+    })
+    .then(function(posts){
+
+        document.getElementById("lista_posts").innerHTML = "";
+
+        for(var i = 0; i < posts.length; i++){
+
+            var post = posts[i];
+
+            document.getElementById("lista_posts").innerHTML += `
+
+            <div class="post">
+
+                <span class="material-symbols-outlined">
+                account_circle
+                </span>
+
+                <div class="conteudo_post">
+
+                    <h3>${post.nickname}</h3>
+
+                    <p>${post.conteudo}</p>
+
+                    <div class="acoes_postagem">
+
+                        <span class="material-symbols-outlined botao_like"
+                        onclick="curtirPost(${post.idPostagensForum}, this)">
+                        favorite
+                        </span>
+
+                        <span id="likes-${post.idPostagensForum}">
+                        ${post.likes}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+        }
+
+    });
+}
+
+listarPosts();
 
 
 function curtirPost(id, elemento){
+    if(elemento.classList.contains("ativo")){
+        return;
+    }
 
-    var contador = document.getElementById("likes-"+id);
+    fetch(`/forum/curtir/${id}`, {
+        method:"PUT"
+    })
+    .then(function(){
 
-    var likes = parseInt(contador.innerText);
+        var contador = document.getElementById("likes-" + id);
 
-    likes++;
+        var likes = parseInt(contador.innerText);
 
-    contador.innerText = likes;
 
-    elemento.classList.add("ativo");
+        if(elemento.classList.contains("ativo")){
+         return;
+     }
+
+
+        likes++;
+
+        contador.innerText = likes;
+
+        elemento.classList.add("ativo");
+
+    });
+};
+
+function validarCargo(){
+    if(sessionStorage.cargo === 'Jogador'){
+      document.getElementById("area_postagem").style.display = "none";
+    };
 }
 </script>
