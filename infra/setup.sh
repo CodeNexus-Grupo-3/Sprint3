@@ -50,12 +50,23 @@ export AWS_ACCESS_KEY_ID="$ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="$SECRET_KEY"
 export AWS_SESSION_TOKEN="$SESSION_TOKEN"
 
-# Configura via aws configure
-aws configure set aws_access_key_id "$ACCESS_KEY"
-aws configure set aws_secret_access_key "$SECRET_KEY"
-aws configure set aws_session_token "$SESSION_TOKEN"
-aws configure set region "$REGION"
-aws configure set output "$OUTPUT"
+# Cria o diretório .aws para guardar as credenciais e configurações
+mkdir -p ~/.aws
+
+# Cria um arquivo de credenciais no diretório .aws
+cat <<EOF > ~/.aws/credentials
+[default]
+aws_access_key_id=$ACCESS_KEY
+aws_secret_access_key=$SECRET_KEY
+aws_session_token=$SESSION_TOKEN
+EOF
+
+# Cria um arquivo de configurações no diretório .aws
+cat <<EOF > ~/.aws/config
+[default]
+region=$REGION
+output=$OUTPUT
+EOF
 
 # 5 - Instalando o Git e clonando o Repo
 echo "[INFO] Instalando o Git e clonando o repositório"
