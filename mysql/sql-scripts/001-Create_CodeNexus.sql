@@ -9,9 +9,6 @@ CREATE TABLE Equipe (
     titulos INT DEFAULT 0
 );
 
-INSERT INTO Equipe (nome, regiao, titulos) VALUES
-('marina goat', 'Brasil', 3);
-
 -- Usuario
 CREATE TABLE Usuario (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,18 +30,6 @@ CREATE TABLE Usuario (
     notificar TINYINT
 );
 
-INSERT INTO Usuario 
-(nome, nickname, email, senha, telefone, pais, funcao, cargo, fkEquipe, notificar)
-VALUES
-('Marina Okamoto', 'YuriMid', 'marina@email.com', 'senha', '11987654321', 
-'Brasil', 'Mid', 'Jogador', 1, 1);
-
-INSERT INTO Usuario 
-(nome, nickname, email, senha, telefone, pais, funcao, cargo, fkEquipe, notificar)
-VALUES
-('Kenzo Uehara', 'Mitohara', 'kenzo@email.com', 'senha', '11987654321', 
-'Brasil', 'Top', 'Treinador', 1, 1);
-
 -- PostagensForum
 CREATE TABLE PostagensForum (
     idPostagensForum INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,19 +41,6 @@ CREATE TABLE PostagensForum (
     CONSTRAINT fkPostagemUsuario
         FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
-
-INSERT INTO PostagensForum
-(titulo, conteudo, likes, dataHora, fkUsuario)
-VALUES
-(
-    'Melhor composição para o meta atual',
-    'Alguém tem sugestões de composição forte para o patch atual? Estamos tendo dificuldade nas team fights.',
-    18,
-    '2026-05-25 19:30:00',
-    2
-);
-
-select* from PostagensForum;
 
 -- PartidasIndividual
 CREATE TABLE PartidasIndividual (
@@ -108,13 +80,6 @@ CREATE TABLE PartidasEquipe (
         FOREIGN KEY (fkEquipe) REFERENCES Equipe(idEquipe)
 );
 
-INSERT INTO PartidasEquipe
-(dtPartida, resultado, tipo, duracao, totalAbates, totalAssistencias,
-totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano, fkEquipe)
-VALUES
-('2026-05-22', 1, 'Rankeada', 3100, 27, 61,
-14, 68200, 1, 3, 9, 84500, 1);
-
 -- Trusted
 CREATE TABLE Trusted (
     idTrusted INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,13 +94,6 @@ CREATE TABLE Trusted (
     totalTorres INT DEFAULT 0,
     totalDano INT DEFAULT 0
 );
-
-INSERT INTO Trusted
-(equipe, duracao, totalAbates, totalAssistencias, totalMortes,
-totalGold, totalBaron, totalDrag, totalTorres, totalDano)
-VALUES
-('t1', 2460, 32, 74, 18,
-72100, 2, 4, 10, 91300);
 
 -- JavaLog
 CREATE TABLE JavaLog (
