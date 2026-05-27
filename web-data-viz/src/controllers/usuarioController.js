@@ -45,6 +45,7 @@ function cadastrar(req, res) {
   var pais = req.body.serverPais;
   var senha = req.body.serverSenha;
   var funcao = req.body.serverFuncao;
+  var fkEquipe = req.body.serverFkEquipe;
 
   if (!nome || nome.trim().length < 3) {
     return res.status(400).send("Nome inválido!");
@@ -59,7 +60,7 @@ function cadastrar(req, res) {
   }
 
   usuarioModel
-    .cadastrar(nome, nickname, email, cargo, telefone, pais, senha, funcao)
+    .cadastrar(nome, nickname, email, cargo, telefone, pais, senha, funcao, fkEquipe)
     .then(function (resultado) {
       res.json(resultado);
     })

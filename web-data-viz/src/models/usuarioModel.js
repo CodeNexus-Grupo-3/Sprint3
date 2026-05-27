@@ -19,6 +19,7 @@ function cadastrar(
   pais,
   senha,
   funcao,
+  fkEquipe,
 ) {
   console.log(
     "ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",
@@ -31,7 +32,7 @@ function cadastrar(
   //  e na ordem de inserção dos dados.
   var instrucaoSql = `
     INSERT INTO Usuario
-    (nome, nickname, email, senha, telefone, pais, funcao, cargo)
+    (nome, nickname, email, senha, telefone, pais, funcao, cargo, fkEquipe)
     VALUES
     (
         '${nome}',
@@ -41,7 +42,8 @@ function cadastrar(
         '${telefone}',
         '${pais}',
         '${funcao}',
-        '${cargo}'
+        '${cargo}',
+        '${fkEquipe}'
     );
 `;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
