@@ -1,3 +1,4 @@
+require("dotenv").config({ path: __dirname + "/.env.dev" });
 var ambiente_processo = 'producao';
 // var ambiente_processo = 'desenvolvimento';
 
@@ -10,11 +11,10 @@ require("dotenv").config({ path: caminho_env });
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
-var PORTA_APP = process.env.APP_PORT;
-var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
+var partidasRouter = require("./src/routes/partidas");
 var avisosRouter = require("./src/routes/avisos");
 var dashboardRouter = require("./src/routes/dashboard");
 var forumRouter = require("./src/routes/forum");
@@ -35,6 +35,10 @@ app.use("/", indexRouter);
 app.use("/relatorio", relatorioRouter);
 app.use("/usuarios", usuarioRouter);
 
+app.use("/partidas", partidasRouter);
+
+app.listen(3000, () => {
+    console.log("Servidor rodando");
 app.listen(PORTA_APP, function () {
     console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
