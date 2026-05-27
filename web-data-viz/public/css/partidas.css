@@ -1,6 +1,3 @@
-/* ==========================================================================
-   VARIÁVEIS GLOBAIS E CONFIGURAÇÃO DA PÁGINA
-   ========================================================================== */
 :root {
     --cor-fundo: #022425;
     --cor-fundo-escuro-escuro: #011b1c;
@@ -32,9 +29,6 @@ body {
     flex-direction: row;
 }
 
-/* ==========================================================================
-   CONTAINER PRINCIPAL E VIEWPORTS (CONTEÚDO DA TELA)
-   ========================================================================== */
 #container_principal {
     width: 80%;
     background-color: var(--cor-fundo);
@@ -56,7 +50,6 @@ body {
     transform: translateX(20px);
 }
 
-/* Cabeçalho da Seção */
 .section-header {
     display: flex;
     align-items: flex-start;
@@ -76,7 +69,7 @@ body {
     font-size: 28px;
 }
 
-/* Avatar do Usuário (Topo Direito) */
+
 .container_user {
     border: 2px solid #F2FF58;
     border-radius: 100%;
@@ -90,8 +83,6 @@ body {
     margin-top: 0px;
     box-sizing: border-box;
 }
-
-/* Elementos de Layout de Apoio (Segunda Seção) */
 .second_section {
     display: flex;
     flex-direction: row;
@@ -110,9 +101,6 @@ body {
     color: #F2FF58;
 }
 
-/* ==========================================================================
-   BOTÕES E COMPONENTES INTERATIVOS
-   ========================================================================== */
 .btn-cadastrar {
     background: var(--cor-destaque);
     color: #011b1c;
@@ -173,9 +161,6 @@ body {
     color: var(--cor-derrota);
 }
 
-/* ==========================================================================
-   TABELAS
-   ========================================================================== */
 .tabela-container {
     background: var(--cor-card);
     border: 1px solid var(--cor-linha);
@@ -257,9 +242,6 @@ select.input-tabela option {
     gap: 8px;
 }
 
-/* ==========================================================================
-   BADGES (STATUS E MODOS DE JOGO)
-   ========================================================================== */
 .badge {
     display: inline-block;
     padding: 3px 10px;
@@ -280,12 +262,6 @@ select.input-tabela option {
     border: 1px solid rgba(248, 113, 113, 0.3);
 }
 
-.badge-empate {
-    background: rgba(250, 204, 21, 0.15);
-    color: var(--cor-empate);
-    border: 1px solid rgba(250, 204, 21, 0.3);
-}
-
 .badge-treino {
     color: #60a5fa;
     border: 1px solid rgba(96, 165, 250, 0.3);
@@ -298,20 +274,15 @@ select.input-tabela option {
     background: rgba(192, 132, 252, 0.1);
 }
 
-.badge-amistoso {
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    background: rgba(52, 211, 153, 0.1);
-}
-
 .pontos-num {
     color: var(--cor-destaque);
     font-weight: 700;
 }
 
-/* ==========================================================================
-   KPIS GRID & CARDS
-   ========================================================================== */
+/* ================================================
+   VIEW DE PARTIDA — textos mais claros e legíveis
+   ================================================ */
+
 .kpis-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -338,8 +309,8 @@ select.input-tabela option {
 }
 
 .kpi-label {
-    color: var(--cor-texto-suave);
-    font-size: 10px;
+    color: #d4c97a;          /* amarelo dourado — era --cor-texto-suave (#3f5551) */
+    font-size: 12px;         /* era 10px */
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 8px;
@@ -347,20 +318,17 @@ select.input-tabela option {
 
 .kpi-value {
     color: var(--cor-destaque);
-    font-size: 22px;
+    font-size: 26px;         /* era 22px */
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .kpi-sub {
-    color: var(--cor-texto-suave);
-    font-size: 10px;
+    color: #8fb8a8;          /* verde-claro suave — era #3f5551 quase invisível */
+    font-size: 11px;         /* era 10px */
     margin-top: 4px;
 }
 
-/* ==========================================================================
-   GRIDS INFERIORES E GRÁFICOS
-   ========================================================================== */
 .bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -376,7 +344,7 @@ select.input-tabela option {
 
 .card-title {
     color: var(--cor-destaque);
-    font-size: 11px;
+    font-size: 12px;         /* era 11px */
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 16px;
@@ -398,8 +366,8 @@ select.input-tabela option {
 }
 
 .tabela-jogadores th {
-    color: var(--cor-texto-suave);
-    font-size: 10px;
+    color: #8fb8a8;          /* era --cor-texto-suave */
+    font-size: 11px;         /* era 10px */
     letter-spacing: 1.5px;
     text-align: left;
     padding: 6px 10px;
@@ -408,7 +376,7 @@ select.input-tabela option {
 
 .tabela-jogadores td {
     color: var(--cor-texto);
-    font-size: 12px;
+    font-size: 13px;
     padding: 9px 10px;
     border-bottom: 1px solid rgba(37, 76, 60, 0.4);
 }
@@ -466,9 +434,13 @@ select.input-tabela option {
     box-sizing: border-box;
 }
 
-/* ==========================================================================
-   SCROLLBAR E UTILS
-   ========================================================================== */
+/* data na partida-meta mais visível */
+.partida-meta span[style] {
+    color: #8fb8a8 !important;
+    font-size: 13px !important;
+}
+
+
 ::-webkit-scrollbar {
     width: 4px;
 }
@@ -496,23 +468,17 @@ select.input-tabela option {
     margin-bottom: 16px;
     opacity: 0.3;
 }
-/* ==========================================================================
-   SOBRESCREVER SIDEBAR GLOBAL PARA ESTA TELA (PARTIDAS)
-   ========================================================================== */
 
-/* 1. Remove o amarelo do Painel (volta para a cor escura padrão) */
 #sub_container_painel span, 
 #sub_container_painel a {
     color: var(--cor-fundo-escuro) !important;
 }
 
-/* 2. Força o amarelo no item de Partidas */
 #sub_container_partidas span, 
 #sub_container_partidas a {
     color: #F2FF58 !important;
 }
 
-/* 3. Garante que se o usuário passar o mouse no Painel, ele ainda acenda em amarelo */
 #sub_container_painel:hover span, 
 #sub_container_painel a:hover {
     color: #F2FF58 !important;
