@@ -62,7 +62,7 @@
                     <span class="legenda_topo2">|</span>
                     <span class="legenda_topo3">geral</span>
                 </div>
-                <div class="container_user">
+                <div id="container_user">
                     <span id="userLetra" class="user_letra"></span>
                 </div>
             </div>
@@ -165,6 +165,14 @@
     }
 
     window.onload = carregarDash;
+
+    //      window.onload = iconeLetra();
+    //     function iconeLetra(){
+    //     var nome = sessionStorage.nome;
+    //     document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+    // };
+
+
 
     function carregarDash() {
         console.log("Página carregou");
