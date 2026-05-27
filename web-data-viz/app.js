@@ -1,4 +1,3 @@
-require("dotenv").config({ path: __dirname + "/.env.dev" });
 var ambiente_processo = 'producao';
 // var ambiente_processo = 'desenvolvimento';
 
@@ -11,10 +10,11 @@ require("dotenv").config({ path: caminho_env });
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
+var PORTA_APP = process.env.APP_PORT;
+var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
-var partidasRouter = require("./src/routes/partidas");
 var avisosRouter = require("./src/routes/avisos");
 var dashboardRouter = require("./src/routes/dashboard");
 var forumRouter = require("./src/routes/forum");
@@ -35,20 +35,16 @@ app.use("/", indexRouter);
 app.use("/relatorio", relatorioRouter);
 app.use("/usuarios", usuarioRouter);
 
-app.use("/partidas", partidasRouter);
-
-app.listen(3000, () => {
-    console.log("Servidor rodando");
 app.listen(PORTA_APP, function () {
     console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
     ##   ##  ##       ##  ##            ## ##     ####      ##      ####             ##  ##     ##         ##  
-    ##   ##  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##        ##   
+    ##   ##  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##        ##  
     ## # ##  ####     #####    ######   ##  ##   ######     ##     ######   ######   ##  ##     ##       ##    
-    #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
+    #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##    
     ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
     ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
-    \n\n\n                                                                                                 
+    \n\n\n                                                                                                
     Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar .: http://${HOST_APP}:${PORTA_APP} :. \n\n
     Você está rodando sua aplicação em ambiente de .:${process.env.AMBIENTE_PROCESSO}:. \n\n
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
