@@ -24,7 +24,7 @@ public class LogService {
 
     public void saveLog(Log log) {
         jdbcTemplate.update(
-                "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, null, null)",
+                "INSERT INTO JavaLog VALUES (DEFAULT, ?, ?, ?, ?, null, null)",
                 log.getDataHora(),
                 log.getStatus(),
                 log.getEvento(),
@@ -33,7 +33,7 @@ public class LogService {
 
     public void saveErro(LogErro logErro) {
         jdbcTemplate.update(
-                "INSERT INTO Log VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO JavaLog VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)",
                 logErro.getDataHora(),
                 logErro.getStatus(),
                 logErro.getEvento(),
