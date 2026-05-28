@@ -26,7 +26,7 @@ document.body.innerHTML += `
                     <span>Notificações</span>
 
                     <label class="switch">
-                        <input type="checkbox">
+                        <input id="toggleNotificacao" type="checkbox">
                         <span class="slider"></span>
                     </label>
 
@@ -57,6 +57,7 @@ function userModal(){
   document.getElementById("nomeModal").innerHTML = sessionStorage.nome;
   document.getElementById("emailModal").innerHTML = sessionStorage.email;
   document.getElementById("avatarUserModal").innerHTML = sessionStorage.nome.charAt(0).toUpperCase();
+  toggleNotificacao();
 }
 
 const modalUser = document.getElementById("modalUser");
@@ -80,6 +81,52 @@ function sair() {
   sessionStorage.clear();
   window.location = "index.html";
 }
+
+function toggleNotificacao(){
+  const toggle = document.getElementById("toggleNotificacao");
+  toggle.addEventListener("change", function() {
+    console.log("checked =", toggle.checked);
+
+    if(toggle.checked === true){
+        console.log("Ativando notificações");
+        ativarFuncao();
+    } else {
+        console.log("Desativando notificações");
+        desativarFuncao();
+    }
+});
+}
+
+function ativarFuncao(){
+  var fkUsuario = sessionStorage.fkUsuario;
+  console.log("Notificação ativada");
+
+  fetch(`/notificacoes/toggleNotificacaoON/${fkUsuario}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fkUsuario
+    }),
+  })
+}
+
+function desativarFuncao(){
+  var fkUsuario = sessionStorage.fkUsuario;
+  console.log("Função desativada");
+
+  fetch(`/notificacoes/toggleNotificacaoOFF/${fkUsuario}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fkUsuario
+    }),
+  });
+}
+
 
 // Função assíncrono que aciona a aplicação em python de gerar relatórios via HTTP
 async function baixarRelatorio() {

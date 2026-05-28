@@ -21,6 +21,7 @@ var forumRouter = require("./src/routes/forum");
 var indexRouter = require("./src/routes/index");
 var relatorioRouter = require("./src/routes/relatorio");
 var usuarioRouter = require("./src/routes/usuarios");
+var notificacoesRouter = require("./src/routes/notificacoes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use("/forum", forumRouter);
 app.use("/", indexRouter);
 app.use("/relatorio", relatorioRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/notificacoes", notificacoesRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
