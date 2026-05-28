@@ -53,7 +53,7 @@
         <div id="forum_topo">
             <span class="title">SALA DE TREINAMENTO</span>
             <!-- <h2 class="title">SALA DE TREINAMENTO</h2> -->
-            <div id="container_user">M</div>
+            <div id="container_user"></div>
         </div>
     </div>  
 
@@ -102,21 +102,18 @@
     </div>
 </body>
 </html>
-<script src="./js/userModal.js"></script>
-<script>
-validarCargo();
 
-// LETRA DO ICONE
+<script>
 function iconeLetra(){
+    console.log("carregou function iconeLetra()")
     var nome = sessionStorage.nome;
-    document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+    document.getElementById("container_user").innerHTML = nome.charAt(0).toUpperCase();
 };
 
 function sair() {
     sessionStorage.clear();
     window.location = "index.html";
 }
-
 
 function postarMensagem(){
     var mensagem = document.getElementById("mensagem").value;
@@ -134,7 +131,7 @@ function postarMensagem(){
         body:JSON.stringify({
             titulo:"Postagem",
             conteudo:mensagem,
-            fkUsuario: sessionStorage.ID_USUARIO
+            fkUsuario: sessionStorage.fkUsuario
         })
     })
     .then(function(resposta){
@@ -205,9 +202,6 @@ function listarPosts(){
     });
 }
 
-listarPosts();
-
-
 function curtirPost(id, elemento){
     if(elemento.classList.contains("ativo")){
         return;
@@ -242,4 +236,13 @@ function validarCargo(){
       document.getElementById("area_postagem").style.display = "none";
     };
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+    listarPosts();
+    validarCargo();
+    iconeLetra();
+    userModal();
+});
+
 </script>
+<script src="./js/userModal.js"></script>

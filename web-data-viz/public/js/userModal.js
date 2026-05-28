@@ -53,14 +53,11 @@ document.body.innerHTML += `
 </div>
 `;
 
-validarCargo();
-userModal();
-
 function userModal(){
   document.getElementById("nomeModal").innerHTML = sessionStorage.nome;
   document.getElementById("emailModal").innerHTML = sessionStorage.email;
-};
-
+  document.getElementById("avatarUserModal").innerHTML = sessionStorage.nome.charAt(0).toUpperCase();
+}
 
 const modalUser = document.getElementById("modalUser");
 const containerUser = document.getElementById("container_user");
@@ -134,9 +131,10 @@ async function baixarRelatorio() {
   }
 }
 
-function validarCargo(){
+function validarCargoModal(){
     if(sessionStorage.cargo === 'Jogador'){
       document.getElementById("btnRelatorio").style.display = "none";
       document.getElementById("notifArea").style.display = "none";
     }
 };
+validarCargoModal();

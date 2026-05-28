@@ -62,7 +62,8 @@
                     <span class="legenda_topo2">|</span>
                     <span class="legenda_topo3">geral</span>
                 </div>
-                <div id="container_user">
+<<<<<<< HEAD
+                <div id="container_user" class="container_user">
                     <span id="userLetra" class="user_letra"></span>
                 </div>
             </div>
@@ -157,12 +158,8 @@
 </body>
 
 </html>
-<script src="./js/userModal.js"></script>
+
 <script>
-    function sair() {
-        sessionStorage.clear();
-        window.location = "index.html";
-    }
 
     window.onload = carregarDash;
 
@@ -188,6 +185,8 @@
         graficoObjetivos();
         graficoGoldDano();
         graficoKDA();
+        iconeLetra();
+        userModal();
     };
 
     // LETRA DO ICONE
@@ -601,6 +600,6 @@
         })
     };
     
-    carregarDash();
 
 </script>
+<script src="./js/userModal.js"></script>

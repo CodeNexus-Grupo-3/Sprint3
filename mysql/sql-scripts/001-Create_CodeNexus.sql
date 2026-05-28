@@ -63,9 +63,6 @@ CREATE TABLE PartidasEquipe (
     idPartidasEquipe INT AUTO_INCREMENT PRIMARY KEY,
     dtPartida DATE DEFAULT (CURDATE()),
     resultado TINYINT NOT NULL,
-    tipo VARCHAR(75),
-    CONSTRAINT chkTipo 
-		CHECK (tipo IN ('Amistoso', 'Rankeada', 'Treino', 'Campeonato')),
     duracao INT,
     totalAbates INT DEFAULT 0,
     totalAssistencias INT DEFAULT 0,
