@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # 1 - Atualiza a lista de pacotes disponíveis
 echo "[INFO] Atualizando a lista de pacotes disponíveis"
@@ -49,12 +50,23 @@ export AWS_ACCESS_KEY_ID="$ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="$SECRET_KEY"
 export AWS_SESSION_TOKEN="$SESSION_TOKEN"
 
-# Configura via aws configure
-aws configure set aws_access_key_id "$ACCESS_KEY"
-aws configure set aws_secret_access_key "$SECRET_KEY"
-aws configure set aws_session_token "$SESSION_TOKEN"
-aws configure set region "$REGION"
-aws configure set output "$OUTPUT"
+# Cria o diretório .aws para guardar as credenciais e configurações
+mkdir -p ~/.aws
+
+# Cria um arquivo de credenciais no diretório .aws
+cat <<EOF > ~/.aws/credentials
+[default]
+aws_access_key_id=$ACCESS_KEY
+aws_secret_access_key=$SECRET_KEY
+aws_session_token=$SESSION_TOKEN
+EOF
+
+# Cria um arquivo de configurações no diretório .aws
+cat <<EOF > ~/.aws/config
+[default]
+region=$REGION
+output=$OUTPUT
+EOF
 
 # 5 - Instalando o Git e clonando o Repo
 echo "[INFO] Instalando o Git e clonando o repositório"
@@ -78,7 +90,7 @@ echo "[INFO] Criando os arquivos .env"
 # 9.1 - .env do web-data-viz
 
 # .env de desenvolvimento
-cat <<EOF > /home/ubuntu/Sprint3/web-data-viz/.env.dev
+cat <<EOF > /home/codenexus/Sprint3/web-data-viz/.env.dev
 AMBIENTE_PROCESSO=desenvolvimento
 
 # Configurações de conexão com o banco de dados
@@ -94,7 +106,7 @@ APP_HOST=0.0.0.0
 EOF
 
 # .env de produção
-cat <<EOF > /home/ubuntu/Sprint3/web-data-viz/.env
+cat <<EOF > /home/codenexus/Sprint3/web-data-viz/.env
 AMBIENTE_PROCESSO=producao
 
 # Configurações de conexão com o banco de dados
@@ -110,7 +122,7 @@ APP_HOST=0.0.0.0
 EOF
 
 # 9.2 - .env jar
-cat <<EOF > /home/ubuntu/Sprint3/jar/.env
+cat <<EOF > /home/codenexus/Sprint3/jar/.env
 # AWS
 # =====================
 AWS_ACCESS_KEY_ID=$ACCESS_KEY
@@ -139,7 +151,7 @@ EOF
 
 # 9.3 - .env do python
 
-cat <<EOF > /home/ubuntu/Sprint3/simbiose/.env
+cat <<EOF > /home/codenexus/Sprint3/simbiose/.env
 # BANCO
 # =====================
 DB_HOST=mysql
@@ -152,8 +164,8 @@ EOF
 
 # 10 - Subindo infraestrutura via docker-compose (imagens, containers, network, volume)
 echo "[INFO] Subindo infraestrutura via docker-compose"
-cd /home/ubuntu/Sprint3
-sudo docker compose up -d --build mysql python app
+cd /home/codenexus/Sprint3
+sudo docker-compose up -d --build mysql python app
 
 # 11 - Subindo container do Java (+CRON)
 
@@ -165,8 +177,12 @@ sudo systemctl enable cron
 
 # Buildando imagem do java
 echo "[INFO] Buildando imagem do java via docker-compose"
-sudo docker compose build java
+sudo docker-compose build java
 
 # Adicionando tarefa no CRON
 echo "[INFO] Criando tarefa no CRON de criar, executar e eliminar container"
-echo "*/10 * * * * sudo docker run --rm --env-file /home/ubuntu/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/ubuntu/etl.log 2>&1" | crontab -
+echo "*/10 * * * * sudo docker run --rm --env-file /home/codenexus/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/codenexus/etl.log 2>&1" | crontab -
+
+# 12 - Adicionando o usuário ao grupo Docker
+echo "[INFO] Adicionando o usuário ao grupo Docker"
+sudo usermod -aG docker codenexus

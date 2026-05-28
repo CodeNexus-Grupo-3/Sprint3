@@ -1,26 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
-    <link rel="stylesheet" href="./css/jogador.css">
-    <link rel="stylesheet" href="./css/userModal.css">
+    <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png" />
+    <link rel="stylesheet" href="./css/jogador.css" />
+    <link rel="stylesheet" href="./css/userModal.css" />
 
     <title>CodeNexus</title>
-
 </head>
 
 <body>
     <div id="sidebar" class="sidebar">
         <div id="container_titulo">
-            <img src="assets/logo_codenexus_sem_fundo.png" alt="">
+            <img src="assets/logo_codenexus_sem_fundo.png" alt="" />
             <h2>CODENEXUS</h2>
         </div>
         <div id="container_opcoes">
@@ -52,22 +51,22 @@
 
     <div id="container_principal">
         <div id="container_equipes">
-
             <div id="header_equipes">
                 <span>EQUIPE</span>
                 <div id="linha_header"></div>
 
                 <div id="topo_direita">
-                    <div id="container_user">M</div>
-                    <button id="btn_cadastrar" onclick="abrirCadastro()">CADASTRAR +</button>
-
-
+                    <div id="container_user">
+                        <span id="userLetra" class="user_letra"></span>
+                    </div>
+                    <button id="btn_cadastrar" onclick="abrirCadastro()">
+                        CADASTRAR +
+                    </button>
                 </div>
 
                 <div id="lista_equipes">
-
                     <div class="item_equipe" onclick="abrirPerfil()">
-                        <span class="numero">1</span>
+                        <span class="numero"></span>
                         <span class="material-symbols-outlined icone">person</span>
                         <span class="nome">Marina Okamoto / hitotsumenokado</span>
                         <div class="divisor"></div>
@@ -75,22 +74,19 @@
                     </div>
 
                     <div class="item_equipe" onclick="abrirPerfil()">
-                        <span class="numero">2</span>
+                        <span class="numero"></span>
                         <span class="material-symbols-outlined icone">person</span>
                         <span class="nome">João Silva / jhonzera</span>
                         <div class="divisor"></div>
                         <span class="cargo">ADC</span>
                     </div>
-
                 </div>
 
                 <!-- MODAL PERFIL -->
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                 <div id="modalPerfil">
-
                     <div id="boxPerfil">
-
                         <span id="fecharModal" onclick="fecharPerfil()">close</span>
 
                         <span>PERFIL DO JOGADOR</span>
@@ -99,19 +95,16 @@
 
                         <!-- TOPO PERFIL -->
                         <div id="topo_perfil">
-
                             <span class="material-symbols-outlined avatar_modal">person</span>
 
                             <div>
                                 <h2>Marina Okamoto / hitotsumenokado</h2>
                                 <p>Suporte / ADC</p>
                             </div>
-
                         </div>
 
                         <!-- CARDS -->
                         <div id="cardsPerfil">
-
                             <div class="card_status">
                                 <p>VITÓRIAS</p>
                                 <h1>72</h1>
@@ -131,12 +124,10 @@
                                 <p>WINRATE</p>
                                 <h1>71%</h1>
                             </div>
-
                         </div>
 
                         <!-- GRAFICOS -->
                         <div id="graficosPerfil">
-
                             <div class="boxGrafico">
                                 <h4>VITÓRIAS POR MÊS:</h4>
                                 <canvas id="graficoLinha"></canvas>
@@ -146,47 +137,40 @@
                                 <h4>CHAMPIONS MAIS PICKADOS:</h4>
                                 <canvas id="graficoBarra"></canvas>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- MODAL CADASTRO -->
                 <div id="modalCadastro">
-
                     <div id="boxCadastro">
-
                         <div id="topoCadastro">
-
                             <span>EQUIPE | CADASTRO</span>
 
                             <div id="acoesCadastro">
-                                <button id="btnEnviarCadastro" onclick="concluir()">CONCLUIR</button>
+                                <button id="btnEnviarCadastro" onclick="concluir()">
+                                    CONCLUIR
+                                </button>
                                 <span id="fecharCadastro" onclick="fecharCadastro()">close</span>
                             </div>
-
                         </div>
 
                         <div id="linhaCadastro"></div>
 
-
                         <div id="gridCadastro">
-
                             <div class="campo">
                                 <label>NOME:</label>
-                                <input id="input_nome" type="text" placeholder="Insira o nome">
+                                <input id="input_nome" type="text" placeholder="Insira o nome" />
                             </div>
 
                             <div class="campo">
                                 <label>NICKNAME:</label>
-                                <input id="input_nickname" type="text" placeholder="Insira o nickname">
+                                <input id="input_nickname" type="text" placeholder="Insira o nickname" />
                             </div>
 
                             <div class="campo">
                                 <label>EMAIL:</label>
-                                <input id="input_email" type="text" placeholder="Insira o email">
+                                <input id="input_email" type="text" placeholder="Insira o email" />
                             </div>
 
                             <div class="campo">
@@ -202,7 +186,7 @@
 
                             <div class="campo">
                                 <label>TELEFONE:</label>
-                                <input id="input_telefone" type="text" placeholder="-----------">
+                                <input id="input_telefone" type="text" placeholder="-----------" />
                             </div>
 
                             <div class="campo">
@@ -234,10 +218,9 @@
                                 </select>
                             </div>
 
-
                             <div class="campo">
                                 <label>SENHA:</label>
-                                <input id="input_senha" type="password" placeholder="Insira a senha">
+                                <input id="input_senha" type="password" placeholder="Insira a senha" />
                             </div>
 
                             <div class="campo">
@@ -251,184 +234,203 @@
                                     <option>ADC</option>
                                 </select>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
-                <script src="./js/userModal.js"></script>
 
-                <script>
-                    function concluir() {
-                        var varNome = input_nome.value;
-                        var varNickname = input_nickname.value;
-                        var varEmail = input_email.value;
-                        var varCargo = select_cargo.value;
-                        var varTelefone = input_telefone.value;
-                        var varPais = select_pais.value;
-                        var varSenha = input_senha.value;
-                        var varFuncao = select_funcao.value;
 
-                        if (
-                            varNome == "" ||
-                            varNickname == "" ||
-                            varEmail == "" ||
-                            varCargo == "" ||
-                            varTelefone == "" ||
-                            varPais == "" ||
-                            varSenha == "" ||
-                            varFuncao == ""
-                        ) {
-                            alert("Preencha todos os campos!");
-                            return;
-                        } else {
-                            fetch("/usuarios/cadastrar", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                    // crie um atributo que recebe o valor recuperado aqui
-                                    // Agora vá para o arquivo routes/usuario.js
-                                    serverNome: varNome,
-                                    serverNickname: varNickname,
-                                    serverEmail: varEmail,
-                                    serverCargo: varCargo,
-                                    serverTelefone: varTelefone,
-                                    serverPais: varPais,
-                                    serverSenha: varSenha,
-                                    serverFuncao: varFuncao,
-                                }),
-                            })
-                                .then(function (resposta) {
-                                    console.log("resposta: ", resposta);
+            </div>
+        </div>
+    </div>
+</body>
 
-                                    if (resposta.ok) {
-                                        // cardErro.style.display = "block";
+</html>
+<script>
+function iconeLetra(){
+        var nome = sessionStorage.nome;
+        document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+    };
+    
+    function concluir() {
+        var varNome = input_nome.value;
+        var varNickname = input_nickname.value;
+        var varEmail = input_email.value;
+        var varCargo = select_cargo.value;
+        var varTelefone = input_telefone.value;
+        var varPais = select_pais.value;
+        var varSenha = input_senha.value;
+        var varFuncao = select_funcao.value;
+        var varfkEquipe = sessionStorage.fkEquipe;
 
-                                        // mensagem_erro.innerHTML =
-                                        //   "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+        if (
+            varNome == "" ||
+            varNickname == "" ||
+            varEmail == "" ||
+            varCargo == "" ||
+            varTelefone == "" ||
+            varPais == "" ||
+            varSenha == "" ||
+            varFuncao == ""
+        ) {
+            alert("Preencha todos os campos!");
+            return;
+        } else {
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    serverNome: varNome,
+                    serverNickname: varNickname,
+                    serverEmail: varEmail,
+                    serverCargo: varCargo,
+                    serverTelefone: varTelefone,
+                    serverPais: varPais,
+                    serverSenha: varSenha,
+                    serverFuncao: varFuncao,
+                    serverFkEquipe: varfkEquipe,
+                
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
 
-                                        setTimeout(() => {
-                                            window.location = "jogador.html";
-                                        }, "2000");
+                    if (resposta.ok) {
+                        // cardErro.style.display = "block";
 
-                                        // limparFormulario();
-                                        // finalizarAguardar();
-                                    } else {
-                                        throw "Houve um erro ao tentar realizar o cadastro!";
-                                    }
-                                })
-                                .catch(function (resposta) {
-                                    console.log(`#ERRO: ${resposta}`);
-                                    // finalizarAguardar();
-                                });
-                        }
+                        // mensagem_erro.innerHTML =
+                        //   "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                        setTimeout(() => {
+                            window.location = "jogador.html";
+                        }, "2000");
+
+                        // limparFormulario();
+                        // finalizarAguardar();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
                     }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    // finalizarAguardar();
+                });
+        }
+    }
 
-                    function abrirPerfil() {
-                        document.getElementById("modalPerfil").style.display = "block";
-                        criarGraficos();
-                    }
+    function abrirPerfil() {
+        document.getElementById("modalPerfil").style.display = "flex";
+        criarGraficos();
+    }
 
-                    function fecharPerfil() {
-                        document.getElementById("modalPerfil").style.display = "none";
-                    }
+    function fecharPerfil() {
+        document.getElementById("modalPerfil").style.display = "none";
+    }
 
-                    function abrirCadastro() {
-                        document.getElementById("modalCadastro").style.display = "block";
-                    }
+    function abrirCadastro() {
+        document.getElementById("modalCadastro").style.display = "flex";
+    }
 
-                    function fecharCadastro() {
-                        document.getElementById("modalCadastro").style.display = "none";
-                    }
+    function fecharCadastro() {
+        document.getElementById("modalCadastro").style.display = "none";
+    }
 
-                    function criarGraficos() {
+    function criarGraficos() {
+        if (window.grafico1) window.grafico1.destroy();
+        if (window.grafico2) window.grafico2.destroy();
 
-                        if (window.grafico1) window.grafico1.destroy();
-                        if (window.grafico2) window.grafico2.destroy();
+        const ctx1 = document.getElementById("graficoLinha");
 
+        window.grafico1 = new Chart(ctx1, {
+            type: "line",
+            data: {
+                labels: ["0", "1", "2", "3", "4"],
+                datasets: [
+                    {
+                        data: [50, 190, 120, 210, 130],
+                        borderColor: "#00ffff",
+                        borderWidth: 2,
+                        tension: 0,
+                    },
+                    {
+                        data: [130, 40, 200, 220, 180],
+                        borderColor: "#F2FF58",
+                        borderWidth: 2,
+                        tension: 0,
+                    },
+                ],
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: { color: "white" },
+                        grid: { color: "rgba(255,255,255,0.3)" },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 250,
+                        ticks: {
+                            color: "white",
+                            stepSize: 50,
+                        },
+                        grid: {
+                            color: "rgba(255,255,255,0.3)",
+                        },
+                    },
+                },
+            },
+        });
 
-                        const ctx1 = document.getElementById('graficoLinha');
+        const ctx2 = document.getElementById("graficoBarra");
 
-                        window.grafico1 = new Chart(ctx1, {
-                            type: 'line',
-                            data: {
-                                labels: ['0', '1', '2', '3', '4'],
-                                datasets: [
-                                    {
-                                        data: [50, 190, 120, 210, 130],
-                                        borderColor: '#00ffff',
-                                        borderWidth: 2,
-                                        tension: 0
-                                    },
-                                    {
-                                        data: [130, 40, 200, 220, 180],
-                                        borderColor: '#F2FF58',
-                                        borderWidth: 2,
-                                        tension: 0
-                                    }
-                                ]
-                            },
-                            options: {
-                                plugins: { legend: { display: false } },
-                                responsive: true,
-                                scales: {
-                                    x: {
-                                        ticks: { color: 'white' },
-                                        grid: { color: 'rgba(255,255,255,0.3)' }
-                                    },
-                                    y: {
-                                        beginAtZero: true,
-                                        max: 250,
-                                        ticks: {
-                                            color: 'white',
-                                            stepSize: 50
-                                        },
-                                        grid: {
-                                            color: 'rgba(255,255,255,0.3)'
-                                        }
-                                    }
-                                }
-                            }
-                        });
+        window.grafico2 = new Chart(ctx2, {
+            type: "bar",
+            data: {
+                labels: ["0", "1", "2", "3", "4"],
+                datasets: [
+                    {
+                        data: [350, 200, 850, 650, 980],
+                        backgroundColor: "#f0b90b",
+                    },
+                ],
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: { color: "white" },
+                        grid: { color: "rgba(255,255,255,0.3)" },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 1000,
+                        ticks: {
+                            color: "white",
+                            stepSize: 250,
+                        },
+                        grid: {
+                            color: "rgba(255,255,255,0.3)",
+                        },
+                    },
+                },
+            },
+        });
+    }
 
+    function iconeLetra(){
+        var nome = sessionStorage.nome;
+        document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
+    };
 
-
-                        const ctx2 = document.getElementById('graficoBarra');
-
-                        window.grafico2 = new Chart(ctx2, {
-                            type: 'bar',
-                            data: {
-                                labels: ['0', '1', '2', '3', '4'],
-                                datasets: [{
-                                    data: [350, 200, 850, 650, 980],
-                                    backgroundColor: '#f0b90b'
-                                }]
-                            },
-                            options: {
-                                plugins: { legend: { display: false } },
-                                responsive: true,
-                                scales: {
-                                    x: {
-                                        ticks: { color: 'white' },
-                                        grid: { color: 'rgba(255,255,255,0.3)' }
-                                    },
-                                    y: {
-                                        beginAtZero: true,
-                                        max: 1000,
-                                        ticks: {
-                                            color: 'white',
-                                            stepSize: 250
-                                        },
-                                        grid: {
-                                            color: 'rgba(255,255,255,0.3)'
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
-                    } 
-                </script>
+    document.addEventListener("DOMContentLoaded", function(){
+        iconeLetra();
+        userModal();
+    })
+</script>
+<script src="./js/userModal.js"></script>

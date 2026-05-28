@@ -27,7 +27,7 @@ CREATE TABLE Usuario (
     fkEquipe INT,
     CONSTRAINT fkUsuarioEquipe
         FOREIGN KEY (fkEquipe) REFERENCES Equipe(idEquipe),
-    notificar TINYINT DEFAULT 0
+    notificar TINYINT
 );
 
 -- PostagensForum
@@ -44,7 +44,7 @@ CREATE TABLE PostagensForum (
 
 -- PartidasIndividual
 CREATE TABLE PartidasIndividual (
-    idPartidasIndividual INT AUTO_INCREMENT PRIMARY KEY,
+    idPartidasTime INT AUTO_INCREMENT PRIMARY KEY,
     dtPartida DATE DEFAULT (CURDATE()),
     resultado TINYINT NOT NULL,
     duracao INT NOT NULL,
