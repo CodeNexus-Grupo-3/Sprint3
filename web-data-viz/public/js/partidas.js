@@ -13,6 +13,7 @@ let chartBarras = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     carregarPartidas();
+    userModal();
 });
 
 async function carregarPartidas() {
