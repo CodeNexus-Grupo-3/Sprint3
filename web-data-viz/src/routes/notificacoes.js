@@ -15,5 +15,10 @@ router.patch("/toggleNotificacaoOFF/:fkUsuario", function (req, res) {
     notificacoesController.toggleNotificacaoOFF(req, res);
 });
 
+router.get("/buscarNotificar/:fkUsuario", function (req, res) {
+    notificacoesController.buscarNotificar(req, res);
+});
+
+
 
 module.exports = router;

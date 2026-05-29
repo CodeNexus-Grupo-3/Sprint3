@@ -26,7 +26,22 @@ function toggleNotificacaoOFF(req, res) {
     });
 }
 
+
+function buscarNotificar(req, res) {
+    var fkUsuario = req.params.fkUsuario;
+    
+    notificacoesModel.buscarNotificar(fkUsuario)
+    .then(function(resultado){
+        res.json(resultado);
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     toggleNotificacao,
-    toggleNotificacaoOFF
+    toggleNotificacaoOFF,
+    buscarNotificar
 }

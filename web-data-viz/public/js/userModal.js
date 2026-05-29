@@ -57,6 +57,7 @@ function userModal(){
   document.getElementById("nomeModal").innerHTML = sessionStorage.nome;
   document.getElementById("emailModal").innerHTML = sessionStorage.email;
   document.getElementById("avatarUserModal").innerHTML = sessionStorage.nome.charAt(0).toUpperCase();
+  carregartoggleNotificacao();
   toggleNotificacao();
 }
 
@@ -95,6 +96,24 @@ function toggleNotificacao(){
         desativarFuncao();
     }
 });
+}
+
+async function carregartoggleNotificacao() {
+    try {
+      console.log('carregando toggle modal');
+        const fkUsuario = sessionStorage.fkUsuario;
+
+        const resposta = await fetch(`/notificacoes/buscarNotificar/${fkUsuario}`);
+
+        const dados = await resposta.json();
+
+        const toggle = document.getElementById("toggleNotificacao");
+
+        toggle.checked = dados[0].notificar == 1;
+        
+    } catch (erro) {
+        console.log("Erro ao carregar toggle:", erro);
+    }
 }
 
 function ativarFuncao(){

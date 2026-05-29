@@ -24,7 +24,21 @@ function updateToggleNotificacaoOFF(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+
+function buscarNotificar(fkUsuario) {
+    var instrucaoSql = 
+    `
+    SELECT notificar
+    FROM Usuario
+    WHERE idUsuario = ${fkUsuario};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     updateToggleNotificacao,
-    updateToggleNotificacaoOFF
+    updateToggleNotificacaoOFF,
+    buscarNotificar
 }
