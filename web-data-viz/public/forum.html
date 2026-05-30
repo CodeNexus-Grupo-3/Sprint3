@@ -66,10 +66,10 @@
             <div id="campo_post">
                 <textarea id="mensagem" placeholder="O que você quer dizer?"></textarea>
                 <div id="acoes_post">
-                    <div>
+                    <!-- <div>
                         <span class="material-symbols-outlined">image</span>
                         <span class="material-symbols-outlined">attach_file</span>
-                    </div>
+                    </div> -->
 
                     <button onclick="postarMensagem()">POSTAR</button>
                 </div>
@@ -103,11 +103,15 @@
 </body>
 </html>
 
+
 <script>
 function iconeLetra(){
     console.log("carregou function iconeLetra()")
+
     var nome = sessionStorage.nome;
-    document.getElementById("container_user").innerHTML = nome.charAt(0).toUpperCase();
+
+    document.getElementById("container_user")
+    .innerHTML = nome.charAt(0).toUpperCase();
 };
 
 function sair() {
@@ -116,6 +120,9 @@ function sair() {
 }
 
 function postarMensagem(){
+
+     console.log("fkUsuario:", sessionStorage.fkUsuario);
+
     var mensagem = document.getElementById("mensagem").value;
 
     if(mensagem.trim() == ""){
@@ -153,7 +160,9 @@ function postarMensagem(){
 
 function listarPosts(){
 
-    fetch("/forum/listar")
+    var fkEquipe = sessionStorage.fkEquipe;
+
+    fetch(`/forum/listar/${fkEquipe}`)
     .then(function(resposta){
         return resposta.json();
     })
@@ -181,14 +190,47 @@ function listarPosts(){
 
                     <div class="acoes_postagem">
 
-                        <span class="material-symbols-outlined botao_like"
-                        onclick="curtirPost(${post.idPostagensForum}, this)">
-                        favorite
-                        </span>
+                        <div style="display:flex; align-items:center; gap:5px;">
 
-                        <span id="likes-${post.idPostagensForum}">
-                        ${post.likes}
-                        </span>
+                            <span class="material-symbols-outlined botao_like"
+                            onclick="curtirPost(${post.idPostagensForum}, this)">
+                            favorite
+                            </span>
+
+                            <span id="likes-${post.idPostagensForum}">
+                            ${post.likes}
+                            </span>
+
+                        </div>
+
+                        ${
+                            post.fkUsuario == sessionStorage.fkUsuario
+                            ?
+                            `
+                            <div style="display:flex; gap:10px;">
+
+                                <span 
+                                class="material-symbols-outlined"
+                                style="cursor:pointer; font-size:22px;"
+                                onclick="editarPost(
+                                    ${post.idPostagensForum},
+                                    \`${post.conteudo}\`
+                                )">
+                                edit
+                                </span>
+
+                                <span 
+                                class="material-symbols-outlined"
+                                style="cursor:pointer; font-size:22px;"
+                                onclick="deletarPost(${post.idPostagensForum})">
+                                delete
+                                </span>
+
+                            </div>
+                            `
+                            :
+                            ""
+                        }
 
                     </div>
 
@@ -203,6 +245,7 @@ function listarPosts(){
 }
 
 function curtirPost(id, elemento){
+
     if(elemento.classList.contains("ativo")){
         return;
     }
@@ -216,11 +259,9 @@ function curtirPost(id, elemento){
 
         var likes = parseInt(contador.innerText);
 
-
         if(elemento.classList.contains("ativo")){
-         return;
-     }
-
+            return;
+        }
 
         likes++;
 
@@ -229,20 +270,86 @@ function curtirPost(id, elemento){
         elemento.classList.add("ativo");
 
     });
+
 };
 
+function deletarPost(idPost){
+
+    var confirmar = confirm(
+        "Deseja deletar esta postagem?"
+    );
+
+    if(confirmar == false){
+        return;
+    }
+
+    fetch(`/forum/deletar/${idPost}`, {
+        method:"DELETE"
+    })
+    .then(function(resposta){
+
+        if(resposta.ok){
+            listarPosts();
+        }
+
+    })
+    .catch(function(erro){
+        console.log(erro);
+    });
+
+}
+
+function editarPost(idPost, conteudoAtual){
+
+    var novoConteudo = prompt(
+        "Editar postagem:",
+        conteudoAtual
+    );
+
+    if(novoConteudo == null || novoConteudo.trim() == ""){
+        return;
+    }
+
+    fetch(`/forum/editar/${idPost}`, {
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            conteudo: novoConteudo
+        })
+    })
+    .then(function(resposta){
+
+        if(resposta.ok){
+            listarPosts();
+        }
+
+    })
+    .catch(function(erro){
+        console.log(erro);
+    });
+
+}
+
 function validarCargo(){
+
     if(sessionStorage.cargo === 'Jogador'){
-      document.getElementById("area_postagem").style.display = "none";
+
+      document.getElementById("area_postagem")
+      .style.display = "none";
+
     };
+
 }
 
 document.addEventListener("DOMContentLoaded", function(){
+
     listarPosts();
     validarCargo();
     iconeLetra();
     userModal();
-});
 
+});
 </script>
 <script src="./js/userModal.js"></script>

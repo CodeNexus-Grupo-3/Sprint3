@@ -236,6 +236,7 @@ body{
 .conteudo_post p{
     color:var(--cor-texto);
     font-size: 18px;
+    word-break: break-word;
 }
 
 .imagens_post{
@@ -256,6 +257,8 @@ body{
     display:flex;
     margin-top:10px;
     align-items:center;
+    justify-content:space-between;
+    gap:15px;
     
 }
 
@@ -268,4 +271,32 @@ body{
     color:#ff4d6d;
     transform:scale(1.2);
     transition:0.2s;
+}
+
+/*NOVO CSS DOS BOTÕES*/
+
+.acoes_postagem div{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.acoes_postagem .material-symbols-outlined{
+    transition:0.2s;
+}
+
+.acoes_postagem .material-symbols-outlined:hover{
+    transform:scale(1.1);
+}
+
+.acoes_postagem span{
+    user-select:none;
+}
+
+.acoes_postagem .material-symbols-outlined:nth-child(2):hover{
+    color:#F2FF58;
+}
+
+.acoes_postagem .material-symbols-outlined:nth-child(3):hover{
+    color:#ff4d6d;
 }
