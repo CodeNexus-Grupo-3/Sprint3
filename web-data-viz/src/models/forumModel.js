@@ -127,19 +127,20 @@
 
 var db = require("../database/config");
 
-function listarPosts() {
+function listarPosts(fkEquipe) {
     var sql = `
         SELECT 
-            pf.idPostagensForum,
-            pf.titulo,
-            pf.conteudo,
-            pf.likes,
-            pf.dataHora,
-            pf.fkUsuario,
-            u.nickname
-        FROM PostagensForum pf
-        INNER JOIN Usuario u ON u.idUsuario = pf.fkUsuario
-        ORDER BY pf.dataHora DESC
+    pf.idPostagensForum,
+    pf.titulo,
+    pf.conteudo,
+    pf.likes,
+    pf.dataHora,
+    pf.fkUsuario,
+    u.nickname
+    FROM PostagensForum pf
+    INNER JOIN Usuario u ON u.idUsuario = pf.fkUsuario
+    WHERE u.fkEquipe = ${fkEquipe}
+    ORDER BY pf.dataHora DESC
     `;
     return db.executar(sql);
 }

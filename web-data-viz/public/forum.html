@@ -160,7 +160,9 @@ function postarMensagem(){
 
 function listarPosts(){
 
-    fetch("/forum/listar")
+    var fkEquipe = sessionStorage.fkEquipe;
+
+    fetch(`/forum/listar/${fkEquipe}`)
     .then(function(resposta){
         return resposta.json();
     })
