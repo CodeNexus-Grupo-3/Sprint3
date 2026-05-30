@@ -23,10 +23,10 @@ var relatorioRouter = require("./src/routes/relatorio");
 var usuarioRouter = require("./src/routes/usuarios");
 var notificacoesRouter = require("./src/routes/notificacoes");
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(cors());
 
 app.use("/avisos", avisosRouter);
