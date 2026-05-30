@@ -116,11 +116,6 @@
                                 <h4>VITÓRIAS POR MÊS:</h4>
                                 <canvas id="graficoLinha"></canvas>
                             </div>
-
-                            <div class="boxGrafico">
-                                <h4>CHAMPIONS MAIS PICKADOS:</h4>
-                                <canvas id="graficoBarra"></canvas>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -237,6 +232,14 @@
         var nome = sessionStorage.nome;
         document.getElementById("userLetra").innerHTML = nome.charAt(0).toUpperCase();
     };
+
+    function validarCargo() {
+
+    console.log("Cargo:", sessionStorage.cargo);
+
+    return sessionStorage.cargo == "Jogador";
+
+}
 
    var idEditando = null;
 
@@ -365,10 +368,12 @@ function concluir() {
 }
 
     function abrirPerfil(idUsuario) {
-    document.getElementById("modalPerfil").style.display = "flex";
+
     buscarPerfil(idUsuario);
     buscarKpis(idUsuario);
     buscarGraficoLinha(idUsuario);
+
+    document.getElementById("modalPerfil").style.display = "flex";
 
 }
 
@@ -381,16 +386,11 @@ function concluir() {
     document.getElementById("modalCadastro").style.display = "flex";
 
 }
-function abrirCadastroNovo(){
-
+    function abrirCadastroNovo(){
     idEditando = null;
-
     limparCampos();
-
     btnEnviarCadastro.innerHTML = "CONCLUIR";
-
     document.getElementById("modalCadastro").style.display = "flex";
-
 }
 
     function limparCampos(){
@@ -501,11 +501,28 @@ function abrirCadastroNovo(){
     };
 
     document.addEventListener("DOMContentLoaded", function () {
-        iconeLetra();
-        listarJogadores();
-        userModal();
 
-    })
+    iconeLetra();
+
+    userModal();
+
+    if(validarCargo()){
+
+        abrirPerfil(sessionStorage.fkUsuario);
+
+        document.getElementById("fecharModal").style.display = "none";
+
+        document.getElementById("lista_equipes").style.display = "none";
+
+        document.getElementById("btn_cadastrar").style.display = "none";
+
+    } else {
+
+        listarJogadores();
+
+    }
+
+});
 
 
     function buscarKpis(idUsuario) {
