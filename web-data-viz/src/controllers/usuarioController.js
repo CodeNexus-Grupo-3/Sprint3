@@ -70,7 +70,125 @@ function cadastrar(req, res) {
     });
 }
 
+
+function buscarKpis(req, res) {
+  var idUsuario = req.params.idUsuario;
+  usuarioModel.buscarKpis(idUsuario)
+    .then(function(resultado){
+        res.json(resultado[0]);
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+}
+
+function listarJogadores(req, res){
+    var fkEquipe = req.params.fkEquipe;
+    usuarioModel.listarJogadores(fkEquipe)
+    .then(function(resultado){
+        res.json(resultado);
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function graficoVitorias(req, res){
+    var idUsuario = req.params.idUsuario;
+    usuarioModel.graficoVitorias(idUsuario)
+    .then(function(resultado){
+        res.json(resultado);
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarPerfil(req, res){
+
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.buscarPerfil(idUsuario)
+    .then(function(resultado){
+        res.json(resultado[0]);
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+}
+
+function deletar(req, res){
+
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.deletarPartidas(idUsuario)
+    .then(function(){
+
+        return usuarioModel.deletar(idUsuario);
+
+    })
+    .then(function(){
+
+        res.status(200).send("Jogador deletado");
+
+    })
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro.sqlMessage);
+
+    });
+
+}
+
+function atualizar(req, res){
+
+    var idUsuario = req.params.idUsuario;
+
+    var nome = req.body.serverNome;
+    var nickname = req.body.serverNickname;
+    var email = req.body.serverEmail;
+    var cargo = req.body.serverCargo;
+    var telefone = req.body.serverTelefone;
+    var pais = req.body.serverPais;
+    var senha = req.body.serverSenha;
+    var funcao = req.body.serverFuncao;
+
+    usuarioModel.atualizar(
+        idUsuario,
+        nome,
+        nickname,
+        email,
+        cargo,
+        telefone,
+        pais,
+        senha,
+        funcao
+    )
+    .then(function(resultado){
+        res.status(200).send("Usuário atualizado");
+    })
+    .catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+}
+
 module.exports = {
   autenticar,
   cadastrar,
+  buscarKpis,
+  listarJogadores,
+  graficoVitorias,
+  buscarPerfil,
+  deletar,
+  atualizar
 };

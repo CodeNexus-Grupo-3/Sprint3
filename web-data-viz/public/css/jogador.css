@@ -624,8 +624,35 @@ canvas{
 .linhaUser{
     width: 100%;
     height: 1px;
-
     background-color: var(--cor-linha);
-
     margin: 22px 0;
+}
+
+
+.cargo_acoes{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.acoes_jogador{
+    display: flex;
+    align-items: center;
+    /* gap: 30px; */
+}
+
+.icone_acao{
+    color: white;
+    cursor: pointer;
+    transition: .2s;
+    font-size: 18px;
+}
+
+.icone_acao:hover{
+    transform: scale(1.15);
+    color: var(--cor-destaque);
+}
+
+.delete:hover{
+    color: #ff4d4d;
 }

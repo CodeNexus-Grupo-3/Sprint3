@@ -12,4 +12,28 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.get("/buscarKpis/:idUsuario", function (req, res) {
+    usuarioController.buscarKpis(req, res);
+});
+
+router.get("/listarJogadores/:fkEquipe", function (req, res) {
+    usuarioController.listarJogadores(req, res);
+});
+
+router.get("/graficoVitorias/:idUsuario", function (req, res) {
+    usuarioController.graficoVitorias(req, res);
+});
+
+router.get("/buscarPerfil/:idUsuario", function (req, res) {
+    usuarioController.buscarPerfil(req, res);
+});
+
+router.delete("/deletar/:idUsuario", function (req, res) {
+    usuarioController.deletar(req, res);
+});
+
+router.put("/atualizar/:idUsuario", function(req, res){
+    usuarioController.atualizar(req, res);
+});
+
 module.exports = router;
