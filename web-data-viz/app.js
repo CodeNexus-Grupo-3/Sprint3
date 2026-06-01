@@ -15,6 +15,7 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
+var partidasRouter = require("./src/routes/partidas");
 var avisosRouter = require("./src/routes/avisos");
 var dashboardRouter = require("./src/routes/dashboard");
 var forumRouter = require("./src/routes/forum");
@@ -29,6 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
+
+app.use("/partidas", partidasRouter);
 app.use("/avisos", avisosRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/forum", forumRouter);

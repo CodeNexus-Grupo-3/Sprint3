@@ -1,8 +1,8 @@
 // const ID_JOGADOR = sessionStorage.getItem("idJogador");
 // const ID_JOGADOR = localStorage.getItem("idJogador");
-const ID_JOGADOR = sessionStorage.getItem("ID_USUARIO");
-console.log("ID_JOGADOR:", ID_JOGADOR);
-console.log("sessionStorage completo:", {...sessionStorage});
+const ID_JOGADOR = sessionStorage.getItem("fkUsuario"); // ✅
+//console.log("ID_JOGADOR:", ID_JOGADOR);
+//console.log("sessionStorage completo:", {...sessionStorage});
 
 const API_BASE = "/partidas";
 
@@ -11,10 +11,27 @@ let chartDano = null;
 let chartPizza = null;
 let chartBarras = null;
 
+
+function aplicarPermissoesCargo() {
+    const cargo = sessionStorage.getItem("cargo");
+    
+    if (cargo === "Jogador") {
+    
+        const btnCadastrar = document.querySelector(".btn-cadastrar");
+        if (btnCadastrar) btnCadastrar.style.display = "none";
+
+       
+        const style = document.createElement("style");
+        style.textContent = `.btn-editar, .btn-deletar { display: none !important; }`;
+        document.head.appendChild(style);
+    }
+}
 document.addEventListener("DOMContentLoaded", () => {
     carregarPartidas();
     userModal();
+    aplicarPermissoesCargo();  // ← novo
 });
+
 
 async function carregarPartidas() {
     try {
@@ -74,44 +91,51 @@ function renderTabela(partidas) {
 
         const numero = partidas.length - index;
 
-        tr.innerHTML = `
-            <td>${numero}</td>
+tr.innerHTML = `
+    <td>${numero}</td>
 
-            <td>
-                <span class="badge ${resClasse}">
-                    ${p.resultado == 1 ? "VITÓRIA" : "DERROTA"}
-                </span>
-            </td>
+    <td>
+        <span class="badge ${resClasse}">
+            ${p.resultado == 1 ? "VITÓRIA" : "DERROTA"}
+        </span>
+    </td>
 
-            <td>${formatarDuracao(p.duracao)}</td>
-            <td>${p.totalAbates}</td>
-            <td>${p.totalAssistencias}</td>
-            <td>${p.totalMortes}</td>
-            <td>${p.totalGold}</td>
-            <td>${p.totalDano}</td>
-            <td>${p.totalBaron}</td>
-            <td>${p.totalDrag}</td>
-            <td>${p.totalTorres}</td>
-            <td>${formatarData(p.dataHora)}</td>
+    <td>${formatarDuracao(p.duracao)}</td>
+    <td>${p.totalAbates}</td>
+    <td>${p.totalAssistencias}</td>
+    <td>${p.totalMortes}</td>
+    <td>${p.totalGold}</td>
+    <td>${p.totalDano}</td>
+    <td>${p.totalBaron}</td>
+    <td>${p.totalDrag}</td>
+    <td>${p.totalTorres}</td>
+    <td>${formatarData(p.dataHora)}</td>
 
-            <td>
-                <div class="cell-acoes">
-                    <button
-                        class="btn-icon"
-                        title="Ver detalhes"
-                        onclick="abrirPartida(${p.id}, event, ${numero})">
-                        open_in_new
-                    </button>
+    <td>
+        <div class="cell-acoes">
+            <button
+                class="btn-icon"
+                title="Ver detalhes"
+                onclick="abrirPartida(${p.id}, event, ${numero})">
+                open_in_new
+            </button>
 
-                    <button
-                        class="btn-icon deletar"
-                        title="Excluir"
-                        onclick="excluirPartida(${p.id}, event)">
-                        delete
-                    </button>
-                </div>
-            </td>
-        `;
+            <button
+                class="btn-icon btn-editar"
+                title="Editar"
+                onclick="editarPartida(${p.id}, event)">
+                edit
+            </button>
+
+            <button
+                class="btn-icon deletar btn-deletar"
+                title="Excluir"
+                onclick="excluirPartida(${p.id}, event)">
+                delete
+            </button>
+        </div>
+    </td>
+`;
 
         tr.addEventListener("click", e => {
             if (e.target.closest(".btn-icon")) return;
@@ -125,6 +149,224 @@ function renderTabela(partidas) {
 function mostrarEmpty() {
     document.getElementById("empty-state").style.display = "block";
     document.getElementById("tabela-body").innerHTML = "";
+}
+async function editarPartida(id, event) {
+    if (event) event.stopPropagation();
+
+    // Evita abrir dois editores ao mesmo tempo
+    if (document.querySelector("tr.editando")) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/ultimas/${ID_JOGADOR}`);
+        if (!res.ok) throw new Error();
+
+        const partidas = await res.json();
+        const p = partidas.find(x => x.id == id);
+        if (!p) return;
+
+        const tr = document.querySelector(`tr[data-id="${id}"]`);
+        if (!tr) return;
+
+        // Converter duracao (segundos) para mm:ss
+        const seg = Number(p.duracao) || 0;
+        const minStr = String(Math.floor(seg / 60)).padStart(2, "0");
+        const segStr = String(seg % 60).padStart(2, "0");
+        const duracaoFormatada = `${minStr}:${segStr}`;
+
+        // Converter dataHora para datetime-local
+        const dataISO = p.dataHora
+            ? new Date(p.dataHora).toISOString().slice(0, 16)
+            : "";
+
+        tr.classList.add("editando");
+
+        tr.innerHTML = `
+            <td>—</td>
+
+            <td>
+                <select class="input-tabela" id="res-edit">
+                    <option value="1" ${p.resultado == 1 ? "selected" : ""}>VITÓRIA</option>
+                    <option value="0" ${p.resultado == 0 ? "selected" : ""}>DERROTA</option>
+                </select>
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="dur-edit"
+                    type="text"
+                    value="${duracaoFormatada}"
+                    style="width:60px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="aba-edit"
+                    type="number"
+                    value="${p.totalAbates}"
+                    min="0"
+                    style="width:50px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="ast-edit"
+                    type="number"
+                    value="${p.totalAssistencias}"
+                    min="0"
+                    style="width:50px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="mor-edit"
+                    type="number"
+                    value="${p.totalMortes}"
+                    min="0"
+                    style="width:50px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="gld-edit"
+                    type="text"
+                    value="${p.totalGold}"
+                    style="width:70px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="dan-edit"
+                    type="text"
+                    value="${p.totalDano}"
+                    style="width:70px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="bar-edit"
+                    type="number"
+                    value="${p.totalBaron}"
+                    min="0"
+                    style="width:40px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="dra-edit"
+                    type="number"
+                    value="${p.totalDrag}"
+                    min="0"
+                    style="width:40px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="tor-edit"
+                    type="number"
+                    value="${p.totalTorres}"
+                    min="0"
+                    style="width:40px">
+            </td>
+
+            <td>
+                <input
+                    class="input-tabela"
+                    id="data-edit"
+                    type="datetime-local"
+                    value="${dataISO}">
+            </td>
+
+            <td>
+                <div class="cell-acoes">
+                    <button
+                        class="btn-icon"
+                        title="Salvar"
+                        onclick="salvarEdicao(${id})">
+                        check_circle
+                    </button>
+
+                    <button
+                        class="btn-icon deletar"
+                        title="Cancelar"
+                        onclick="cancelarEdicao()">
+                        cancel
+                    </button>
+                </div>
+            </td>
+        `;
+
+    } catch (erro) {
+        console.error("Erro ao abrir edição:", erro);
+    }
+}
+
+async function salvarEdicao(id) {
+    const resultado = parseInt(document.getElementById("res-edit").value);
+
+    const duracaoTexto = document.getElementById("dur-edit").value || "";
+    const partes = duracaoTexto.split(":");
+    const duracao = (parseInt(partes[0]) || 0) * 60 + (parseInt(partes[1]) || 0);
+
+    const abates       = parseInt(document.getElementById("aba-edit").value) || 0;
+    const assistencias = parseInt(document.getElementById("ast-edit").value) || 0;
+    const mortes       = parseInt(document.getElementById("mor-edit").value) || 0;
+
+    const gold = parseInt(
+        (document.getElementById("gld-edit").value || "0").replace(/\./g, "")
+    ) || 0;
+
+    const dano = parseInt(
+        (document.getElementById("dan-edit").value || "0").replace(/\./g, "")
+    ) || 0;
+
+    const baroes  = parseInt(document.getElementById("bar-edit").value) || 0;
+    const dragoes = parseInt(document.getElementById("dra-edit").value) || 0;
+    const torres  = parseInt(document.getElementById("tor-edit").value) || 0;
+    const dataRaw = document.getElementById("data-edit").value; 
+const data = dataRaw.replace("T", " ") + ":00";             
+
+    if (duracaoTexto.trim() === "" || !data) {
+        alert("Preencha os campos obrigatórios.");
+        return;
+    }
+
+    const payload = {
+        resultado, duracao, abates, assistencias,
+        mortes, gold, dano, baroes, dragoes, torres, data
+    };
+
+    try {
+        const res = await fetch(`${API_BASE}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+            const msg = await res.text();
+            alert(msg);
+            return;
+        }
+
+        await carregarPartidas();
+
+    } catch (erro) {
+        console.error("Erro ao atualizar partida:", erro);
+        alert("Erro ao atualizar partida.");
+    }
+}
+
+function cancelarEdicao() {
+    carregarPartidas(); // Recarrega para restaurar a linha original
 }
 
 function cadastrarPartida() {
@@ -306,8 +548,8 @@ async function salvarNovaPartida() {
     const torres =
         parseInt(document.getElementById("tor-novo").value) || 0;
 
-    const data =
-        document.getElementById("data-novo").value;
+    const dataRaw = document.getElementById("data-novo").value;
+    const data = dataRaw.replace("T", " ") + ":00";
 
     if (
         resultado === undefined ||

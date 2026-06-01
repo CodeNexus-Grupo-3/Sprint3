@@ -1,5 +1,39 @@
 var database = require("../database/config");
 
+
+function atualizar(
+    idPartida,
+    resultado,
+    duracao,
+    abates,
+    assistencias,
+    mortes,
+    gold,
+    dano,
+    baroes,
+    dragoes,
+    torres,
+    data
+) {
+    var instrucaoSql = `
+        UPDATE PartidasEquipe SET
+            resultado       = ${resultado},
+            duracao         = ${duracao},
+            totalAbates     = ${abates},
+            totalAssistencias = ${assistencias},
+            totalMortes     = ${mortes},
+            totalGold       = ${gold},
+            totalDano       = ${dano},
+            totalBaron      = ${baroes},
+            totalDrag       = ${dragoes},
+            totalTorres     = ${torres},
+            dataHora        = '${data}'
+        WHERE idPartidasEquipe = ${idPartida};
+    `;
+
+    console.log(instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 function buscarUltimasPartidas(idJogador, limite_linhas) {
 
     var instrucaoSql = `
@@ -98,5 +132,6 @@ function excluir(idPartida) {
 module.exports = {
     buscarUltimasPartidas,
     cadastrar,
-    excluir
+    excluir,
+    atualizar
 };
