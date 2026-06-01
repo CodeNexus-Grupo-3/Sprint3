@@ -21,6 +21,41 @@ function buscarUltimasPartidas(req, res) {
 
         });
 }
+function atualizar(req, res) {
+    var idPartida    = req.params.idPartida;
+    var resultado    = req.body.resultado;
+    var duracao      = req.body.duracao;
+    var abates       = req.body.abates;
+    var assistencias = req.body.assistencias;
+    var mortes       = req.body.mortes;
+    var gold         = req.body.gold;
+    var dano         = req.body.dano;
+    var baroes       = req.body.baroes;
+    var dragoes      = req.body.dragoes;
+    var torres       = req.body.torres;
+    var data         = req.body.data;
+
+    if (
+        resultado === undefined || resultado === null ||
+        duracao === undefined   || duracao === null   ||
+        !data
+    ) {
+        return res.status(400).send("Campos obrigatórios não preenchidos!");
+    }
+
+    partidasModel.atualizar(
+        idPartida, resultado, duracao, abates,
+        assistencias, mortes, gold, dano,
+        baroes, dragoes, torres, data
+    )
+    .then(function(resultado) {
+        res.status(200).json(resultado);
+    })
+    .catch(function(erro) {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 function cadastrar(req, res) {
 
@@ -100,5 +135,6 @@ function excluir(req, res) {
 module.exports = {
     buscarUltimasPartidas,
     cadastrar,
-    excluir
+    excluir,
+    atualizar
 };

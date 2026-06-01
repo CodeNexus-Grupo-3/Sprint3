@@ -3,6 +3,11 @@ var router = express.Router();
 
 var partidasController = require("../controllers/partidasController");
 
+
+router.put("/:idPartida", function (req, res) {
+    partidasController.atualizar(req, res);
+});
+
 router.get("/ultimas/:idJogador", function (req, res) {
     partidasController.buscarUltimasPartidas(req, res);
 });
