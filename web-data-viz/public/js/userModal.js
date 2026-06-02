@@ -59,6 +59,7 @@ function userModal(){
   document.getElementById("avatarUserModal").innerHTML = sessionStorage.nome.charAt(0).toUpperCase();
   carregartoggleNotificacao();
   toggleNotificacao();
+  validarCargoModal();
 }
 
 const modalUser = document.getElementById("modalUser");
@@ -203,4 +204,4 @@ function validarCargoModal(){
       document.getElementById("notifArea").style.display = "none";
     }
 };
-validarCargoModal();
+
