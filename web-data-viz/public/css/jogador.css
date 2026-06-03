@@ -247,6 +247,7 @@ body{
 /* BOX */
 
 #boxPerfil{
+    position: relative;
     padding: 20px 28px;
     height: 100vh;
     width: 79vw;
@@ -256,6 +257,10 @@ body{
 #boxPerfil span{
     color: #F2FF58;
     font-size: 28px;
+}
+
+#boxPerfil #container_user span {
+    font-size: 20px;
 }
 
 
