@@ -1,6 +1,7 @@
 // const ID_JOGADOR = sessionStorage.getItem("idJogador");
 // const ID_JOGADOR = localStorage.getItem("idJogador");
 const ID_JOGADOR = sessionStorage.getItem("fkUsuario"); // ✅
+const nomeId = sessionStorage.getItem("nome");
 //console.log("ID_JOGADOR:", ID_JOGADOR);
 //console.log("sessionStorage completo:", {...sessionStorage});
 
@@ -29,7 +30,10 @@ function aplicarPermissoesCargo() {
 document.addEventListener("DOMContentLoaded", () => {
     carregarPartidas();
     userModal();
-    aplicarPermissoesCargo();  // ← novo
+    aplicarPermissoesCargo();  
+    iconeLetra();
+  
+    
 });
 
 
@@ -54,6 +58,10 @@ async function carregarPartidas() {
         mostrarEmpty();
     }
 }
+   function iconeLetra(){
+        var nome = nomeId
+        document.getElementById("container_user").innerHTML = nome.charAt(0).toUpperCase();
+    };
 
 function renderTabela(partidas) {
     const tbody = document.getElementById("tabela-body");
@@ -989,6 +997,8 @@ function formatarDuracao(segundos) {
 
     return `${String(min).padStart(2, "0")}:${String(seg).padStart(2, "0")}`;
 }
+
+
 
 function destruirGraficos() {
     if (chartLinha) {
