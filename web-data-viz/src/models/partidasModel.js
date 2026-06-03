@@ -27,7 +27,7 @@ function atualizar(
             totalBaron      = ${baroes},
             totalDrag       = ${dragoes},
             totalTorres     = ${torres},
-            dataHora        = '${data}'
+            dtPartida        = '${data}'
         WHERE idPartidasEquipe = ${idPartida};
     `;
 
@@ -49,7 +49,7 @@ function buscarUltimasPartidas(idJogador, limite_linhas) {
         p.totalDrag,
         p.totalTorres,
         p.totalDano,
-        p.dataHora
+        p.dtPartida
     FROM PartidasEquipe p
     INNER JOIN Usuario u
         ON p.fkEquipe = u.fkEquipe
@@ -91,7 +91,7 @@ function cadastrar(
         totalDrag,
         totalTorres,
         totalDano,
-        dataHora,
+        dtPartida,
         fkEquipe
     )
 
