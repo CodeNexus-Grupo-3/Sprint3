@@ -1,4 +1,3 @@
-
 function iconeLetra(){
     console.log("carregou function iconeLetra()")
 
