@@ -77,7 +77,7 @@ def gerar_relatorio():
 
     cursor = conexao.cursor(dictionary=True)
 
-    cursor.execute("SELECT dtPartida, resultado, duracao, tipo, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano FROM PartidasEquipe;")
+    cursor.execute("SELECT dtPartida, resultado, duracao, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano FROM PartidasEquipe;")
 
     team_data = cursor.fetchall()
 
@@ -96,7 +96,6 @@ def gerar_relatorio():
         "Data", 
         "Resultado", 
         "Duração",
-        "Tipo", 
         "Total de Abates", 
         "Total de Assistências", 
         "Total de Mortes", 
