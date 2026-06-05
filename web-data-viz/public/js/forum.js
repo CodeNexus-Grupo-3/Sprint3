@@ -77,7 +77,7 @@ function listarPosts(){
 
                 <div class="conteudo_post">
 
-                    <h3>${post.nickname}</h3>
+                    <h3>${post.titulo}</h3>
 
                     <p>${post.conteudo}</p>
 
