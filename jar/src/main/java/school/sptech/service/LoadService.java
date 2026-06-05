@@ -22,17 +22,17 @@ public class LoadService {
             return;
         }
 
-        String sql = "INSERT INTO Trusted VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Trusted VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, dados, dados.size(), (ps, dado) -> {
             ps.setInt(1, dado.getDuracao());
-            ps.setInt(2, dado.getTotalBaron());
-            ps.setInt(3, dado.getTotalDrag());
-            ps.setInt(4, dado.getTotalTorres());
-            ps.setInt(5, dado.getTotalAbates());
-            ps.setInt(6, dado.getTotalMortes());
-            ps.setInt(7, dado.getTotalAssistencias());
-            ps.setInt(8, dado.getTotalGold());
+            ps.setInt(2, dado.getTotalAbates());
+            ps.setInt(3, dado.getTotalAssistencias());
+            ps.setInt(4, dado.getTotalMortes());
+            ps.setInt(5, dado.getTotalGold());
+            ps.setInt(6, dado.getTotalBaron());
+            ps.setInt(7, dado.getTotalDrag());
+            ps.setInt(8, dado.getTotalTorres());
             ps.setInt(9, dado.getTotalDano());
         });
     }
@@ -42,7 +42,7 @@ public class LoadService {
             logService.sucesso("INFO", "Iniciando limpeza da tabela Dashboard", "LoadService");
             System.out.println("[INFO] Iniciando limpeza da tabela Dashboard");
 
-            jdbcTemplate.execute("TRUNCATE TABLE Dashboard");
+            jdbcTemplate.execute("TRUNCATE TABLE Trusted");
 
             logService.sucesso("SUCESSO", "Tabela limpa com sucesso", "LoadService");
             System.out.println("[SUCESSO] Tabela limpa com sucesso");

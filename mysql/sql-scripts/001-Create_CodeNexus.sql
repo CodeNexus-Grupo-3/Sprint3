@@ -80,7 +80,6 @@ CREATE TABLE PartidasEquipe (
 -- Trusted
 CREATE TABLE Trusted (
     idTrusted INT AUTO_INCREMENT PRIMARY KEY,
-    equipe VARCHAR(75),
     duracao INT,
     totalAbates INT DEFAULT 0,
     totalAssistencias INT DEFAULT 0,
