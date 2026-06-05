@@ -78,16 +78,16 @@ INSERT INTO PartidasIndividual (dtPartida, resultado, duracao, abates, assistenc
 
 
 -- Partidas de Equipe
-INSERT INTO PartidasEquipe (dtPartida, resultado, tipo, duracao, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano, fkEquipe) VALUES
+INSERT INTO PartidasEquipe (dtPartida, resultado, duracao, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano, fkEquipe) VALUES
     -- CodeWarriors
-    ('2026-04-04', 1, 'Amistoso', 40, 25, 40, 20, 60000, 1, 2, 8, 120000, 1),
-    ('2026-04-08', 0, 'Rankeada', 38, 18, 30, 25, 55000, 0, 1, 6, 100000, 1),
-    ('2026-04-12', 1, 'Treino', 42, 30, 50, 15, 65000, 2, 3, 9, 130000, 1),
-    ('2026-04-16', 0, 'Campeonato', 45, 20, 35, 28, 58000, 1, 2, 7, 110000, 1),
-    ('2026-04-20', 1, 'Rankeada', 39, 28, 45, 18, 62000, 2, 2, 10, 125000, 1),
+    ('2026-04-04', 1, 40, 25, 40, 20, 60000, 1, 2, 8, 120000, 1),
+    ('2026-04-08', 0, 38, 18, 30, 25, 55000, 0, 1, 6, 100000, 1),
+    ('2026-04-12', 1, 42, 30, 50, 15, 65000, 2, 3, 9, 130000, 1),
+    ('2026-04-16', 0, 45, 20, 35, 28, 58000, 1, 2, 7, 110000, 1),
+    ('2026-04-20', 1, 39, 28, 45, 18, 62000, 2, 2, 10, 125000, 1),
     -- NexusMasters
-    ('2026-04-06', 1, 'Amistoso', 41, 27, 42, 19, 61000, 1, 2, 9, 122000, 2),
-    ('2026-04-10', 0, 'Rankeada', 37, 19, 33, 26, 54000, 0, 1, 6, 98000, 2),
-    ('2026-04-14', 1, 'Treino', 43, 32, 55, 14, 67000, 2, 3, 9, 135000, 2),
-    ('2026-04-18', 0, 'Campeonato', 46, 21, 36, 29, 59000, 1, 2, 7, 112000, 2),
-    ('2026-04-22', 1, 'Rankeada', 40, 29, 47, 17, 63000, 2, 2, 10, 127000, 2);
+    ('2026-04-06', 1, 41, 27, 42, 19, 61000, 1, 2, 9, 122000, 2),
+    ('2026-04-10', 0, 37, 19, 33, 26, 54000, 0, 1, 6, 98000, 2),
+    ('2026-04-14', 1, 43, 32, 55, 14, 67000, 2, 3, 9, 135000, 2),
+    ('2026-04-18', 0, 46, 21, 36, 29, 59000, 1, 2, 7, 112000, 2),
+    ('2026-04-22', 1, 40, 29, 47, 17, 63000, 2, 2, 10, 127000, 2);
