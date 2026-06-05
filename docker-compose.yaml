@@ -41,7 +41,7 @@ services:
     image: app-codenexus
     restart: always
     ports:
-      - "3333:3333"
+      - "80:3333"
     depends_on:
       - mysql
       - python
