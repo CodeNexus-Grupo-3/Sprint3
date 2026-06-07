@@ -90,7 +90,7 @@ function renderTabela(partidas) {
 
     partidas.forEach((p, index) => {
         const tr = document.createElement("tr");
-
+console.log("Partida:", p); 
         tr.dataset.id = p.id;
 
         const resClasse = p.resultado == 1
@@ -117,7 +117,7 @@ tr.innerHTML = `
     <td>${p.totalBaron}</td>
     <td>${p.totalDrag}</td>
     <td>${p.totalTorres}</td>
-    <td>${formatarData(p.dataHora)}</td>
+    <td>${formatarData(p.dtPartida)}</td>
 
     <td>
         <div class="cell-acoes">
@@ -147,6 +147,7 @@ tr.innerHTML = `
 
         tr.addEventListener("click", e => {
             if (e.target.closest(".btn-icon")) return;
+             if (tr.classList.contains("editando")) return;
             abrirPartida(p.id, null, numero);
         });
 
@@ -181,12 +182,16 @@ async function editarPartida(id, event) {
         const segStr = String(seg % 60).padStart(2, "0");
         const duracaoFormatada = `${minStr}:${segStr}`;
 
-        // Converter dataHora para datetime-local
-        const dataISO = p.dataHora
-            ? new Date(p.dataHora).toISOString().slice(0, 16)
+        // Converter dtPartida para datetime-local
+        const dataISO = p.dtPartida
+            ? new Date(p.dtPartida).toISOString().slice(0, 16)
             : "";
 
         tr.classList.add("editando");
+        tr.addEventListener("click", e => {
+    if (!e.target.closest(".btn-icon")) e.stopPropagation();
+}, { capture: true });
+
 
         tr.innerHTML = `
             <td>—</td>
@@ -311,6 +316,7 @@ async function editarPartida(id, event) {
                 </div>
             </td>
         `;
+        aplicarMascaraDuracao(document.getElementById("dur-edit"));
 
     } catch (erro) {
         console.error("Erro ao abrir edição:", erro);
@@ -376,6 +382,15 @@ const data = dataRaw.replace("T", " ") + ":00";
 function cancelarEdicao() {
     carregarPartidas(); // Recarrega para restaurar a linha original
 }
+function aplicarMascaraDuracao(input) {
+    input.addEventListener("input", e => {
+        let v = input.value.replace(/\D/g, "").slice(0, 4);
+        if (v.length >= 3) {
+            v = v.slice(0, 2) + ":" + v.slice(2);
+        }
+        input.value = v;
+    });
+}
 
 function cadastrarPartida() {
     const tbody = document.getElementById("tabela-body");
@@ -386,6 +401,10 @@ function cadastrarPartida() {
 
     tr.classList.add("nova-linha", "editando");
     tr.dataset.id = "novo";
+
+    tr.addEventListener("click", e => {
+    if (!e.target.closest(".btn-icon")) e.stopPropagation();
+}, { capture: true });
 
     tr.innerHTML = `
         <td>—</td>
@@ -511,7 +530,7 @@ function cadastrarPartida() {
     `;
 
     tbody.insertBefore(tr, tbody.firstChild);
-    document.getElementById("dur-novo").focus();
+    aplicarMascaraDuracao(document.getElementById("dur-novo"));
 }
 
 async function salvarNovaPartida() {
@@ -683,7 +702,7 @@ function renderDetalhe(p, numero) {
         </span>
 
         <span style="color:var(--cor-texto-suave);font-size:12px">
-            ${formatarData(p.dataHora)}
+            ${formatarData(p.dtPartida)}
         </span>
     `;
 
@@ -978,11 +997,8 @@ function formatarData(valor) {
 
     if (!isNaN(d)) {
         const dia = String(d.getUTCDate()).padStart(2, "0");
-
         const mes = String(d.getUTCMonth() + 1).padStart(2, "0");
-
         const ano = String(d.getUTCFullYear()).slice(-2);
-
         return `${dia}/${mes}/${ano}`;
     }
 
