@@ -55,7 +55,7 @@ public class ExtractService {
                 logService.sucesso("INFO", "Nenhum objeto encontrado no bucket: " + nomeBucket, "ExtractService");
                 System.out.println("[INFO] Nenhum objeto encontrado no bucket: " + nomeBucket);
             } else {
-                logService.sucesso("SUCESSO", objects.size() + " listados com sucesso", "ExtractService");
+                logService.sucesso("SUCESSO", objects.size() + " objetos listados com sucesso", "ExtractService");
                 System.out.println("[SUCESSO] " + objects.size() + " listados com sucesso");
             }
 
