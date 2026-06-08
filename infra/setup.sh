@@ -144,8 +144,8 @@ DB_PORT=3306
 # =====================
 SMTP_HOST=smtp.office365.com
 SMTP_PORT=587
-SMTP_USER=codenexus.sptech@outlook.com
-SMTP_PASS=jspdcbatcanywphv
+SMTP_USER=marina.okamoto@sptech.school
+SMTP_PASS=Culiinformatica15!
 # =====================
 EOF
 
@@ -181,7 +181,7 @@ sudo docker-compose build java
 
 # Adicionando tarefa no CRON
 echo "[INFO] Criando tarefa no CRON de criar, executar e eliminar container"
-echo "*/10 * * * * sudo docker run --rm --env-file /home/codenexus/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/codenexus/etl.log 2>&1" | crontab -
+echo "0 */3 * * * sudo docker run --rm --env-file /home/codenexus/Sprint3/jar/.env --network network-codenexus java-codenexus >> /home/codenexus/etl.log 2>&1" | crontab -
 
 # 12 - Adicionando o usuário ao grupo Docker
 echo "[INFO] Adicionando o usuário ao grupo Docker"

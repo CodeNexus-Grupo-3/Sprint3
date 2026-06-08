@@ -94,8 +94,8 @@ DB_PORT=3306
 # =====================
 SMTP_HOST=smtp.office365.com
 SMTP_PORT=587
-SMTP_USER=codenexus.sptech@outlook.com
-SMTP_PASS=jspdcbatcanywphv
+SMTP_USER=marina.okamoto@sptech.school
+SMTP_PASS=Culiinformatica15!
 # =====================
 EOF
 
