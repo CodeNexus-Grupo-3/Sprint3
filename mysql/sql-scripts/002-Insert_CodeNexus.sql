@@ -16,6 +16,7 @@ INSERT INTO Usuario (nome, email, senha, telefone, pais, cargo, fkEquipe, notifi
     ('Vinicius Santana', 'vinicius.gama@sptech.school', 'senha123', '11966666666', 'Brasil', 'Treinador', 1, 1),
     ('Nicolas Mazza', 'nicolas.ibrahim@sptech.school', 'senha123', '11955555555', 'Espanha', 'Treinador', 2, 1);
 
+
 -- Jogadores
 INSERT INTO Usuario (nome, nickname, email, senha, telefone, pais, funcao, cargo, fkEquipe) VALUES
     -- CodeWarriors
@@ -34,48 +35,47 @@ INSERT INTO Usuario (nome, nickname, email, senha, telefone, pais, funcao, cargo
 -- Postagens do Fórum
 INSERT INTO PostagensForum (titulo, conteudo, dataHora, likes, fkUsuario) VALUES
     -- Vinicius
-    ('Treino intenso', 'Hoje tivemos um treino muito produtivo.', '2026-04-02 14:00:00', 10, 4),
-    ('Preparacao para campeonato', 'Estamos focados no proximo torneio.', '2026-04-10 16:00:00', 15, 4),
-    ('Feedback dos jogadores', 'A equipe está evoluindo bem.', '2026-04-18 18:00:00', 20, 4),
+    ('Treino intenso', 'Hoje tivemos um treino muito produtivo.', '2026-04-02 14:00:00', 10, 3),
+    ('Preparacao para campeonato', 'Estamos focados no proximo torneio.', '2026-04-10 16:00:00', 15, 3),
+    ('Feedback dos jogadores', 'A equipe está evoluindo bem.', '2026-04-18 18:00:00', 20, 3),
     -- Mazza
-    ('Treino europeu', 'A equipe treinou estrategias novas.', '2026-04-03 15:00:00', 12, 5),
-    ('Campeonato europeu', 'Foco no titulo.', '2026-04-12 17:00:00', 18, 5),
-    ('Avaliacao semanal', 'Os jogadores estao motivados.', '2026-04-20 19:00:00', 22, 5);
+    ('Treino europeu', 'A equipe treinou estrategias novas.', '2026-04-03 15:00:00', 12, 4),
+    ('Campeonato europeu', 'Foco no titulo.', '2026-04-12 17:00:00', 18, 4),
+    ('Avaliacao semanal', 'Os jogadores estao motivados.', '2026-04-20 19:00:00', 22, 4);
 
 -- Partidas Individuais
 INSERT INTO PartidasIndividual (dtPartida, resultado, duracao, abates, assistencias, mortes, cs, dano, fkUsuario) VALUES
+	('2026-04-18', 1, 2280, 12, 5, 2, 250, 21000, 5),
+    ('2026-04-22', 0, 2400, 7, 6, 6, 230, 18000, 5),
+    ('2026-05-26', 1, 2280, 13, 4, 3, 260, 22000, 5),
     ('2026-04-01', 1, 2400, 5, 3, 2, 200, 15000, 6),
     ('2026-04-05', 0, 2280, 2, 5, 4, 180, 12000, 6),
-    ('2026-04-09', 1, 2520, 7, 2, 1, 210, 16000, 6),
+    ('2026-05-09', 1, 2520, 7, 2, 1, 210, 16000, 6),
     ('2026-04-02', 1, 2700, 8, 6, 3, 220, 17000, 7),
     ('2026-04-06', 0, 2340, 4, 7, 5, 190, 14000, 7),
-    ('2026-04-10', 1, 2460, 9, 5, 2, 230, 18000, 7),
+    ('2026-05-10', 1, 2460, 9, 5, 2, 230, 18000, 7),
     ('2026-04-03', 1, 2220, 6, 8, 4, 150, 16000, 8),
     ('2026-04-07', 0, 2580, 3, 9, 6, 140, 13000, 8),
-    ('2026-04-11', 1, 2760, 7, 10, 3, 160, 17500, 8),
+    ('2026-05-11', 1, 2760, 7, 10, 3, 160, 17500, 8),
     ('2026-04-04', 1, 2280, 2, 12, 2, 80, 9000, 9),
     ('2026-04-08', 0, 2760, 1, 14, 5, 70, 8500, 9),
-    ('2026-04-12', 1, 2580, 3, 15, 1, 90, 9500, 9),
+    ('2026-05-12', 1, 2580, 3, 15, 1, 90, 9500, 9),
     ('2026-04-13', 1, 2220, 10, 4, 2, 240, 20000, 10),
     ('2026-04-17', 0, 2460, 6, 5, 6, 220, 17000, 10),
-    ('2026-04-21', 1, 2340, 11, 3, 3, 250, 21000, 10),
+    ('2026-05-21', 1, 2340, 11, 3, 3, 250, 21000, 10),
     ('2026-04-14', 1, 2700, 6, 2, 2, 210, 16000, 11),
     ('2026-04-18', 0, 2520, 3, 4, 5, 190, 14000, 11),
-    ('2026-04-22', 1, 2280, 7, 3, 1, 220, 16500, 11),
+    ('2026-05-22', 1, 2280, 7, 3, 1, 220, 16500, 11),
     ('2026-04-15', 1, 2400, 9, 7, 2, 230, 18500, 12),
     ('2026-04-19', 0, 2280, 5, 6, 6, 200, 15000, 12),
-    ('2026-04-23', 1, 2520, 10, 8, 3, 240, 19000, 12),
+    ('2026-05-23', 1, 2520, 10, 8, 3, 240, 19000, 12),
     ('2026-04-16', 1, 2700, 7, 9, 4, 160, 17000, 13),
     ('2026-04-20', 0, 2340, 4, 10, 7, 150, 14500, 13),
-    ('2026-04-24', 1, 2460, 8, 11, 3, 170, 18000, 13),
+    ('2026-05-24', 1, 2460, 8, 11, 3, 170, 18000, 13),
     ('2026-04-17', 1, 2220, 2, 13, 2, 85, 9500, 14),
     ('2026-04-21', 0, 2580, 1, 12, 5, 75, 9000, 14),
-    ('2026-04-25', 1, 2760, 3, 14, 1, 95, 9800, 14),
-    ('2026-04-18', 1, 2280, 12, 5, 2, 250, 21000, 15),
-    ('2026-04-22', 0, 2400, 7, 6, 6, 230, 18000, 15),
-    ('2026-04-26', 1, 2280, 13, 4, 3, 260, 22000, 15);
-
-
+    ('2026-05-25', 1, 2760, 3, 14, 1, 95, 9800, 14);
+    
 -- Partidas de Equipe
 INSERT INTO PartidasEquipe (dtPartida, resultado, duracao, totalAbates, totalAssistencias, totalMortes, totalGold, totalBaron, totalDrag, totalTorres, totalDano, fkEquipe) VALUES
     -- CodeWarriors

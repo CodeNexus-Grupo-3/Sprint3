@@ -42,6 +42,18 @@ CREATE TABLE PostagensForum (
         FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
 
+-- LikesForum
+CREATE TABLE LikesForum (
+    idLike INT AUTO_INCREMENT PRIMARY KEY,
+    fkUsuario INT NOT NULL,
+	CONSTRAINT fkLikeUsuario
+		FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario),
+    fkPostagem INT NOT NULL,
+    CONSTRAINT fkLikePostagem 
+		FOREIGN KEY (fkPostagem) REFERENCES PostagensForum(idPostagensForum),
+    CONSTRAINT unicoLike UNIQUE (fkUsuario, fkPostagem)
+);
+
 -- PartidasIndividual
 CREATE TABLE PartidasIndividual (
     idPartidasTime INT AUTO_INCREMENT PRIMARY KEY,
