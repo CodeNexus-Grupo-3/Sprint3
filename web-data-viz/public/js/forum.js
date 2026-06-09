@@ -1,3 +1,4 @@
+
 function iconeLetra(){
     console.log("carregou function iconeLetra()")
 
@@ -29,7 +30,6 @@ function postarMensagem(){
             "Content-Type":"application/json"
         },
         body:JSON.stringify({
-            // titulo:"Postagem",
             titulo: document.getElementById("titulo").value || "Sem título",
             conteudo:mensagem,
             fkUsuario: sessionStorage.fkUsuario
@@ -42,6 +42,7 @@ function postarMensagem(){
             listarPosts();
 
             document.getElementById("mensagem").value = "";
+            document.getElementById("titulo").value = "";
 
         }
 
@@ -55,8 +56,9 @@ function postarMensagem(){
 function listarPosts(){
 
     var fkEquipe = sessionStorage.fkEquipe;
+    var fkUsuario = sessionStorage.fkUsuario;
 
-    fetch(`/forum/listar/${fkEquipe}`)
+    fetch(`/forum/listar/${fkEquipe}/${fkUsuario}`)
     .then(function(resposta){
         return resposta.json();
     })
@@ -67,6 +69,7 @@ function listarPosts(){
         for(var i = 0; i < posts.length; i++){
 
             var post = posts[i];
+            var jaCurtiu = post.curtido == 1;
 
             document.getElementById("lista_posts").innerHTML += `
 
@@ -86,7 +89,7 @@ function listarPosts(){
 
                         <div style="display:flex; align-items:center; gap:5px;">
 
-                            <span class="material-symbols-outlined botao_like"
+                            <span class="material-symbols-outlined botao_like ${jaCurtiu ? 'ativo' : ''}"
                             onclick="curtirPost(${post.idPostagensForum}, this)">
                             favorite
                             </span>
@@ -138,18 +141,27 @@ function listarPosts(){
     });
 }
 
-
 function curtirPost(id, elemento){
 
+    var fkUsuario = sessionStorage.fkUsuario;
+
     if(elemento.classList.contains("ativo")){
-        fetch(`/forum/descurtir/${id}`, { method:"PUT" })
+        fetch(`/forum/descurtir/${id}`, {
+            method:"PUT",
+            headers:{ "Content-Type":"application/json" },
+            body: JSON.stringify({ fkUsuario: fkUsuario })
+        })
         .then(function(){
             var contador = document.getElementById("likes-" + id);
             contador.innerText = parseInt(contador.innerText) - 1;
             elemento.classList.remove("ativo");
         });
     } else {
-        fetch(`/forum/curtir/${id}`, { method:"PUT" })
+        fetch(`/forum/curtir/${id}`, {
+            method:"PUT",
+            headers:{ "Content-Type":"application/json" },
+            body: JSON.stringify({ fkUsuario: fkUsuario })
+        })
         .then(function(){
             var contador = document.getElementById("likes-" + id);
             contador.innerText = parseInt(contador.innerText) + 1;

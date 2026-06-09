@@ -1,10 +1,12 @@
 
 
+
 var forumModel = require("../models/forumModel");
 
 function listarPosts(req, res) {
     var fkEquipe = req.params.fkEquipe;
-    forumModel.listarPosts(fkEquipe)
+    var fkUsuario = req.params.fkUsuario;
+    forumModel.listarPosts(fkEquipe, fkUsuario)
     .then(function(posts) {
         res.json(posts);
     })
@@ -35,7 +37,8 @@ function postarMensagem(req, res) {
 
 function curtirPost(req, res) {
     var idPostagensForum = req.params.id;
-    forumModel.curtirPost(idPostagensForum)
+    var fkUsuario = req.body.fkUsuario;
+    forumModel.curtirPost(idPostagensForum, fkUsuario)
     .then(function() {
         res.status(200).json({ mensagem: "Post curtido com sucesso" });
     })
@@ -47,7 +50,8 @@ function curtirPost(req, res) {
 
 function descurtirPost(req, res) {
     var idPostagensForum = req.params.id;
-    forumModel.descurtirPost(idPostagensForum)
+    var fkUsuario = req.body.fkUsuario;
+    forumModel.descurtirPost(idPostagensForum, fkUsuario)
     .then(function() {
         res.status(200).json({ mensagem: "Like removido com sucesso" });
     })

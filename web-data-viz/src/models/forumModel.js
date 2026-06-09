@@ -1,7 +1,8 @@
 
+
 var db = require("../database/config");
 
-function listarPosts(fkEquipe) {
+function listarPosts(fkEquipe, fkUsuario) {
     var sql = `
         SELECT 
             pf.idPostagensForum,
@@ -9,9 +10,13 @@ function listarPosts(fkEquipe) {
             pf.conteudo,
             pf.likes,
             pf.dataHora,
-            pf.fkUsuario
+            pf.fkUsuario,
+            CASE WHEN lf.fkUsuario IS NOT NULL THEN 1 ELSE 0 END AS curtido
         FROM PostagensForum pf
         INNER JOIN Usuario u ON u.idUsuario = pf.fkUsuario
+        LEFT JOIN LikesForum lf 
+            ON lf.fkPostagem = pf.idPostagensForum 
+            AND lf.fkUsuario = ${fkUsuario}
         WHERE u.fkEquipe = ${fkEquipe}
         ORDER BY pf.dataHora DESC
     `;
@@ -26,30 +31,44 @@ function postarMensagem(titulo, conteudo, fkUsuario) {
     return db.executar(sql);
 }
 
-function curtirPost(idPostagensForum) {
+function curtirPost(idPostagensForum, fkUsuario) {
     var sql = `
-        UPDATE PostagensForum
-        SET likes = likes + 1
-        WHERE idPostagensForum = ${idPostagensForum}
+        INSERT INTO LikesForum (fkUsuario, fkPostagem)
+        VALUES (${fkUsuario}, ${idPostagensForum})
     `;
-    return db.executar(sql);
+    return db.executar(sql)
+    .then(function() {
+        return db.executar(`
+            UPDATE PostagensForum
+            SET likes = likes + 1
+            WHERE idPostagensForum = ${idPostagensForum}
+        `);
+    });
 }
 
-function descurtirPost(idPostagensForum) {
+function descurtirPost(idPostagensForum, fkUsuario) {
     var sql = `
-        UPDATE PostagensForum
-        SET likes = likes - 1
-        WHERE idPostagensForum = ${idPostagensForum}
+        DELETE FROM LikesForum
+        WHERE fkUsuario = ${fkUsuario} AND fkPostagem = ${idPostagensForum}
     `;
-    return db.executar(sql);
+    return db.executar(sql)
+    .then(function() {
+        return db.executar(`
+            UPDATE PostagensForum
+            SET likes = likes - 1
+            WHERE idPostagensForum = ${idPostagensForum}
+        `);
+    });
 }
 
 function deletarPost(idPostagensForum) {
-    var sql = `
-        DELETE FROM PostagensForum
-        WHERE idPostagensForum = ${idPostagensForum}
-    `;
-    return db.executar(sql);
+    return db.executar(`DELETE FROM LikesForum WHERE fkPostagem = ${idPostagensForum}`)
+    .then(function() {
+        return db.executar(`
+            DELETE FROM PostagensForum
+            WHERE idPostagensForum = ${idPostagensForum}
+        `);
+    });
 }
 
 function editarPost(idPostagensForum, conteudo) {
