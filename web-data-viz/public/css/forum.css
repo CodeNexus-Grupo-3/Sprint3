@@ -300,3 +300,17 @@ body{
 .acoes_postagem .material-symbols-outlined:nth-child(3):hover{
     color:#ff4d6d;
 }
+
+#campo_post input{
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--cor-linha);
+    outline: none;
+    color: white;
+    font-family: "Goldman", sans-serif;
+    font-size: 16px;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    display: block;
+}

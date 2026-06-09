@@ -29,7 +29,8 @@ function postarMensagem(){
             "Content-Type":"application/json"
         },
         body:JSON.stringify({
-            titulo:"Postagem",
+            // titulo:"Postagem",
+            titulo: document.getElementById("titulo").value || "Sem título",
             conteudo:mensagem,
             fkUsuario: sessionStorage.fkUsuario
         })
@@ -137,34 +138,26 @@ function listarPosts(){
     });
 }
 
+
 function curtirPost(id, elemento){
 
     if(elemento.classList.contains("ativo")){
-        return;
+        fetch(`/forum/descurtir/${id}`, { method:"PUT" })
+        .then(function(){
+            var contador = document.getElementById("likes-" + id);
+            contador.innerText = parseInt(contador.innerText) - 1;
+            elemento.classList.remove("ativo");
+        });
+    } else {
+        fetch(`/forum/curtir/${id}`, { method:"PUT" })
+        .then(function(){
+            var contador = document.getElementById("likes-" + id);
+            contador.innerText = parseInt(contador.innerText) + 1;
+            elemento.classList.add("ativo");
+        });
     }
 
-    fetch(`/forum/curtir/${id}`, {
-        method:"PUT"
-    })
-    .then(function(){
-
-        var contador = document.getElementById("likes-" + id);
-
-        var likes = parseInt(contador.innerText);
-
-        if(elemento.classList.contains("ativo")){
-            return;
-        }
-
-        likes++;
-
-        contador.innerText = likes;
-
-        elemento.classList.add("ativo");
-
-    });
-
-};
+}
 
 function deletarPost(idPost){
 

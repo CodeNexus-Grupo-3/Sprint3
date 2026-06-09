@@ -1,3 +1,104 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="icon" href="assets/logo_codenexus_sem_fundo.png" type="image/png">
+    <link rel="stylesheet" href="./css/forum.css">
+    <link rel="stylesheet" href="./css/userModal.css">
+    <title>CodeNexus</title>
+
+</head>
+<body>
+    <div id="sidebar" class="sidebar">
+        <div id="container_titulo">
+            <img src="assets/logo_codenexus_sem_fundo.png" alt="">
+            <h2>CODENEXUS</h2>
+        </div>
+        <div id="container_opcoes">
+            <div id="sub_container_painel">
+                <span class="material-symbols-outlined">home</span>
+                <a href="painel.html" id="sub_container_painel_a">PAINEL</a>
+            </div>
+            <div id="sub_container_perfil">
+                <span class="material-symbols-outlined">person</span>
+                <a href="jogador.html" id="sub_container_perfil_a">JOGADOR</a>
+            </div>
+            <div id="sub_container_partidas">
+                <span class="material-symbols-outlined">contract</span>
+                <a href="partidas.html"id="sub_container_partidas_a">PARTIDAS</a>
+            </div>
+            <div id="sub_container_forum">
+                <span class="material-symbols-outlined">forum</span>   
+                <a href="forum.html" id="sub_container_forum_a">FÓRUM</a>
+            </div>
+        </div> -->
+
+      
+    <!-- </div>
+
+    <div id="container_principal">
+      
+    <div class="forum_topo_pai">  
+        <div id="forum_topo">
+            <span class="title">SALA DE TREINAMENTO</span>
+            <div id="container_user"></div>
+        </div>
+    </div>   -->
+
+    <!-- area da postagem no forum-->
+    <!-- <div id="area_postagem">
+
+        <div id="post_input">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div id="campo_post">
+                <textarea id="mensagem" placeholder="O que você quer dizer?"></textarea>
+                <div id="acoes_post">
+                
+
+                    <button onclick="postarMensagem()">POSTAR</button>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+
+    <!-- a lista de todos os posts que for feito -->
+    <!-- <div id="lista_posts">
+
+        <div class="post">
+            <span class="material-symbols-outlined">account_circle</span>
+
+            <div class="conteudo_post">
+                <h3>TREINADOR</h3>
+                <p>
+                    @jogador, aqui está a estratégia que discutimos antes!
+                </p>
+
+                <div class="imagens_post">
+                    <div class="img_fake"></div>
+                    <div class="img_fake"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</body>
+</html>
+
+<script src="./js/userModal.js"></script>
+<script src="./js/forum.js"></script> -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,6 +165,7 @@
             <span class="material-symbols-outlined">account_circle</span>
 
             <div id="campo_post">
+                <input id="titulo" placeholder="Título da postagem..." />
                 <textarea id="mensagem" placeholder="O que você quer dizer?"></textarea>
                 <div id="acoes_post">
                     <!-- <div>
@@ -79,25 +181,7 @@
     </div>
 
     <!-- a lista de todos os posts que for feito -->
-    <div id="lista_posts">
-
-        <div class="post">
-            <span class="material-symbols-outlined">account_circle</span>
-
-            <div class="conteudo_post">
-                <h3>TREINADOR</h3>
-                <p>
-                    @jogador, aqui está a estratégia que discutimos antes!
-                </p>
-
-                <div class="imagens_post">
-                    <div class="img_fake"></div>
-                    <div class="img_fake"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <div id="lista_posts"></div>
 
     </div>
 </body>

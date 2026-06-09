@@ -1,4 +1,5 @@
 
+
 var forumModel = require("../models/forumModel");
 
 function listarPosts(req, res) {
@@ -34,7 +35,6 @@ function postarMensagem(req, res) {
 
 function curtirPost(req, res) {
     var idPostagensForum = req.params.id;
-
     forumModel.curtirPost(idPostagensForum)
     .then(function() {
         res.status(200).json({ mensagem: "Post curtido com sucesso" });
@@ -45,9 +45,20 @@ function curtirPost(req, res) {
     });
 }
 
+function descurtirPost(req, res) {
+    var idPostagensForum = req.params.id;
+    forumModel.descurtirPost(idPostagensForum)
+    .then(function() {
+        res.status(200).json({ mensagem: "Like removido com sucesso" });
+    })
+    .catch(function(erro) {
+        console.log(erro);
+        res.status(500).json({ mensagem: "Erro ao remover like" });
+    });
+}
+
 function deletarPost(req, res) {
     var idPostagensForum = req.params.id;
-
     forumModel.deletarPost(idPostagensForum)
     .then(function() {
         res.status(200).json({ mensagem: "Post deletado com sucesso" });
@@ -80,6 +91,7 @@ module.exports = {
     listarPosts,
     postarMensagem,
     curtirPost,
+    descurtirPost,
     deletarPost,
     editarPost
 };
